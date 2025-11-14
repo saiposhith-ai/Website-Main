@@ -1,0 +1,657 @@
+{% extends "admin/base.html" %} {% block title %}{% if investor %}Edit{% else
+%}Add{% endif %} Investor{% endblock %} {% block page_title %}{% if investor
+%}Edit{% else %}Add{% endif %} Investor{% endblock %} {% block page_subtitle
+%}Manage investor logos and information{% endblock %} {% block extra_styles %}
+<style>
+  .form-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .form-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .form-card-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 153, 255, 0.3);
+  }
+
+  .form-card-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .form-card-title h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .form-card-title p {
+    font-size: 0.875rem;
+    color: #777e90;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #b1b0b6;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-label .required {
+    color: #fca5a5;
+    margin-left: 0.25rem;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+  }
+
+  .form-control:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #0099ff;
+    box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+  }
+
+  .form-control::placeholder {
+    color: #777e90;
+  }
+
+  .form-help {
+    font-size: 0.8125rem;
+    color: #777e90;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .form-help svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Image Upload */
+  .image-upload-container {
+    position: relative;
+  }
+
+  .image-upload-area {
+    position: relative;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .image-upload-area:hover {
+    border-color: #0099ff;
+    background: rgba(0, 153, 255, 0.05);
+  }
+
+  .image-upload-area.drag-over {
+    border-color: #0099ff;
+    background: rgba(0, 153, 255, 0.1);
+  }
+
+  .upload-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem;
+    background: rgba(0, 153, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .upload-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #0099ff;
+  }
+
+  .upload-text h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .upload-text p {
+    font-size: 0.875rem;
+    color: #777e90;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  /* Image Preview */
+  .image-preview {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    display: none;
+  }
+
+  .image-preview.active {
+    display: block;
+  }
+
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .preview-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #b1b0b6;
+  }
+
+  .remove-image-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    color: #fca5a5;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .remove-image-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    transform: translateY(-1px);
+  }
+
+  .preview-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+  }
+
+  /* Checkbox */
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .checkbox-group:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #0099ff;
+  }
+
+  .checkbox-label {
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .checkbox-label strong {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .checkbox-label span {
+    display: block;
+    font-size: 0.8125rem;
+    color: #777e90;
+  }
+
+  /* Form Actions */
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .btn {
+    flex: 1;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+
+  .btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 153, 255, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 153, 255, 0.4);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #b1b0b6;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .form-card {
+      padding: 1.5rem;
+    }
+
+    .form-actions {
+      flex-direction: column-reverse;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="form-container">
+  <form method="POST" enctype="multipart/form-data">
+    <!-- Basic Information Card -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </div>
+        <div class="form-card-title">
+          <h3>Investor Information</h3>
+          <p>Enter the investor name and details</p>
+        </div>
+      </div>
+
+      <!-- Investor Name -->
+      <div class="form-group">
+        <label class="form-label">
+          Investor Name<span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          name="name"
+          class="form-control"
+          placeholder="e.g., Sequoia Capital, Andreessen Horowitz"
+          value="{{ investor.name if investor else '' }}"
+          required
+        />
+        <div class="form-help">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          Enter the full name of the investor or investment firm
+        </div>
+      </div>
+
+      <!-- Display Order -->
+      <div class="form-group">
+        <label class="form-label">Display Order</label>
+        <input
+          type="number"
+          name="order"
+          class="form-control"
+          placeholder="0"
+          value="{{ investor.order if investor else 0 }}"
+          min="0"
+        />
+        <div class="form-help">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          Lower numbers appear first. Use 0 for default ordering.
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo Upload Card -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+        </div>
+        <div class="form-card-title">
+          <h3>Investor Logo</h3>
+          <p>Upload the investor's logo (PNG, JPG, SVG, WebP)</p>
+        </div>
+      </div>
+
+      <div class="image-upload-container">
+        <div class="image-upload-area" id="uploadArea">
+          <input
+            type="file"
+            name="logo"
+            id="logoInput"
+            class="file-input"
+            accept="image/*"
+          />
+          <div class="upload-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+          </div>
+          <div class="upload-text">
+            <h4>Click to upload or drag and drop</h4>
+            <p>PNG, JPG, SVG, WebP up to 16MB</p>
+          </div>
+        </div>
+
+        <!-- Current Logo Preview (if editing) -->
+        {% if investor and investor.logo_path %}
+        <div class="image-preview active" id="currentPreview">
+          <div class="preview-header">
+            <span class="preview-label">Current Logo</span>
+          </div>
+          <img
+            src="{{ url_for('static', filename=investor.logo_path) }}"
+            alt="{{ investor.name }}"
+            class="preview-image"
+          />
+        </div>
+        {% endif %}
+
+        <!-- New Image Preview -->
+        <div class="image-preview" id="imagePreview">
+          <div class="preview-header">
+            <span class="preview-label">New Logo Preview</span>
+            <button type="button" class="remove-image-btn" id="removeImageBtn">
+              Remove
+            </button>
+          </div>
+          <img src="" alt="Preview" class="preview-image" id="previewImg" />
+        </div>
+      </div>
+
+      <div class="form-help" style="margin-top: 1rem">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        Use a transparent PNG or SVG for best results. Recommended size:
+        300x100px
+      </div>
+    </div>
+
+    <!-- Status Card -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="9 11 12 14 22 4"></polyline>
+            <path
+              d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+            ></path>
+          </svg>
+        </div>
+        <div class="form-card-title">
+          <h3>Publication Status</h3>
+          <p>Control visibility on the website</p>
+        </div>
+      </div>
+
+      <label class="checkbox-group">
+        <input
+          type="checkbox"
+          name="active"
+          {%
+          if
+          not
+          investor
+          or
+          investor.active
+          %}checked{%
+          endif
+          %}
+        />
+        <div class="checkbox-label">
+          <strong>Active</strong>
+          <span>Display this investor on the website</span>
+        </div>
+      </label>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <a href="{{ url_for('admin_investors') }}" class="btn btn-secondary">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Cancel
+      </a>
+      <button type="submit" class="btn btn-primary">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polyline points="9 11 12 14 22 4"></polyline>
+          <path
+            d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+          ></path>
+        </svg>
+        {% if investor %}Update{% else %}Create{% endif %} Investor
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Image upload handling
+  const uploadArea = document.getElementById("uploadArea");
+  const logoInput = document.getElementById("logoInput");
+  const imagePreview = document.getElementById("imagePreview");
+  const previewImg = document.getElementById("previewImg");
+  const removeImageBtn = document.getElementById("removeImageBtn");
+  const currentPreview = document.getElementById("currentPreview");
+
+  // Click to upload
+  uploadArea.addEventListener("click", () => {
+    logoInput.click();
+  });
+
+  // File input change
+  logoInput.addEventListener("change", (e) => {
+    handleFile(e.target.files[0]);
+  });
+
+  // Drag and drop
+  uploadArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    uploadArea.classList.add("drag-over");
+  });
+
+  uploadArea.addEventListener("dragleave", () => {
+    uploadArea.classList.remove("drag-over");
+  });
+
+  uploadArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove("drag-over");
+    handleFile(e.dataTransfer.files[0]);
+  });
+
+  // Handle file
+  function handleFile(file) {
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please upload an image file");
+      return;
+    }
+
+    if (file.size > 16 * 1024 * 1024) {
+      alert("File size must be less than 16MB");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewImg.src = e.target.result;
+      imagePreview.classList.add("active");
+      if (currentPreview) {
+        currentPreview.style.display = "none";
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Remove image
+  removeImageBtn.addEventListener("click", () => {
+    logoInput.value = "";
+    imagePreview.classList.remove("active");
+    previewImg.src = "";
+    if (currentPreview) {
+      currentPreview.style.display = "block";
+    }
+  });
+
+  // Form validation
+  document.querySelector("form").addEventListener("submit", (e) => {
+    const name = document.querySelector('input[name="name"]').value.trim();
+
+    if (!name) {
+      e.preventDefault();
+      alert("Please enter an investor name");
+      return;
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,444 @@
+{% extends 'admin/base.html' %} {% block title %}{{ 'Edit' if link else 'Add' }}
+Footer Link{% endblock %} {% block content %}
+<div class="top-header">
+  <div class="page-title">
+    <h2>{{ 'Edit' if link else 'Add' }} Footer Link</h2>
+    <p>{{ 'Update' if link else 'Create a new' }} footer navigation link</p>
+  </div>
+  <a href="{{ url_for('admin_footer_links') }}" class="btn-secondary"
+    >← Back to Links</a
+  >
+</div>
+
+<div class="dashboard-content">
+  <div class="form-container">
+    <form method="POST" class="form-modern">
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label for="category">Category *</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            value="{{ link.category if link else '' }}"
+            placeholder="e.g., Company, Product, Legal, Resources"
+            list="category-suggestions"
+            required
+          />
+          <datalist id="category-suggestions">
+            <option value="Company"></option>
+            <option value="Product"></option>
+            <option value="Legal"></option>
+            <option value="Resources"></option>
+            <option value="Support"></option>
+            <option value="Social"></option>
+          </datalist>
+
+          <small>Group name for this link in the footer</small>
+        </div>
+
+        <div class="form-group">
+          <label for="title">Link Title *</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value="{{ link.title if link else '' }}"
+            placeholder="e.g., About Us, Contact"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="url">URL *</label>
+          <input
+            type="text"
+            id="url"
+            name="url"
+            value="{{ link.url if link else '' }}"
+            placeholder="/about or https://example.com"
+            required
+          />
+          <small
+            >Internal links start with / or use full URL for external</small
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="order">Display Order</label>
+          <input
+            type="number"
+            id="order"
+            name="order"
+            value="{{ link.order if link else 0 }}"
+            min="0"
+            placeholder="0"
+          />
+          <small>Lower numbers appear first</small>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-container">
+            <input
+              type="checkbox"
+              name="active"
+              {%
+              if
+              not
+              link
+              or
+              link.active
+              %}checked{%
+              endif
+              %}
+            />
+            <span class="checkbox-label">Active</span>
+          </label>
+          <small>Inactive links won't appear in the footer</small>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">
+          {{ 'Update Link' if link else 'Add Link' }}
+        </button>
+        <a href="{{ url_for('admin_footer_links') }}" class="btn-secondary"
+          >Cancel</a
+        >
+        {% if link %}
+        <a
+          href="{{ url_for('admin_footer_link_delete', id=link.id) }}"
+          class="btn-danger"
+          onclick="return confirm('Are you sure you want to delete this link?')"
+        >
+          Delete Link
+        </a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+
+  {% if link %}
+  <div class="info-card" style="margin-top: 2rem">
+    <h3>Link Information</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Link ID:</span>
+        <span class="info-value">{{ link.id }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Category:</span>
+        <span class="info-value">{{ link.category }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Status:</span>
+        <span class="info-value">
+          <span
+            class="status-badge {% if link.active %}active{% else %}inactive{% endif %}"
+          >
+            {{ 'Active' if link.active else 'Inactive' }}
+          </span>
+        </span>
+      </div>
+      <div class="info-item full-width">
+        <span class="info-label">Current URL:</span>
+        <span class="info-value">
+          <a
+            href="{{ link.url }}"
+            target="_blank"
+            style="color: #0099ff; text-decoration: underline"
+          >
+            {{ link.url }}
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<style>
+  .top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .form-container {
+    background: linear-gradient(
+      158deg,
+      rgba(42, 43, 46, 0.95) 27%,
+      rgba(27, 28, 31, 0.95) 119%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .form-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .form-group label {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: rgba(0, 153, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .form-group input::placeholder {
+    color: #777e90;
+  }
+
+  .form-group small {
+    color: #777e90;
+    font-size: 0.85rem;
+  }
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+  }
+
+  .checkbox-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .checkbox-label {
+    color: #b1b0b6;
+    font-size: 0.95rem;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 153, 255, 0.3);
+  }
+
+  .btn-secondary {
+    padding: 0.875rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #b1b0b6;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  .btn-danger {
+    padding: 0.875rem 2rem;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-left: auto;
+  }
+
+  .btn-danger:hover {
+    background: rgba(239, 68, 68, 0.3);
+    color: #fff;
+  }
+
+  .info-card {
+    background: linear-gradient(
+      158deg,
+      rgba(42, 43, 46, 0.95) 27%,
+      rgba(27, 28, 31, 0.95) 119%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+
+  .info-card h3 {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    gap: 1rem;
+  }
+
+  .info-item.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .info-label {
+    color: #777e90;
+    font-size: 0.9rem;
+  }
+
+  .info-value {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    word-break: break-all;
+  }
+
+  .status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .status-badge.active {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+  }
+
+  .status-badge.inactive {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
+  @media (max-width: 768px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .top-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .btn-danger {
+      margin-left: 0;
+    }
+  }
+</style>
+
+<script>
+  // Preview URL as user types
+  document.getElementById("url")?.addEventListener("input", function (e) {
+    const url = e.target.value;
+    // Add validation or preview functionality here if needed
+  });
+
+  // Auto-suggest category based on title
+  document.getElementById("title")?.addEventListener("input", function (e) {
+    const title = e.target.value.toLowerCase();
+    const categoryInput = document.getElementById("category");
+
+    if (!categoryInput.value) {
+      if (
+        title.includes("about") ||
+        title.includes("team") ||
+        title.includes("career")
+      ) {
+        categoryInput.value = "Company";
+      } else if (
+        title.includes("privacy") ||
+        title.includes("terms") ||
+        title.includes("legal")
+      ) {
+        categoryInput.value = "Legal";
+      } else if (
+        title.includes("blog") ||
+        title.includes("help") ||
+        title.includes("doc")
+      ) {
+        categoryInput.value = "Resources";
+      } else if (title.includes("contact") || title.includes("support")) {
+        categoryInput.value = "Support";
+      }
+    }
+  });
+</script>
+{% endblock %}

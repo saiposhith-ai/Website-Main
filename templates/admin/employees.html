@@ -1,0 +1,707 @@
+{% extends "admin/base.html" %} {% block title %}Team Management - Admin{%
+endblock %} {% block content %}
+<div class="admin-header">
+  <div>
+    <h1>Team Management</h1>
+    <p>Manage your team members and their information</p>
+  </div>
+  <a href="{{ url_for('admin_employee_add') }}" class="btn-primary">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+    Add Team Member
+  </a>
+</div>
+
+<!-- Team Stats -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon" style="background: rgba(0, 153, 255, 0.1)">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#0099FF"
+        stroke-width="2"
+      >
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+      </svg>
+    </div>
+    <div class="stat-content">
+      <div class="stat-label">Total Members</div>
+      <div class="stat-value">{{ employees|length }}</div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon" style="background: rgba(34, 197, 94, 0.1)">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#22c55e"
+        stroke-width="2"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <div class="stat-content">
+      <div class="stat-label">Active</div>
+      <div class="stat-value">
+        {{ employees|selectattr('active', 'equalto', True)|list|length }}
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon" style="background: rgba(251, 146, 60, 0.1)">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#fb923c"
+        stroke-width="2"
+      >
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+      </svg>
+    </div>
+    <div class="stat-content">
+      <div class="stat-label">With Photos</div>
+      <div class="stat-value">
+        {{ employees|selectattr('image_path')|list|length }}
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon" style="background: rgba(168, 85, 247, 0.1)">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#a855f7"
+        stroke-width="2"
+      >
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
+    </div>
+    <div class="stat-content">
+      <div class="stat-label">Leadership</div>
+      <div class="stat-value">{{ leadership_count }}</div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="admin-filters">
+  <div class="filter-group">
+    <button class="filter-btn active" data-filter="all">
+      All ({{ employees|length }})
+    </button>
+    <button class="filter-btn" data-filter="active">
+      Active ({{ employees|selectattr('active', 'equalto', True)|list|length }})
+    </button>
+    <button class="filter-btn" data-filter="inactive">
+      Inactive ({{ employees|selectattr('active', 'equalto', False)|list|length
+      }})
+    </button>
+  </div>
+  <div class="search-box">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.35-4.35"></path>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Search team members..." />
+  </div>
+</div>
+
+<!-- Rest of the template remains the same... -->
+{% if employees %}
+<div class="team-grid">
+  {% for employee in employees %}
+  <div
+    class="team-card"
+    data-status="{% if employee.active %}active{% else %}inactive{% endif %}"
+    data-name="{{ employee.name|lower }}"
+    data-designation="{{ employee.designation|lower }}"
+  >
+    <div class="team-card-header">
+      <div class="member-avatar">
+        {% if employee.image_path %} {% if
+        employee.image_path.startswith(('http://', 'https://')) %}
+        <!-- External URL -->
+        <img
+          src="{{ employee.image_path }}"
+          alt="{{ employee.name }}"
+          class="member-img"
+          data-gender="{{ employee.gender }}"
+        />
+        {% else %}
+        <!-- Local file -->
+        <img
+          src="{{ url_for('static', filename=employee.image_path) }}"
+          alt="{{ employee.name }}"
+          class="member-img"
+          data-gender="{{ employee.gender }}"
+        />
+        {% endif %} {% else %}
+        <div class="avatar-placeholder">
+          {% if employee.gender == 'female' %}👩{% else %}👨{% endif %}
+        </div>
+        {% endif %}
+      </div>
+      <div
+        class="status-badge {% if employee.active %}active{% else %}inactive{% endif %}"
+      >
+        {{ 'Active' if employee.active else 'Inactive' }}
+      </div>
+    </div>
+
+    <div class="team-card-body">
+      <h3 class="member-name">{{ employee.name }}</h3>
+      <p class="member-designation">{{ employee.designation }}</p>
+      {% if employee.bio %}
+      <p class="member-bio">
+        {{ employee.bio[:100] }}{% if employee.bio|length > 100 %}...{% endif %}
+      </p>
+      {% endif %}
+      <div class="member-meta">
+        <span class="meta-item">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          {{ employee.gender|capitalize }}
+        </span>
+        <span class="meta-item">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Order: {{ employee.order }}
+        </span>
+      </div>
+    </div>
+
+    <div class="team-card-footer">
+      <a
+        href="{{ url_for('admin_employee_edit', id=employee.id) }}"
+        class="btn-icon"
+        title="Edit"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+          ></path>
+          <path
+            d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+          ></path>
+        </svg>
+        Edit
+      </a>
+      <button
+        class="btn-icon btn-danger"
+        onclick="deleteEmployee({{ employee.id }}, '{{ employee.name }}')"
+        title="Delete"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path
+            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+          ></path>
+        </svg>
+        Delete
+      </button>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <svg
+    width="80"
+    height="80"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+  >
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="9" cy="7" r="4"></circle>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+  </svg>
+  <h3>No Team Members</h3>
+  <p>Start building your team by adding the first member.</p>
+  <a
+    href="{{ url_for('admin_employee_add') }}"
+    class="btn-primary"
+    style="margin-top: 1.5rem"
+  >
+    Add First Team Member
+  </a>
+</div>
+{% endif %}
+
+<!-- Include all the CSS from your original template -->
+<style>
+  /* Copy all your existing CSS here */
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .admin-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-header p {
+    color: #777e90;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 153, 255, 0.3);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: #1a1a1d;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .stat-content {
+    flex: 1;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: #777e90;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .admin-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #777e90;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+
+  .filter-btn:hover {
+    border-color: rgba(0, 153, 255, 0.5);
+    color: #0099ff;
+  }
+
+  .filter-btn.active {
+    background: #0099ff;
+    border-color: #0099ff;
+    color: #fff;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #1a1a1d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    min-width: 300px;
+  }
+
+  .search-box svg {
+    color: #777e90;
+    flex-shrink: 0;
+  }
+
+  .search-box input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #fff;
+    outline: none;
+    font-size: 0.95rem;
+  }
+
+  .search-box input::placeholder {
+    color: #777e90;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .team-card {
+    background: #1a1a1d;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .team-card:hover {
+    border-color: rgba(0, 153, 255, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .team-card-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .member-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(0, 153, 255, 0.2);
+  }
+
+  .member-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 153, 255, 0.2),
+      rgba(5, 97, 226, 0.2)
+    );
+  }
+
+  .status-badge {
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .status-badge.active {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  .status-badge.inactive {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .team-card-body {
+    padding: 1.5rem;
+  }
+
+  .member-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .member-designation {
+    font-size: 0.95rem;
+    color: #0099ff;
+    margin-bottom: 1rem;
+  }
+
+  .member-bio {
+    font-size: 0.875rem;
+    color: #777e90;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .member-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    color: #777e90;
+  }
+
+  .meta-item svg {
+    color: #777e90;
+  }
+
+  .team-card-footer {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-icon {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #b1b0b6;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-icon:hover {
+    border-color: #0099ff;
+    color: #0099ff;
+    background: rgba(0, 153, 255, 0.1);
+  }
+
+  .btn-icon.btn-danger:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #777e90;
+    background: #1a1a1d;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .empty-state svg {
+    margin-bottom: 1.5rem;
+    opacity: 0.3;
+  }
+
+  .empty-state h3 {
+    font-size: 1.5rem;
+    color: #b1b0b6;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .admin-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .admin-filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .search-box {
+      min-width: 100%;
+    }
+
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Filter functionality
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  const teamCards = document.querySelectorAll(".team-card");
+  const searchInput = document.getElementById("searchInput");
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const filter = btn.dataset.filter;
+      filterTeam(filter, searchInput.value);
+    });
+  });
+
+  searchInput.addEventListener("input", (e) => {
+    const activeFilter =
+      document.querySelector(".filter-btn.active").dataset.filter;
+    filterTeam(activeFilter, e.target.value);
+  });
+
+  function filterTeam(statusFilter, searchTerm) {
+    const search = searchTerm.toLowerCase();
+    teamCards.forEach((card) => {
+      const status = card.dataset.status;
+      const name = card.dataset.name;
+      const designation = card.dataset.designation;
+      const matchesStatus = statusFilter === "all" || status === statusFilter;
+      const matchesSearch =
+        !search || name.includes(search) || designation.includes(search);
+      card.style.display = matchesStatus && matchesSearch ? "block" : "none";
+    });
+  }
+
+  function deleteEmployee(id, name) {
+    if (confirm(`Are you sure you want to delete ${name}?`)) {
+      window.location.href = `/admin/employees/delete/${id}`;
+    }
+  }
+</script>
+<script>
+  // Handle image loading errors
+  document.addEventListener("DOMContentLoaded", function () {
+    const memberImages = document.querySelectorAll(".member-img");
+
+    memberImages.forEach((img) => {
+      img.addEventListener("error", function () {
+        const gender = this.dataset.gender;
+        const placeholder = document.createElement("div");
+        placeholder.className = "avatar-placeholder";
+        placeholder.textContent = gender === "female" ? "👩" : "👨";
+
+        this.parentElement.innerHTML = "";
+        this.parentElement.appendChild(placeholder);
+      });
+    });
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,392 @@
+{% extends 'admin/base.html' %} {% block title %}{% if item %}Edit{% else
+%}Add{% endif %} Formula Step{% endblock %} {% block page_title %}
+<div class="page-header">
+  <div>
+    <h2>{% if item %}Edit{% else %}Add New{% endif %} Formula Step</h2>
+    <p class="subtitle">
+      {% if item %}Update the details of this process step{% else %}Create a new
+      process step{% endif %}
+    </p>
+  </div>
+  <a href="{{ url_for('admin_formula') }}" class="btn-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    Back to List
+  </a>
+</div>
+{% endblock %} {% block content %}
+<div class="form-container">
+  <form method="POST" class="formula-form">
+    <div class="form-grid">
+      <div class="form-group full-width">
+        <label for="title">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M4 7h16M4 12h16M4 17h10"></path>
+          </svg>
+          Step Title
+        </label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="{{ item.title if item else '' }}"
+          placeholder="e.g., Mix ingredients thoroughly"
+          required
+          autocomplete="off"
+        />
+        <small>A clear, concise title for this process step</small>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="description">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            ></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Description
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          rows="5"
+          placeholder="Provide detailed instructions for this step..."
+          required
+        >
+{{ item.description if item else '' }}</textarea
+        >
+        <small>Detailed instructions and guidelines for this step</small>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            name="active"
+            {%
+            if
+            not
+            item
+            or
+            item.active
+            %}checked{%
+            endif
+            %}
+          />
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-text">
+            <strong>Active Step</strong>
+            <small>This step will be visible in the process</small>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        {% if item %}Update Step{% else %}Create Step{% endif %}
+      </button>
+      <a href="{{ url_for('admin_formula') }}" class="btn-cancel">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+
+<style>
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .subtitle {
+    color: #b1b0b6;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #b1b0b6;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-back:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transform: translateX(-3px);
+  }
+
+  .btn-back svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .form-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .formula-form {
+    background: linear-gradient(
+      158deg,
+      rgba(42, 43, 46, 0.95) 27%,
+      rgba(27, 28, 31, 0.95) 119%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .form-group label svg {
+    width: 18px;
+    height: 18px;
+    color: #0099ff;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group textarea {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .form-group input[type="text"]:focus,
+  .form-group input[type="number"]:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #0099ff;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+  }
+
+  .form-group small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #777e90;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+    padding: 1.25rem;
+    background: rgba(0, 153, 255, 0.05);
+    border: 1px solid rgba(0, 153, 255, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .checkbox-label:hover {
+    background: rgba(0, 153, 255, 0.1);
+    border-color: rgba(0, 153, 255, 0.3);
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    display: none;
+  }
+
+  .checkbox-custom {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    border-color: #0099ff;
+  }
+
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .checkbox-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .checkbox-text strong {
+    color: #fff;
+    font-size: 0.95rem;
+  }
+
+  .checkbox-text small {
+    color: #b1b0b6;
+    font-size: 0.85rem;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .btn-submit,
+  .btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .btn-submit {
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    flex: 1;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 153, 255, 0.4);
+  }
+
+  .btn-submit svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .btn-cancel {
+    background: rgba(255, 255, 255, 0.05);
+    color: #b1b0b6;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .btn-cancel svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .formula-form {
+      padding: 1.5rem;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .btn-submit,
+    .btn-cancel {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+{% endblock %}

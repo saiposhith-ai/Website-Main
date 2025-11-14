@@ -1,0 +1,269 @@
+{% extends 'admin/base.html' %} {% block title %}{% if feature %}Edit{% else
+%}Add{% endif %} Feature{% endblock %} {% block page_title %}
+<h2>{% if feature %}Edit Feature{% else %}Add Feature{% endif %}</h2>
+<p>
+  {% if feature %}Update feature details{% else %}Create a new feature{% endif
+  %}
+</p>
+{% endblock %} {% block content %}
+<div class="form-container">
+  <form method="POST" enctype="multipart/form-data" class="admin-form">
+    <!-- Basic Info -->
+    <div class="form-section">
+      <h3>Feature Information</h3>
+
+      <div class="form-group">
+        <label>Title</label>
+        <input
+          type="text"
+          name="title"
+          value="{{ feature.title if feature else '' }}"
+          required
+          maxlength="100"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" rows="4" required>
+{{ feature.description if feature else '' }}</textarea
+        >
+      </div>
+    </div>
+
+    <!-- Icon Options -->
+    <div class="form-section">
+      <h3>Icon Options</h3>
+      <p style="color: #777e90; font-size: 0.875rem; margin-bottom: 1.5rem">
+        Choose either an emoji/text icon OR upload an image. Image will take
+        priority if both are provided.
+      </p>
+
+      <div class="form-group">
+        <label>Text Icon (Emoji or Symbol)</label>
+        <input
+          type="text"
+          name="icon_text"
+          value="{{ feature.icon if feature else '⚡' }}"
+          maxlength="10"
+          placeholder="⚡"
+        />
+        <small>Examples: 🚀 💎 ⚡ 🎯 🔒 📊 ⭐ 💰</small>
+      </div>
+
+      <div class="form-group">
+        <label>OR Upload Icon Image</label>
+        {% if feature and feature.icon_path %}
+        <div class="preview-image">
+          <img
+            src="{{ url_for('static', filename=feature.icon_path) }}"
+            alt="Feature icon"
+          />
+          <small>Current icon image</small>
+        </div>
+        {% endif %}
+        <input type="file" name="icon_image" accept="image/*" />
+        <small>Upload feature icon (recommended: 100x100px, square)</small>
+      </div>
+    </div>
+
+    <!-- Ordering & Settings -->
+    <div class="form-section">
+      <h3>Settings</h3>
+
+      <div class="form-group">
+        <label>Order</label>
+        <input
+          type="number"
+          name="order"
+          value="{{ feature.order if feature else 0 }}"
+          min="0"
+        />
+        <small>Display order on page (lower numbers appear first)</small>
+      </div>
+
+      <div class="form-group checkbox">
+        <label>
+          <input
+            type="checkbox"
+            name="active"
+            {%
+            if
+            feature
+            is
+            none
+            or
+            feature.active
+            %}checked{%
+            endif
+            %}
+          />
+          Active (Display on website)
+        </label>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        {% if feature %}Update{% else %}Create{% endif %} Feature
+      </button>
+      <a href="{{ url_for('admin_features') }}" class="btn btn-secondary"
+        >Cancel</a
+      >
+    </div>
+  </form>
+</div>
+
+<style>
+  .form-container {
+    background: linear-gradient(
+      158deg,
+      rgba(42, 43, 46, 0.95) 27%,
+      rgba(27, 28, 31, 0.95) 119%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 700px;
+  }
+
+  .form-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .form-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .form-section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #b1b0b6;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.875rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 153, 255, 0.3);
+    box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+  }
+
+  .form-group small {
+    display: block;
+    margin-top: 0.5rem;
+    color: #777e90;
+    font-size: 0.8rem;
+  }
+
+  .form-group.checkbox {
+    display: flex;
+    align-items: center;
+  }
+
+  .form-group.checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0;
+  }
+
+  .form-group.checkbox input {
+    width: auto;
+  }
+
+  .preview-image {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(0, 153, 255, 0.1);
+    border: 1px solid rgba(0, 153, 255, 0.2);
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .preview-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .preview-image small {
+    color: #7dd3fc;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 0.875rem 1.75rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 153, 255, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 153, 255, 0.4);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #b1b0b6;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+</style>
+{% endblock %}

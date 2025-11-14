@@ -1,0 +1,222 @@
+{% extends 'admin/base.html' %} {% block title %}Features{% endblock %} {% block
+page_title %}
+<h2>Features</h2>
+<p>Manage product features and highlights</p>
+{% endblock %} {% block content %}
+<div class="top-section">
+  <a href="{{ url_for('admin_feature_add') }}" class="btn-add">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+    Add Feature
+  </a>
+</div>
+
+<div class="features-grid">
+  {% for feature in features %}
+  <div class="feature-card">
+    <div class="feature-icon">
+      {% if feature.icon_path %}
+      <img
+        src="{{ url_for('static', filename=feature.icon_path) }}"
+        alt="{{ feature.title }}"
+      />
+      {% else %}
+      <div class="icon-text">{{ feature.icon }}</div>
+      {% endif %}
+    </div>
+
+    <div class="feature-content">
+      <h3>{{ feature.title }}</h3>
+      <p class="description">
+        {% if feature.description|length > 100 %} {{ feature.description[:100]
+        }}... {% else %} {{ feature.description }} {% endif %}
+      </p>
+      <span
+        class="status {% if feature.active %}active{% else %}inactive{% endif %}"
+      >
+        {% if feature.active %}Active{% else %}Inactive{% endif %}
+      </span>
+    </div>
+
+    <div class="feature-actions">
+      <a
+        href="{{ url_for('admin_feature_edit', id=feature.id) }}"
+        class="action-link edit"
+        >Edit</a
+      >
+      <a
+        href="{{ url_for('admin_feature_delete', id=feature.id) }}"
+        class="action-link delete"
+        onclick="return confirm('Delete this feature?')"
+        >Delete</a
+      >
+    </div>
+  </div>
+  {% else %}
+  <div
+    style="grid-column: 1/-1; text-align: center; color: #777e90; padding: 3rem"
+  >
+    No features yet.
+    <a href="{{ url_for('admin_feature_add') }}" style="color: #0099ff"
+      >Add one</a
+    >
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+  .top-section {
+    margin-bottom: 2rem;
+  }
+
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 153, 255, 0.3);
+  }
+
+  .btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 153, 255, 0.4);
+  }
+
+  .btn-add svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature-card {
+    background: linear-gradient(
+      158deg,
+      rgba(42, 43, 46, 0.95) 27%,
+      rgba(27, 28, 31, 0.95) 119%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 153, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 153, 255, 0.15);
+  }
+
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 153, 255, 0.1);
+    border: 1px solid rgba(0, 153, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+
+  .feature-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .feature-icon .icon-text {
+    font-size: 2rem;
+    color: #0099ff;
+  }
+
+  .feature-content {
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+
+  .feature-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-content .description {
+    font-size: 0.85rem;
+    color: #b1b0b6;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .status {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .status.active {
+    background: rgba(34, 197, 94, 0.2);
+    color: #86efac;
+  }
+
+  .status.inactive {
+    background: rgba(107, 114, 128, 0.2);
+    color: #b1b0b6;
+  }
+
+  .feature-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .action-link {
+    flex: 1;
+    padding: 0.625rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .action-link.edit {
+    background: rgba(0, 153, 255, 0.2);
+    color: #0099ff;
+  }
+
+  .action-link.edit:hover {
+    background: rgba(0, 153, 255, 0.3);
+  }
+
+  .action-link.delete {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+  }
+
+  .action-link.delete:hover {
+    background: rgba(239, 68, 68, 0.3);
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,725 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if career %}Edit{% else %}Add{% endif %} Career - Admin{% endblock %}
+
+{% block page_title %}{% if career %}Edit Position{% else %}Create New Position{% endif %}{% endblock %}
+{% block page_subtitle %}{% if career %}Update job posting details{% else %}Add a new job opening to your careers page{% endif %}{% endblock %}
+
+{% block extra_styles %}
+<style>
+  .form-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .form-card {
+    background: #1a1b1e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .form-section-title svg {
+    width: 24px;
+    height: 24px;
+    color: #0099ff;
+  }
+
+  .form-section-subtitle {
+    color: #777e90;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #b1b0b6;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .form-label .required {
+    color: #ef4444;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    padding: 0.875rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: #0099ff;
+    background: rgba(0, 153, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+  }
+
+  .form-textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-textarea.large {
+    min-height: 200px;
+  }
+
+  .form-hint {
+    font-size: 0.8125rem;
+    color: #777e90;
+    margin-top: 0.25rem;
+  }
+
+  /* Toggle Switch */
+  .toggle-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+  }
+
+  .toggle-info {
+    flex: 1;
+  }
+
+  .toggle-title {
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .toggle-description {
+    font-size: 0.8125rem;
+    color: #777e90;
+  }
+
+  .toggle-switch {
+    position: relative;
+    width: 52px;
+    height: 28px;
+  }
+
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 34px;
+    transition: all 0.3s ease;
+  }
+
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  input:checked + .toggle-slider {
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    border-color: #0099ff;
+  }
+
+  input:checked + .toggle-slider:before {
+    transform: translateX(24px);
+  }
+
+  /* Tags Input */
+  .tags-input-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    min-height: 48px;
+  }
+
+  .tag {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    background: rgba(0, 153, 255, 0.15);
+    border: 1px solid rgba(0, 153, 255, 0.3);
+    border-radius: 6px;
+    color: #0099ff;
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .tag-remove {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .tag-remove:hover {
+    opacity: 1;
+  }
+
+  /* Action Buttons */
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .btn-primary {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 153, 255, 0.3);
+  }
+
+  .btn-secondary {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #b1b0b6;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+
+  .btn-danger {
+    padding: 1rem 2rem;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+  }
+  /* Fixed Select Dropdown Styling */
+.form-select {
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9375rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b1b0b6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 3rem;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #0099ff;
+  background: rgba(0, 153, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+}
+
+.form-select:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Style the select dropdown options */
+.form-select option {
+  background: #1a1b1e;
+  color: #fff;
+  padding: 0.5rem;
+}
+
+.form-select option:hover,
+.form-select option:focus,
+.form-select option:checked {
+  background: rgba(0, 153, 255, 0.2);
+  color: #fff;
+}
+
+/* For better cross-browser support */
+.form-select::-ms-expand {
+  display: none;
+}
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+  .form-select {
+    color: #fff;
+    text-indent: 0.01px;
+  }
+  
+  .form-select option {
+    background: #1a1b1e;
+    color: #fff;
+  }
+}
+
+/* Webkit (Chrome, Safari, Edge) specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .form-select {
+    color: #fff;
+  }
+  
+  .form-select option {
+    background: #1a1b1e;
+    color: #fff;
+  }
+}
+
+/* Additional text input fixes to ensure consistency */
+.form-input {
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9375rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #0099ff;
+  background: rgba(0, 153, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+}
+
+.form-input::placeholder {
+  color: #777e90;
+  opacity: 1;
+}
+
+/* Textarea fixes */
+.form-textarea {
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9375rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #0099ff;
+  background: rgba(0, 153, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+}
+
+.form-textarea::placeholder {
+  color: #777e90;
+  opacity: 1;
+}
+
+.form-textarea.large {
+  min-height: 200px;
+}
+
+/* Autofill background fix */
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover,
+.form-input:-webkit-autofill:focus,
+.form-select:-webkit-autofill,
+.form-select:-webkit-autofill:hover,
+.form-select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.05) inset;
+  box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.05) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <form method="POST" enctype="multipart/form-data">
+    
+    <!-- Basic Information -->
+    <div class="form-card">
+      <div class="form-section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        Basic Information
+      </div>
+      <div class="form-section-subtitle">Essential details about the position</div>
+
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label class="form-label">
+            Job Title <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            name="title" 
+            class="form-input" 
+            value="{{ career.title if career else '' }}"
+            placeholder="e.g. Senior Software Engineer"
+            required
+          />
+          <div class="form-hint">The official title for this position</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Department <span class="required">*</span>
+          </label>
+          <select name="department" class="form-select" required>
+            <option value="">Select Department</option>
+            <option value="Engineering" {% if career and career.department == 'Engineering' %}selected{% endif %}>Engineering</option>
+            <option value="Product" {% if career and career.department == 'Product' %}selected{% endif %}>Product</option>
+            <option value="Design" {% if career and career.department == 'Design' %}selected{% endif %}>Design</option>
+            <option value="Marketing" {% if career and career.department == 'Marketing' %}selected{% endif %}>Marketing</option>
+            <option value="Sales" {% if career and career.department == 'Sales' %}selected{% endif %}>Sales</option>
+            <option value="Operations" {% if career and career.department == 'Operations' %}selected{% endif %}>Operations</option>
+            <option value="Finance" {% if career and career.department == 'Finance' %}selected{% endif %}>Finance</option>
+            <option value="HR" {% if career and career.department == 'HR' %}selected{% endif %}>HR</option>
+            <option value="Customer Success" {% if career and career.department == 'Customer Success' %}selected{% endif %}>Customer Success</option>
+            <option value="Other" {% if career and career.department == 'Other' %}selected{% endif %}>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Location <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            name="location" 
+            class="form-input" 
+            value="{{ career.location if career else '' }}"
+            placeholder="e.g. Bengaluru, India"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Job Type <span class="required">*</span>
+          </label>
+          <select name="job_type" class="form-select" required>
+            <option value="Full-time" {% if career and career.job_type == 'Full-time' %}selected{% endif %}>Full-time</option>
+            <option value="Part-time" {% if career and career.job_type == 'Part-time' %}selected{% endif %}>Part-time</option>
+            <option value="Contract" {% if career and career.job_type == 'Contract' %}selected{% endif %}>Contract</option>
+            <option value="Internship" {% if career and career.job_type == 'Internship' %}selected{% endif %}>Internship</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            Experience Level
+          </label>
+          <select name="experience_level" class="form-select">
+            <option value="Entry-level" {% if career and career.experience_level == 'Entry-level' %}selected{% endif %}>Entry-level</option>
+            <option value="Mid-level" {% if career and career.experience_level == 'Mid-level' %}selected{% endif %}>Mid-level</option>
+            <option value="Senior" {% if career and career.experience_level == 'Senior' %}selected{% endif %}>Senior</option>
+            <option value="Lead" {% if career and career.experience_level == 'Lead' %}selected{% endif %}>Lead</option>
+            <option value="Executive" {% if career and career.experience_level == 'Executive' %}selected{% endif %}>Executive</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Salary Range</label>
+          <input 
+            type="text" 
+            name="salary_range" 
+            class="form-input" 
+            value="{{ career.salary_range if career else '' }}"
+            placeholder="e.g. $80,000 - $120,000"
+          />
+          <div class="form-hint">Optional - helps attract qualified candidates</div>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">External Application Link</label>
+          <input 
+            type="url" 
+            name="external_link" 
+            class="form-input" 
+            value="{{ career.external_link if career else 'https://shramicintern.pythonanywhere.com/' }}"
+            placeholder="https://careers.yourcompany.com/apply"
+          />
+          <div class="form-hint">Link to external job board or application form</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Job Description -->
+    <div class="form-card">
+      <div class="form-section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        Job Description
+      </div>
+      <div class="form-section-subtitle">Detailed information about the role</div>
+
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label class="form-label">
+            Description <span class="required">*</span>
+          </label>
+          <textarea 
+            name="description" 
+            class="form-textarea large" 
+            placeholder="Describe the role, team, and what makes this opportunity exciting..."
+            required
+          >{{ career.description if career else '' }}</textarea>
+          <div class="form-hint">Provide a compelling overview of the position</div>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">Responsibilities</label>
+          <textarea 
+            name="responsibilities" 
+            class="form-textarea" 
+            placeholder="• Lead development of new features&#10;• Mentor junior engineers&#10;• Collaborate with product team..."
+          >{{ career.responsibilities if career else '' }}</textarea>
+          <div class="form-hint">List key responsibilities (use bullet points)</div>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">Requirements</label>
+          <textarea 
+            name="requirements" 
+            class="form-textarea" 
+            placeholder="• 5+ years of software development experience&#10;• Strong knowledge of Python/JavaScript&#10;• Experience with cloud platforms..."
+          >{{ career.requirements if career else '' }}</textarea>
+          <div class="form-hint">List required qualifications and skills</div>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">Benefits</label>
+          <textarea 
+            name="benefits" 
+            class="form-textarea" 
+            placeholder="• Competitive salary and equity&#10;• Comprehensive health insurance&#10;• Flexible work hours..."
+          >{{ career.benefits if career else '' }}</textarea>
+          <div class="form-hint">Highlight what you offer employees</div>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">Required Skills</label>
+          <input 
+            type="text" 
+            name="skills" 
+            class="form-input" 
+            value="{{ career.skills if career else '' }}"
+            placeholder="Python, React, AWS, Docker (comma-separated)"
+          />
+          <div class="form-hint">Separate skills with commas</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="form-card">
+      <div class="form-section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 1v6m0 6v6m5.196-13.196l-4.242 4.242m-6.364 0L2.804 5.804M23 12h-6m-6 0H1m18.196 7.196l-4.242-4.242m-6.364 0l-4.242 4.242"></path>
+        </svg>
+        Position Settings
+      </div>
+      <div class="form-section-subtitle">Configure visibility and special options</div>
+
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <div class="toggle-title">Active Position</div>
+              <div class="toggle-description">Show this position on the careers page</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" name="active" {% if not career or career.active %}checked{% endif %} />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <div class="toggle-title">Featured Position</div>
+              <div class="toggle-description">Highlight this position at the top of listings</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" name="featured" {% if career and career.featured %}checked{% endif %} />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <div class="toggle-group">
+            <div class="toggle-info">
+              <div class="toggle-title">Remote Work Allowed</div>
+              <div class="toggle-description">This position can be performed remotely</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" name="remote_allowed" {% if career and career.remote_allowed %}checked{% endif %} />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-card">
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          {% if career %}Update Position{% else %}Create Position{% endif %}
+        </button>
+        <a href="{{ url_for('admin_careers') }}" class="btn-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          Cancel
+        </a>
+        {% if career %}
+        <button type="button" class="btn-danger" onclick="deleteCareer()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          Delete
+        </button>
+        {% endif %}
+      </div>
+    </div>
+
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  {% if career %}
+  function deleteCareer() {
+    if (confirm('Are you sure you want to delete this position?\n\nThis action cannot be undone.')) {
+      window.location.href = '{{ url_for("admin_career_delete", id=career.id) }}';
+    }
+  }
+  {% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,263 @@
+{% extends 'admin/base.html' %} {% block title %}Partners{% endblock %} {% block
+page_title %}
+<h2>Partners & Sponsors</h2>
+<p>Manage partner logos and information</p>
+{% endblock %} {% block content %}
+<div class="top-section">
+  <a href="{{ url_for('admin_partner_add') }}" class="btn-add">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+    Add Partner
+  </a>
+</div>
+
+<div class="table-container">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Logo</th>
+        <th>Name</th>
+        <th>Website</th>
+        <th>Order</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for partner in partners %}
+      <tr>
+        <td class="logo-cell">
+          {% if partner.logo_path %}
+          <img
+            src="{{ url_for('static', filename=partner.logo_path) }}"
+            alt="{{ partner.name }}"
+          />
+          {% else %}
+          <span class="placeholder">No logo</span>
+          {% endif %}
+        </td>
+        <td class="name-cell">{{ partner.name }}</td>
+        <td>
+          {% if partner.website %}
+          <a href="{{ partner.website }}" target="_blank" class="link"
+            >{{ partner.website[:50] }}{% if partner.website|length > 50 %}...{%
+            endif %}</a
+          >
+          {% else %}
+          <span class="placeholder">No website</span>
+          {% endif %}
+        </td>
+        <td>{{ partner.order }}</td>
+        <td>
+          <span
+            class="status {% if partner.active %}active{% else %}inactive{% endif %}"
+          >
+            {% if partner.active %}Active{% else %}Inactive{% endif %}
+          </span>
+        </td>
+        <td class="actions-cell">
+          <a
+            href="{{ url_for('admin_partner_edit', id=partner.id) }}"
+            class="action-link edit"
+            >Edit</a
+          >
+          <a
+            href="{{ url_for('admin_partner_delete', id=partner.id) }}"
+            class="action-link delete"
+            onclick="return confirm('Are you sure you want to delete this partner?')"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6" class="empty">
+          No partners yet.
+          <a href="{{ url_for('admin_partner_add') }}" style="color: #0099ff"
+            >Add one</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .top-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+  }
+
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 153, 255, 0.3);
+  }
+
+  .btn-add svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .table-container {
+    background: linear-gradient(
+      158deg,
+      rgba(42, 43, 46, 0.95) 27%,
+      rgba(27, 28, 31, 0.95) 119%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow-x: auto;
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .admin-table thead {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .admin-table th {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #777e90;
+    white-space: nowrap;
+  }
+
+  .admin-table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #b1b0b6;
+    font-size: 0.9rem;
+  }
+
+  .admin-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .logo-cell {
+    width: 100px;
+  }
+
+  .logo-cell img {
+    width: 80px;
+    height: 60px;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .placeholder {
+    color: #777e90;
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  .name-cell {
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .link {
+    color: #0099ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    word-break: break-all;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  .status {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .status.active {
+    background: rgba(34, 197, 94, 0.2);
+    color: #86efac;
+  }
+
+  .status.inactive {
+    background: rgba(107, 114, 128, 0.2);
+    color: #b1b0b6;
+  }
+
+  .actions-cell {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .action-link {
+    padding: 0.5rem 0.875rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .action-link.edit {
+    background: rgba(0, 153, 255, 0.2);
+    color: #0099ff;
+  }
+
+  .action-link.edit:hover {
+    background: rgba(0, 153, 255, 0.3);
+  }
+
+  .action-link.delete {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+  }
+
+  .action-link.delete:hover {
+    background: rgba(239, 68, 68, 0.3);
+  }
+
+  .empty {
+    text-align: center;
+    padding: 3rem !important;
+    color: #777e90;
+  }
+
+  @media (max-width: 768px) {
+    .table-container {
+      overflow-x: scroll;
+    }
+
+    .admin-table {
+      min-width: 800px;
+    }
+  }
+</style>
+{% endblock %}

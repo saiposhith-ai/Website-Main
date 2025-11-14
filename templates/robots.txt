@@ -1,0 +1,38 @@
+# robots.txt for {{ site_settings.site_name }}
+# Generated automatically
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /static/uploads/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: {{ request.url_root }}sitemap.xml
+
+# Crawl delay (optional - remove if not needed)
+Crawl-delay: 1
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin/
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /

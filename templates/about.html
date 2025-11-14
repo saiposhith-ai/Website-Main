@@ -1,0 +1,1762 @@
+{% extends "base.html" %} {% block title %}{{ hero.title_line1 if hero else
+'About Us - We Engineer Payments for Global Scale' }}{% endblock %} {% block
+meta_description %}{{ hero.subtitle if hero else 'Trusted by leading enterprises
+worldwide, SHARMIC simplifies payment orchestration and global coverage.' }}{%
+endblock %} {% block extra_css %}
+<style>
+  /* ============================================
+   BASE STYLES & RESET
+   ============================================ */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ============================================
+   HERO SECTION - Dynamic & Controllable
+   ============================================ */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10rem 2rem 6rem;
+    overflow: hidden;
+    background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+  }
+
+  /* Background Layers */
+  .hero-background,
+  .hero-background-image,
+  .hero-background-video,
+  .hero-background-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .hero-background-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-background-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-background-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 153, 255, 0.2),
+      rgba(5, 97, 226, 0.2)
+    );
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Dynamic Text Alignment */
+  .hero[style*="text-align: left"] .hero-content {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .hero[style*="text-align: right"] .hero-content {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .hero[style*="text-align: center"] .hero-content {
+    text-align: center;
+    align-items: center;
+  }
+
+  /* Badge with Icon Support */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(9, 29, 53, 0.8);
+    border: 1px solid rgba(85, 165, 255, 0.3);
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #55a5ff;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .badge-icon-emoji {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .badge-icon-image {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+
+  .badge-icon-svg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+  }
+
+  .badge-icon-svg svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
+  /* Title Style Variations */
+  .gradient-text {
+    background: linear-gradient(135deg, #0099ff 0%, #60efff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    color: #0099ff;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .hero-title-solid .title-highlight {
+    background: none;
+    -webkit-text-fill-color: inherit;
+    color: #0099ff;
+  }
+
+  .hero-title-outline .title-highlight {
+    background: none;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px #0099ff;
+    text-stroke: 2px #0099ff;
+  }
+
+  .hero p {
+    font-size: clamp(0.95rem, 2vw, 1.125rem);
+    color: #b1b0b6;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+    padding: 0 1rem;
+  }
+
+  /* CTA Button Styles */
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out 0.6s both;
+    border: none;
+    cursor: pointer;
+    min-height: 48px;
+    min-width: 160px;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 153, 255, 0.2);
+    touch-action: manipulation;
+  }
+
+  .cta-solid {
+    background: #fff;
+    color: #000;
+  }
+
+  .cta-solid:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+  }
+
+  .cta-outline {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+  }
+
+  .cta-outline:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  .cta-ghost {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .cta-ghost:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .cta-button:active {
+    transform: translateY(0);
+  }
+
+  /* Particle Animations */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .particle-blue {
+    background: radial-gradient(
+      circle,
+      rgba(0, 153, 255, 0.6) 0%,
+      rgba(0, 153, 255, 0) 70%
+    );
+    animation: float 25s infinite ease-in-out;
+    filter: blur(50px);
+  }
+
+  .particle-ring {
+    border: 2px solid rgba(0, 153, 255, 0.2);
+    background: transparent;
+    animation: pulse 5s infinite ease-in-out;
+  }
+
+  .particle-dot {
+    background: rgba(0, 153, 255, 0.4);
+    width: 3px;
+    height: 3px;
+    animation: twinkle 4s infinite ease-in-out;
+  }
+
+  .particle-icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(20, 30, 50, 0.8);
+    border: 1px solid rgba(85, 165, 255, 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #55a5ff;
+    font-size: 1.5rem;
+    animation: float 20s infinite ease-in-out;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(30px, -30px);
+    }
+    50% {
+      transform: translate(-20px, 20px);
+    }
+    75% {
+      transform: translate(20px, 30px);
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ============================================
+   STATS SECTION
+   ============================================ */
+  .stats {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #000;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: #121316;
+    border: 1px solid #2d2b2b;
+    border-radius: 20px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-10px);
+    border-color: #0561e2;
+    box-shadow: 0 20px 40px rgba(5, 97, 226, 0.2);
+  }
+
+  .stat-number {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #00ff87 0%, #60efff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    display: inline-block;
+    color: #00ff87;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .stat-label {
+    color: #c4c4c7;
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    line-height: 1.5;
+  }
+
+  /* ============================================
+   PARTNERS SECTION
+   ============================================ */
+  .partners {
+    padding: 3rem 2rem;
+    background: #fff;
+    text-align: center;
+  }
+
+  .partners-text {
+    color: #838383;
+    font-size: clamp(0.8rem, 1.5vw, 0.875rem);
+    margin-bottom: 2rem;
+  }
+
+  .partners-text span {
+    color: #1c1c1c;
+    font-weight: 600;
+  }
+
+  .partners-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+
+  .partners-grid:hover {
+    opacity: 1;
+  }
+
+  .partner-logo {
+    height: 40px;
+    max-width: 120px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .partner-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  /* ============================================
+   GLOBAL HUBS SECTION
+   ============================================ */
+  .global-hubs {
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff5f8 100%);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  .hubs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    align-items: start;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #1a1a2e;
+    margin: 0;
+    word-wrap: break-word;
+  }
+
+  .section-description {
+    font-size: clamp(0.95rem, 2vw, 1rem);
+    line-height: 1.7;
+    color: #4a5568;
+    margin: 0;
+  }
+
+  .section-description strong {
+    color: #2d3748;
+    font-weight: 600;
+  }
+
+  .hubs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .hub-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  .hub-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .hub-card.featured {
+    grid-row: span 2;
+  }
+
+  .hub-card.coming-soon {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e3e8f0 100%);
+    cursor: default;
+  }
+
+  .hub-image {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hub-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hub-flag {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .hub-name {
+    font-size: clamp(1.5rem, 2vw, 1.75rem);
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+  }
+
+  .hub-location {
+    font-size: 0.875rem;
+    color: #718096;
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+  }
+
+  .hub-address {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #4a5568;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .hub-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: gap 0.3s ease;
+    min-height: 44px;
+  }
+
+  .hub-card:hover .hub-link {
+    gap: 0.75rem;
+  }
+
+  .offices-badge {
+    background: #fef3f2;
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .offices-number {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .offices-label {
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    font-weight: 600;
+    color: #4a5568;
+    margin: 0;
+  }
+
+  /* ============================================
+   INVESTORS SECTION
+   ============================================ */
+  .investors {
+    padding: 6rem 2rem;
+    background: #f8f8f8;
+  }
+
+  .investors-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .investors-text {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .investors-text h2 {
+    font-size: clamp(1.75rem, 4vw, 3.25rem);
+    font-weight: 600;
+    color: #1c1c1c;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+
+  .investors-text p {
+    color: #1c1c1c;
+    line-height: 1.6;
+    font-size: clamp(0.95rem, 2vw, 1rem);
+  }
+
+  .investors-logos {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    min-width: 300px;
+  }
+
+  .investor-card {
+    background: #fff;
+    border: 1px solid #f5eeee;
+    border-radius: 15px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 45px rgba(130, 130, 130, 0.07);
+    transition: all 0.3s ease;
+    min-height: 100px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  .investor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(130, 130, 130, 0.15);
+  }
+
+  .investor-card img {
+    max-width: 100%;
+    max-height: 60px;
+    object-fit: contain;
+  }
+
+  /* ============================================
+   FORMULA SECTION
+   ============================================ */
+  .formula {
+    padding: 6rem 2rem;
+    background: #fff;
+  }
+
+  .formula-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .formula-header h2 {
+    font-size: clamp(1.75rem, 4vw, 3.25rem);
+    font-weight: 600;
+    color: #1c1c1c;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+  }
+
+  .formula-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .formula-badge {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 153, 255, 0.1),
+      rgba(5, 97, 226, 0.1)
+    );
+    padding: 0.5rem 2rem;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .sharmic-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .accordion {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #f9f9f9;
+    border-radius: 36px;
+    padding: 4rem 3rem;
+  }
+
+  .accordion-item {
+    border-bottom: 2px solid #e7e7e7;
+    padding: 2rem 0;
+  }
+
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    min-height: 44px;
+  }
+
+  .accordion-header:hover {
+    opacity: 0.8;
+  }
+
+  .accordion-title {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 600;
+    color: #1c1c1c;
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .accordion-number {
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 700;
+    min-width: 50px;
+    color: #0099ff;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    flex-shrink: 0;
+  }
+
+  .accordion-icon {
+    width: 40px;
+    height: 40px;
+    background: #e8e8e8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .accordion-item.active .accordion-icon {
+    transform: rotate(45deg);
+    background: #0561e2;
+  }
+
+  .accordion-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+  }
+
+  .accordion-item.active .accordion-content {
+    max-height: 300px;
+    padding-top: 1.5rem;
+    padding-left: 4rem;
+  }
+
+  .accordion-content p {
+    color: #535353;
+    line-height: 1.6;
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+  }
+
+  /* ============================================
+   CTA SECTION
+   ============================================ */
+  .cta-section {
+    padding: 6rem 2rem;
+    background: #121316;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 150px;
+    background: radial-gradient(
+      ellipse,
+      rgba(64, 130, 222, 0.4) 0%,
+      transparent 70%
+    );
+    filter: blur(80px);
+  }
+
+  .cta-section h2 {
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    line-height: 1.3;
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    word-wrap: break-word;
+    padding: 0 1rem;
+  }
+
+  /* ============================================
+   SCROLL REVEAL ANIMATION
+   ============================================ */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+  }
+
+  .scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ============================================
+   TABLET RESPONSIVE (1024px and below)
+   ============================================ */
+  @media (max-width: 1024px) {
+    .hero {
+      padding: 8rem 2rem 5rem;
+    }
+
+    .global-hubs,
+    .investors,
+    .formula {
+      padding: 5rem 2rem;
+    }
+
+    .section-header {
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .accordion {
+      padding: 3rem 2rem;
+    }
+  }
+
+  /* ============================================
+   MOBILE RESPONSIVE (768px and below)
+   ============================================ */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 7rem 1.5rem 4rem;
+      min-height: 90vh;
+      min-height: 90svh;
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 8vw, 2.25rem);
+      margin-bottom: 1.25rem;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.4rem 1.2rem;
+      letter-spacing: 1.2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      padding: 0 0.5rem;
+    }
+
+    .cta-button {
+      padding: 0.9rem 1.75rem;
+      font-size: 0.95rem;
+      width: auto;
+      max-width: 100%;
+    }
+
+    .stats {
+      padding: 3rem 1.5rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .stat-card {
+      padding: 2rem 1rem;
+    }
+
+    .partners {
+      padding: 2.5rem 1.5rem;
+    }
+
+    .partners-grid {
+      gap: 2rem;
+    }
+
+    .partner-logo {
+      height: 32px;
+    }
+
+    .global-hubs {
+      padding: 4rem 1.5rem;
+    }
+
+    .section-header {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hubs-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .hub-card {
+      padding: 1.5rem;
+    }
+
+    .hub-card.featured {
+      grid-row: span 1;
+    }
+
+    .hub-image {
+      height: 180px;
+    }
+
+    .hub-flag {
+      font-size: 2.5rem;
+    }
+
+    .investors {
+      padding: 4rem 1.5rem;
+    }
+
+    .investors-content {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .investors-logos {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .investor-card {
+      padding: 1.5rem;
+      min-height: 80px;
+    }
+
+    .formula {
+      padding: 4rem 1.5rem;
+    }
+
+    .formula-title {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .formula-badge {
+      padding: 0.5rem 1.5rem;
+    }
+
+    .sharmic-icon {
+      width: 50px;
+      height: 50px;
+      font-size: 1.25rem;
+    }
+
+    .accordion {
+      padding: 2rem 1.25rem;
+      border-radius: 20px;
+    }
+
+    .accordion-item {
+      padding: 1.25rem 0;
+    }
+
+    .accordion-title {
+      gap: 1rem;
+    }
+
+    .accordion-number {
+      min-width: 40px;
+    }
+
+    .accordion-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .accordion-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 400px;
+      padding-left: 2.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .cta-section {
+      padding: 5rem 1.5rem;
+    }
+
+    .cta-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .particle-blue {
+      filter: blur(30px);
+    }
+
+    .particle-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1.25rem;
+    }
+  }
+
+  /* ============================================
+   SMALL MOBILE (480px and below)
+   ============================================ */
+  @media (max-width: 480px) {
+    .hero {
+      padding: 6rem 1rem 3rem;
+      min-height: 85vh;
+      min-height: 85svh;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .cta-button {
+      padding: 0.85rem 1.5rem;
+      font-size: 0.9rem;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      padding: 0.35rem 1rem;
+    }
+
+    .stats {
+      padding: 2.5rem 1rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      padding: 1.75rem 1rem;
+    }
+
+    .partners {
+      padding: 2rem 1rem;
+    }
+
+    .partners-grid {
+      gap: 1.5rem;
+    }
+
+    .partner-logo {
+      height: 28px;
+    }
+
+    .global-hubs {
+      padding: 3rem 1rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .hubs-grid {
+      gap: 1rem;
+    }
+
+    .hub-image {
+      height: 160px;
+    }
+
+    .investors {
+      padding: 3rem 1rem;
+    }
+
+    .investors-logos {
+      grid-template-columns: 1fr;
+    }
+
+    .investor-card {
+      padding: 1.25rem;
+    }
+
+    .formula {
+      padding: 3rem 1rem;
+    }
+
+    .accordion {
+      padding: 1.5rem 1rem;
+    }
+
+    .accordion-title {
+      font-size: 0.85rem;
+      gap: 0.75rem;
+    }
+
+    .accordion-number {
+      min-width: 35px;
+    }
+
+    .accordion-item.active .accordion-content {
+      padding-left: 2rem;
+    }
+
+    .formula-badge {
+      flex-direction: row;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .cta-section {
+      padding: 4rem 1rem;
+    }
+
+    .cta-section h2 {
+      font-size: 1.75rem;
+    }
+
+    .particle-icon:nth-child(n + 3) {
+      display: none;
+    }
+  }
+
+  /* ============================================
+   EXTRA SMALL DEVICES (360px and below)
+   ============================================ */
+  @media (max-width: 360px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .hero {
+      padding: 5.5rem 0.75rem 2.5rem;
+    }
+
+    .badge {
+      font-size: 0.6rem;
+      padding: 0.3rem 0.875rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem 0.75rem;
+    }
+
+    .accordion-title {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* ============================================
+   LANDSCAPE ORIENTATION (Mobile)
+   ============================================ */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+      min-height: auto;
+      padding: 6rem 2rem 3rem;
+    }
+
+    .stats {
+      padding: 2rem 1.5rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* ============================================
+   WEBKIT SPECIFIC FIXES
+   ============================================ */
+  @supports (-webkit-touch-callout: none) {
+    .hero {
+      min-height: -webkit-fill-available;
+    }
+
+    .cta-button {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .gradient-text,
+    .stat-number,
+    .accordion-number {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+  }
+
+  .hub-card,
+  .stat-card,
+  .investor-card {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  @supports (padding: max(0px)) {
+    .hero {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+
+    .hero-content {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .cta-button:active {
+      transform: scale(0.98);
+    }
+
+    .stat-card:hover,
+    .hub-card:hover,
+    .investor-card:hover {
+      transform: none;
+    }
+
+    .stat-card:active,
+    .hub-card:active {
+      transform: scale(0.98);
+    }
+
+    .partner-logo:hover {
+      filter: grayscale(100%);
+      transform: none;
+    }
+
+    .accordion-header:hover {
+      opacity: 1;
+    }
+  }
+  .investor-name {
+    font-weight: 650;
+    font-size: 0.875rem;
+    color: #1c1c1c;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .investor-name {
+    font-size: 1.7rem;
+  }
+  .investor-card {
+    padding: 1.25rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Hero Section - Dynamic & Controllable -->
+<section
+  class="hero {% if hero %}hero-title-{{ hero.title_style }}{% else %}hero-title-gradient{% endif %}"
+  style="min-height: {{ hero.min_height if hero else '100vh' }}; 
+                text-align: {{ hero.text_alignment if hero else 'center' }};"
+>
+  <!-- Background Layer - Dynamic -->
+  {% if hero %} {% if hero.background_type == 'image' and
+  hero.background_image_path %}
+  <div
+    class="hero-background-image"
+    style="background-image: url('{{ url_for('static', filename=hero.background_image_path) }}'); 
+                  opacity: {{ (hero.background_overlay_opacity / 100) if hero.background_overlay_opacity else 0.8 }};"
+  ></div>
+
+  {% elif hero.background_type == 'video' and hero.background_video_url %}
+  <div class="hero-background-video">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      style="opacity: {{ (hero.background_overlay_opacity / 100) if hero.background_overlay_opacity else 0.8 }};"
+    >
+      <source src="{{ hero.background_video_url }}" type="video/mp4" />
+    </video>
+  </div>
+
+  {% elif hero.background_type == 'gradient' %}
+  <div
+    class="hero-background-gradient"
+    style="opacity: {{ (hero.background_overlay_opacity / 100) if hero.background_overlay_opacity else 0.8 }};"
+  ></div>
+
+  {% else %}
+  <!-- Default: Particles -->
+  <div class="hero-background" id="particleCanvas"></div>
+  {% endif %} {% else %}
+  <!-- Fallback: Particles -->
+  <div class="hero-background" id="particleCanvas"></div>
+  {% endif %}
+
+  <!-- Content Layer -->
+  <div class="hero-content">
+    {% if hero %}
+    <!-- Badge with Dynamic Icon -->
+    <div class="badge">
+      {% if hero.badge_icon_type == 'emoji' and hero.badge_icon_content %}
+      <span class="badge-icon-emoji">{{ hero.badge_icon_content }}</span>
+      {% elif hero.badge_icon_type == 'image' and hero.badge_icon_content %}
+      <img
+        src="{{ url_for('static', filename=hero.badge_icon_content) }}"
+        alt="Badge icon"
+        class="badge-icon-image"
+      />
+      {% elif hero.badge_icon_type == 'svg' and hero.badge_icon_content %}
+      <span class="badge-icon-svg">{{ hero.badge_icon_content|safe }}</span>
+      {% endif %}
+      <span>{{ hero.badge_text }}</span>
+    </div>
+
+    <!-- Dynamic Title -->
+    <h1>
+      {{ hero.title_line1 }}<br />
+      {% if hero.title_style == 'gradient' %}
+      <span class="gradient-text">{{ hero.title_line2 }}</span>
+      {% elif hero.title_style == 'solid' %}
+      <span class="title-highlight">{{ hero.title_line2 }}</span>
+      {% elif hero.title_style == 'outline' %}
+      <span class="title-highlight">{{ hero.title_line2 }}</span>
+      {% else %}
+      <span class="gradient-text">{{ hero.title_line2 }}</span>
+      {% endif %}
+    </h1>
+
+    <!-- Subtitle -->
+    <p>{{ hero.subtitle }}</p>
+
+    <!-- Dynamic CTA Button -->
+    <a href="{{ hero.cta_link }}" class="cta-button cta-{{ hero.cta_style }}">
+      {{ hero.cta_text }}
+      <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+        <path
+          d="M1 1L5 5L1 9"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+    </a>
+    {% else %}
+    <!-- Fallback Content -->
+    <div class="badge">ABOUT US</div>
+    <h1>
+      We Engineer Payments<br />
+      <span class="gradient-text">for Global Scale</span>
+    </h1>
+    <p>Trusted by leading enterprises worldwide.</p>
+    <a href="{{ url_for('contact') }}" class="cta-button cta-solid">
+      Schedule a call
+      <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+        <path
+          d="M1 1L5 5L1 9"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+    </a>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Stats Section -->
+{% if stats %}
+<section class="stats scroll-reveal">
+  <div class="stats-grid">
+    {% for stat in stats %}
+    <div class="stat-card">
+      <div class="stat-number">{{ stat.number }}</div>
+      <div class="stat-label">
+        {{ stat.label_line1 }} {% if stat.label_line2 %}<br />{{
+        stat.label_line2 }}{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Partners Section -->
+{% if partners %}
+<section class="partners scroll-reveal">
+  <p class="partners-text">
+    <span>Trusted</span> by the fastest growing companies
+  </p>
+  <div class="partners-grid">
+    {% for partner in partners %}
+    <img
+      src="{{ url_for('static', filename=partner.logo_path) }}"
+      alt="{{ partner.name }}"
+      class="partner-logo"
+    />
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Global Hubs Section -->
+{% if hubs %}
+<section class="global-hubs scroll-reveal">
+  <div class="hubs-container">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">
+          <span class="gradient-text">Global</span><br />
+          Innovation Hubs
+        </h2>
+      </div>
+      <div>
+        <p class="section-description">
+          We're a <strong>Global Payments</strong> company with offices across
+          multiple continents.
+        </p>
+      </div>
+    </div>
+
+    <div class="hubs-grid">
+      {% for hub in hubs %} {% if hub.is_featured %}
+      <div class="hub-card featured">
+        <img
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop"
+          alt="Team collaboration"
+          class="hub-image"
+        />
+        <div class="offices-badge">
+          <div class="offices-number">{{ hubs|length }}</div>
+          <div class="offices-label">Offices Worldwide</div>
+        </div>
+      </div>
+      {% elif hub.is_coming_soon %}
+      <div class="hub-card coming-soon">
+        <div class="hub-header">
+          <div class="hub-flag">{{ hub.flag }}</div>
+        </div>
+        <h3 class="hub-name">{{ hub.country }}</h3>
+        <p style="font-size: 14px; color: #4a5568; margin: 0; font-weight: 600">
+          Coming Soon
+        </p>
+      </div>
+      {% else %}
+      <div class="hub-card">
+        <div class="hub-header">
+          <div class="hub-flag">{{ hub.flag }}</div>
+        </div>
+        <h3 class="hub-name">{{ hub.country }}</h3>
+        <p class="hub-location">{{ hub.city }}</p>
+        <p class="hub-address">{{ hub.address }}</p>
+        {% if hub.maps_link and hub.maps_link != '#' %}
+        <a
+          href="{{ hub.maps_link }}"
+          class="hub-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Get Direction
+          <span>→</span>
+        </a>
+        {% else %}
+        <div class="hub-link disabled"></div>
+        {% endif %}
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Investors Section -->
+<!-- Investors Section -->
+{% if investors %}
+<section class="investors scroll-reveal">
+  <div class="investors-content">
+    <div class="investors-text">
+      <h2>
+        <span class="gradient-text">Build for the world,</span><br />
+        backed by the best
+      </h2>
+      <p>
+        SHARMIC is backed by leading global investors who believe in our mission
+        to transform payments worldwide.
+      </p>
+    </div>
+    <div class="investors-logos">
+      {% for investor in investors %}
+      <div class="investor-card">
+        {% if investor.logo_path %}
+        <img
+          src="{{ url_for('static', filename=investor.logo_path) }}"
+          alt="{{ investor.name }}"
+          class="investor-logo"
+        />
+        {% endif %}
+        <span class="investor-name">{{ investor.name }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Formula Section -->
+{% if formula_items %}
+<section class="formula scroll-reveal">
+  <div class="formula-header">
+    <h2>How do we do it?</h2>
+    <div class="formula-title">
+      <div class="formula-badge">
+        <div class="sharmic-icon">S</div>
+        <span class="gradient-text" style="font-size: 2rem; font-weight: 600"
+          >The SHARMIC</span
+        >
+      </div>
+      <span style="font-size: 2rem; font-weight: 600; color: #1c1c1c"
+        >formula</span
+      >
+    </div>
+  </div>
+
+  <div class="accordion">
+    {% for item in formula_items %}
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <div class="accordion-title">
+          <span class="accordion-number">{{ item.step_number }}</span>
+          <span>{{ item.title }}</span>
+        </div>
+        <div class="accordion-icon">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path
+              d="M8 3V13M3 8H13"
+              stroke="#111"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <p>{{ item.description }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="cta-section scroll-reveal">
+  <h2>
+    <span class="gradient-text">Ready to transform</span><br />
+    your payment experience?
+  </h2>
+  <a href="{{ url_for('contact') }}" class="cta-button cta-solid">
+    Get Started Today
+    <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+      <path
+        d="M1 1L5 5L1 9"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </svg>
+  </a>
+</section>
+{% endblock %} {% block extra_js %}
+<script>
+  // Particle Animation (only runs for particles background)
+  function createParticles() {
+    const canvas = document.getElementById("particleCanvas");
+    if (!canvas) return;
+
+    const particles = [
+      { size: 200, x: 15, y: 20, class: "particle-blue" },
+      { size: 150, x: 75, y: 30, class: "particle-blue" },
+      { size: 120, x: 85, y: 65, class: "particle-blue" },
+    ];
+
+    particles.forEach((p, i) => {
+      const particle = document.createElement("div");
+      particle.className = `particle ${p.class}`;
+      particle.style.width = p.size + "px";
+      particle.style.height = p.size + "px";
+      particle.style.left = p.x + "%";
+      particle.style.top = p.y + "%";
+      particle.style.animationDelay = i * 3 + "s";
+      canvas.appendChild(particle);
+    });
+
+    const icons = [
+      { symbol: "₹", x: 75, y: 25 },
+      { symbol: "#", x: 65, y: 45 },
+      { symbol: "€", x: 80, y: 55 },
+      { symbol: "£", x: 85, y: 35 },
+      { symbol: "🛒", x: 70, y: 60 },
+      { symbol: "🔒", x: 90, y: 48 },
+    ];
+
+    icons.forEach((icon, i) => {
+      const iconEl = document.createElement("div");
+      iconEl.className = "particle particle-icon";
+      iconEl.textContent = icon.symbol;
+      iconEl.style.left = icon.x + "%";
+      iconEl.style.top = icon.y + "%";
+      iconEl.style.animationDelay = i * 2.5 + "s";
+      canvas.appendChild(iconEl);
+    });
+
+    for (let i = 0; i < 4; i++) {
+      const ring = document.createElement("div");
+      ring.className = "particle particle-ring";
+      ring.style.width = 60 + i * 40 + "px";
+      ring.style.height = 60 + i * 40 + "px";
+      ring.style.left = 62 + i * 4 + "%";
+      ring.style.top = 42 - i * 3 + "%";
+      ring.style.animationDelay = i * 0.7 + "s";
+      canvas.appendChild(ring);
+    }
+
+    for (let i = 0; i < 30; i++) {
+      const dot = document.createElement("div");
+      dot.className = "particle particle-dot";
+      dot.style.left = Math.random() * 100 + "%";
+      dot.style.top = Math.random() * 100 + "%";
+      dot.style.animationDelay = Math.random() * 4 + "s";
+      canvas.appendChild(dot);
+    }
+  }
+
+  // Accordion functionality
+  document.querySelectorAll(".accordion-header").forEach((header) => {
+    header.addEventListener("click", () => {
+      const item = header.parentElement;
+      const isActive = item.classList.contains("active");
+
+      document.querySelectorAll(".accordion-item").forEach((i) => {
+        i.classList.remove("active");
+      });
+
+      if (!isActive) {
+        item.classList.add("active");
+      }
+    });
+  });
+
+  // Scroll Reveal Animation
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -80px 0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll(".scroll-reveal").forEach((el) => {
+    observer.observe(el);
+  });
+
+  // Initialize particles on page load
+  document.addEventListener("DOMContentLoaded", createParticles);
+</script>
+{% endblock %}

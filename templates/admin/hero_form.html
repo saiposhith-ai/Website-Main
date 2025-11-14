@@ -1,0 +1,1215 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Edit Hero Section - {{ hero.page|title }}{% endblock %}
+
+{% block page_title %}
+<div class="page-header">
+  <div>
+    <h2><i class="fas fa-image"></i> Edit Hero Section</h2>
+    <p>Customize {{ hero.page|title }} page hero banner</p>
+  </div>
+  <span class="page-badge">{{ hero.page|title }} Page</span>
+</div>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+  /* ============================================
+     BASE LAYOUT
+     ============================================ */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .page-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.75rem;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .page-header h2 i {
+    color: #0099ff;
+  }
+
+  .page-header p {
+    color: #b1b0b6;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .page-badge {
+    padding: 0.5rem 1.25rem;
+    background: rgba(0, 153, 255, 0.15);
+    border: 1px solid rgba(0, 153, 255, 0.3);
+    border-radius: 50px;
+    color: #0099ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .form-section {
+    background: linear-gradient(158deg, rgba(42, 43, 46, 0.95) 27%, rgba(27, 28, 31, 0.95) 119%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .form-section:hover {
+    border-color: rgba(0, 153, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 153, 255, 0.1);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .section-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 153, 255, 0.3);
+  }
+
+  .section-header-text h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .section-header-text p {
+    font-size: 0.85rem;
+    color: #777e90;
+    margin: 0;
+  }
+
+  .form-group {
+    margin-bottom: 1.75rem;
+  }
+
+  .form-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e1e1e3;
+    margin-bottom: 0.75rem;
+  }
+
+  .form-group label i {
+    color: #0099ff;
+    font-size: 0.85rem;
+  }
+
+  .form-group label .required {
+    color: #ef4444;
+    margin-left: 0.25rem;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="url"],
+  .form-group input[type="file"],
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #0099ff;
+    box-shadow: 0 0 0 4px rgba(0, 153, 255, 0.1);
+  }
+
+  .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  .form-group input[type="file"] {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+  }
+
+  .form-group input[type="file"]::file-selector-button {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .form-group input[type="file"]::file-selector-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 153, 255, 0.4);
+  }
+
+  .form-help {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #777e90;
+  }
+
+  .form-help i {
+    color: #0099ff;
+    font-size: 0.75rem;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .option-card {
+    position: relative;
+  }
+
+  .option-card input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .option-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-height: 100px;
+  }
+
+  .option-label i {
+    font-size: 1.75rem;
+    color: #b1b0b6;
+    transition: all 0.3s ease;
+  }
+
+  .option-label span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #b1b0b6;
+    transition: all 0.3s ease;
+  }
+
+  .option-card input:checked + .option-label {
+    background: rgba(0, 153, 255, 0.15);
+    border-color: #0099ff;
+    box-shadow: 0 4px 16px rgba(0, 153, 255, 0.2);
+  }
+
+  .option-card input:checked + .option-label i,
+  .option-card input:checked + .option-label span {
+    color: #0099ff;
+  }
+
+  .option-label:hover {
+    border-color: rgba(0, 153, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .conditional-field {
+    display: none;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 153, 255, 0.2);
+  }
+
+  .conditional-field.active {
+    display: block;
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .preview-box {
+    padding: 1.5rem;
+    background: rgba(0, 153, 255, 0.05);
+    border: 1px solid rgba(0, 153, 255, 0.2);
+    border-radius: 12px;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .preview-box img {
+    max-width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .preview-box p {
+    margin: 0.75rem 0 0 0;
+    color: #777e90;
+    font-size: 0.8rem;
+  }
+
+  .preview-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    background: rgba(0, 153, 255, 0.15);
+    border: 1px solid rgba(0, 153, 255, 0.3);
+    border-radius: 20px;
+    color: #0099ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .slider-container {
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .slider-label {
+    font-size: 0.85rem;
+    color: #b1b0b6;
+    font-weight: 500;
+  }
+
+  .slider-value {
+    font-size: 1rem;
+    color: #0099ff;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    background: rgba(0, 153, 255, 0.15);
+    border-radius: 8px;
+  }
+
+  .slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 153, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px rgba(0, 153, 255, 0.7);
+  }
+
+  .slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 153, 255, 0.5);
+  }
+
+  .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .checkbox-wrapper:hover {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 153, 255, 0.2);
+  }
+
+  .checkbox-wrapper input[type="checkbox"] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+  }
+
+  .checkbox-toggle {
+    width: 52px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .checkbox-toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .checkbox-wrapper input[type="checkbox"]:checked ~ .checkbox-toggle {
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+  }
+
+  .checkbox-wrapper input[type="checkbox"]:checked ~ .checkbox-toggle::after {
+    left: 27px;
+  }
+
+  .checkbox-label {
+    font-size: 0.95rem;
+    color: #e1e1e3;
+    font-weight: 500;
+    margin: 0;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .form-actions {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(158deg, rgba(42, 43, 46, 0.95) 27%, rgba(27, 28, 31, 0.95) 119%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    position: sticky;
+    bottom: 1rem;
+    z-index: 10;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn i {
+    font-size: 1.1rem;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #0099ff, #0561e2);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 153, 255, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 153, 255, 0.5);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    color: #b1b0b6;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+
+  .info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(0, 153, 255, 0.1);
+    border: 1px solid rgba(0, 153, 255, 0.2);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-banner i {
+    color: #0099ff;
+    font-size: 1.25rem;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  .info-banner-content p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #b1b0b6;
+    line-height: 1.5;
+  }
+
+  .info-banner-content strong {
+    color: #0099ff;
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .form-section {
+      padding: 1.5rem;
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .option-label {
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 1.25rem;
+      min-height: auto;
+    }
+
+    .form-actions {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+      position: static;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .page-header h2 {
+      font-size: 1.5rem;
+    }
+
+    .form-section {
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 0.875rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      padding: 0.875rem 1.5rem;
+      font-size: 0.95rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <form method="POST" enctype="multipart/form-data" id="heroForm">
+    
+    <div class="info-banner">
+      <i class="fas fa-info-circle"></i>
+      <div class="info-banner-content">
+        <p>Customize every aspect of your hero section. Changes are <strong>saved instantly</strong> and will appear on the {{ hero.page }} page.</p>
+      </div>
+    </div>
+
+    <!-- Badge Section -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-tag"></i>
+        </div>
+        <div class="section-header-text">
+          <h3>Badge Settings</h3>
+          <p>Small label above the main title</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-font"></i>
+          Badge Text
+          <span class="required">*</span>
+        </label>
+        <input type="text" name="badge_text" value="{{ hero.badge_text }}" required maxlength="100" placeholder="e.g., WELCOME, ABOUT US">
+        <span class="form-help">
+          <i class="fas fa-lightbulb"></i>
+          Appears as a small pill above the title
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-icons"></i>
+          Badge Icon
+        </label>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" name="badge_icon_type" value="none" id="icon_none" 
+                   {% if hero.badge_icon_type == 'none' %}checked{% endif %}>
+            <label for="icon_none" class="option-label">
+              <i class="fas fa-ban"></i>
+              <span>No Icon</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="badge_icon_type" value="emoji" id="icon_emoji"
+                   {% if hero.badge_icon_type == 'emoji' %}checked{% endif %}>
+            <label for="icon_emoji" class="option-label">
+              <i class="fas fa-smile"></i>
+              <span>Emoji</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="badge_icon_type" value="image" id="icon_image"
+                   {% if hero.badge_icon_type == 'image' %}checked{% endif %}>
+            <label for="icon_image" class="option-label">
+              <i class="fas fa-image"></i>
+              <span>Image</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="badge_icon_type" value="svg" id="icon_svg"
+                   {% if hero.badge_icon_type == 'svg' %}checked{% endif %}>
+            <label for="icon_svg" class="option-label">
+              <i class="fas fa-code"></i>
+              <span>SVG Code</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="conditional-field" id="emoji_field" {% if hero.badge_icon_type == 'emoji' %}style="display:block"{% endif %}>
+          <label>
+            <i class="fas fa-smile-beam"></i>
+            Emoji Character
+          </label>
+          <input type="text" name="badge_icon_emoji" value="{{ hero.badge_icon_content if hero.badge_icon_type == 'emoji' else '⚡' }}" maxlength="2" placeholder="⚡">
+          <span class="form-help">
+            <i class="fas fa-lightbulb"></i>
+            Enter a single emoji (e.g., ⚡ 🚀 ✨)
+          </span>
+          {% if hero.badge_icon_type == 'emoji' and hero.badge_icon_content %}
+          <div class="preview-box">
+            <span class="preview-badge">{{ hero.badge_icon_content }} {{ hero.badge_text }}</span>
+            <p>Preview</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="conditional-field" id="image_field" {% if hero.badge_icon_type == 'image' %}style="display:block"{% endif %}>
+          <label>
+            <i class="fas fa-file-image"></i>
+            Badge Icon Image
+          </label>
+          <input type="file" name="badge_icon_image" accept="image/*">
+          <span class="form-help">
+            <i class="fas fa-lightbulb"></i>
+            Recommended: 24x24px PNG or SVG
+          </span>
+          {% if hero.badge_icon_type == 'image' and hero.badge_icon_content %}
+          <div class="preview-box">
+            <img src="{{ url_for('static', filename=hero.badge_icon_content) }}" alt="Current badge icon">
+            <p>Current Icon</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="conditional-field" id="svg_field" {% if hero.badge_icon_type == 'svg' %}style="display:block"{% endif %}>
+          <label>
+            <i class="fas fa-code"></i>
+            SVG Code
+          </label>
+          <textarea name="badge_icon_svg" rows="4" placeholder='<svg width="20" height="20">...</svg>'>{{ hero.badge_icon_content if hero.badge_icon_type == 'svg' else '' }}</textarea>
+          <span class="form-help">
+            <i class="fas fa-lightbulb"></i>
+            Paste complete SVG markup (20x20 recommended)
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title Section -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-heading"></i>
+        </div>
+        <div class="section-header-text">
+          <h3>Title Settings</h3>
+          <p>Main heading configuration</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-text-height"></i>
+          Title Line 1
+          <span class="required">*</span>
+        </label>
+        <input type="text" name="title_line1" value="{{ hero.title_line1 }}" required maxlength="200" placeholder="e.g., We Engineer Payments">
+        <span class="form-help">
+          <i class="fas fa-lightbulb"></i>
+          First line of the main heading
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-highlighter"></i>
+          Title Line 2 (Highlighted)
+          <span class="required">*</span>
+        </label>
+        <input type="text" name="title_line2" value="{{ hero.title_line2 }}" required maxlength="200" placeholder="e.g., for Global Scale">
+        <span class="form-help">
+          <i class="fas fa-lightbulb"></i>
+          Second line with special styling
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-palette"></i>
+          Title Style
+        </label>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" name="title_style" value="gradient" id="style_gradient" 
+                   {% if hero.title_style == 'gradient' %}checked{% endif %}>
+            <label for="style_gradient" class="option-label">
+              <i class="fas fa-fill-drip"></i>
+              <span>Gradient</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="title_style" value="solid" id="style_solid"
+                   {% if hero.title_style == 'solid' %}checked{% endif %}>
+            <label for="style_solid" class="option-label">
+              <i class="fas fa-paint-brush"></i>
+              <span>Solid Color</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="title_style" value="outline" id="style_outline"
+                   {% if hero.title_style == 'outline' %}checked{% endif %}>
+            <label for="style_outline" class="option-label">
+              <i class="far fa-circle"></i>
+              <span>Outline</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subtitle & CTA Section -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-align-center"></i>
+        </div>
+        <div class="section-header-text">
+          <h3>Subtitle & Call-to-Action</h3>
+          <p>Supporting text and action button</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-paragraph"></i>
+          Subtitle
+        </label>
+        <textarea name="subtitle" rows="3" placeholder="e.g., Trusted by leading enterprises worldwide...">{{ hero.subtitle }}</textarea>
+        <span class="form-help">
+          <i class="fas fa-lightbulb"></i>
+          Supporting text below the title (optional)
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-mouse-pointer"></i>
+          CTA Button Text
+          <span class="required">*</span>
+        </label>
+        <input type="text" name="cta_text" value="{{ hero.cta_text }}" required maxlength="100" placeholder="e.g., Get Started">
+        <span class="form-help">
+          <i class="fas fa-lightbulb"></i>
+          Text displayed on the action button
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-link"></i>
+          CTA Button Link
+          <span class="required">*</span>
+        </label>
+        <input type="text" name="cta_link" value="{{ hero.cta_link }}" required maxlength="200" placeholder="/contact">
+        <span class="form-help">
+          <i class="fas fa-lightbulb"></i>
+          Where the button leads (e.g., /contact, /signup)
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-paint-roller"></i>
+          CTA Button Style
+        </label>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" name="cta_style" value="solid" id="cta_solid" 
+                   {% if hero.cta_style == 'solid' %}checked{% endif %}>
+            <label for="cta_solid" class="option-label">
+              <i class="fas fa-square"></i>
+              <span>Solid</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="cta_style" value="outline" id="cta_outline"
+                   {% if hero.cta_style == 'outline' %}checked{% endif %}>
+            <label for="cta_outline" class="option-label">
+              <i class="far fa-square"></i>
+              <span>Outline</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="cta_style" value="ghost" id="cta_ghost"
+                   {% if hero.cta_style == 'ghost' %}checked{% endif %}>
+            <label for="cta_ghost" class="option-label">
+              <i class="fas fa-ghost"></i>
+              <span>Ghost</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Section -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-image"></i>
+        </div>
+        <div class="section-header-text">
+          <h3>Background Settings</h3>
+          <p>Hero section background configuration</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-layer-group"></i>
+          Background Type
+        </label>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" name="background_type" value="particles" id="bg_particles" 
+                   {% if hero.background_type == 'particles' %}checked{% endif %}>
+            <label for="bg_particles" class="option-label">
+              <i class="fas fa-sparkles"></i>
+              <span>Particles</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="background_type" value="gradient" id="bg_gradient"
+                   {% if hero.background_type == 'gradient' %}checked{% endif %}>
+            <label for="bg_gradient" class="option-label">
+              <i class="fas fa-fill-drip"></i>
+              <span>Gradient</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="background_type" value="image" id="bg_image"
+                   {% if hero.background_type == 'image' %}checked{% endif %}>
+            <label for="bg_image" class="option-label">
+              <i class="fas fa-image"></i>
+              <span>Image</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="background_type" value="video" id="bg_video"
+                   {% if hero.background_type == 'video' %}checked{% endif %}>
+            <label for="bg_video" class="option-label">
+              <i class="fas fa-video"></i>
+              <span>Video</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="conditional-field" id="bg_image_field" {% if hero.background_type == 'image' %}style="display:block"{% endif %}>
+          <label>
+            <i class="fas fa-file-image"></i>
+            Background Image
+          </label>
+          <input type="file" name="background_image" accept="image/*">
+          <span class="form-help">
+            <i class="fas fa-lightbulb"></i>
+            Recommended: 1920x1080px or larger for best quality
+          </span>
+          {% if hero.background_type == 'image' and hero.background_image_path %}
+          <div class="preview-box">
+            <img src="{{ url_for('static', filename=hero.background_image_path) }}" alt="Current background" style="max-width: 100%; max-height: 200px;">
+            <p>Current Background Image</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="conditional-field" id="bg_video_field" {% if hero.background_type == 'video' %}style="display:block"{% endif %}>
+          <label>
+            <i class="fas fa-film"></i>
+            Background Video URL
+          </label>
+          <input type="url" name="background_video_url" value="{{ hero.background_video_url or '' }}" placeholder="https://example.com/video.mp4">
+          <span class="form-help">
+            <i class="fas fa-lightbulb"></i>
+            Direct link to MP4 video file (will autoplay and loop)
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-adjust"></i>
+          Background Overlay Opacity
+        </label>
+        <div class="slider-container">
+          <div class="slider-header">
+            <span class="slider-label">Transparency Level</span>
+            <span class="slider-value" id="opacityValue">{{ hero.background_overlay_opacity or 80 }}%</span>
+          </div>
+          <input type="range" name="background_overlay_opacity" 
+                 class="slider" min="0" max="100" 
+                 value="{{ hero.background_overlay_opacity or 80 }}" 
+                 id="opacitySlider">
+        </div>
+        <span class="form-help">
+          <i class="fas fa-lightbulb"></i>
+          Controls background darkness (0 = fully transparent, 100 = fully opaque)
+        </span>
+      </div>
+    </div>
+
+    <!-- Layout Section -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-th-large"></i>
+        </div>
+        <div class="section-header-text">
+          <h3>Layout Settings</h3>
+          <p>Position and alignment options</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-align-justify"></i>
+          Text Alignment
+        </label>
+        <div class="options-grid">
+          <div class="option-card">
+            <input type="radio" name="text_alignment" value="left" id="align_left"
+                   {% if hero.text_alignment == 'left' %}checked{% endif %}>
+            <label for="align_left" class="option-label">
+              <i class="fas fa-align-left"></i>
+              <span>Left</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="text_alignment" value="center" id="align_center"
+                   {% if hero.text_alignment == 'center' %}checked{% endif %}>
+            <label for="align_center" class="option-label">
+              <i class="fas fa-align-center"></i>
+              <span>Center</span>
+            </label>
+          </div>
+          <div class="option-card">
+            <input type="radio" name="text_alignment" value="right" id="align_right"
+                   {% if hero.text_alignment == 'right' %}checked{% endif %}>
+            <label for="align_right" class="option-label">
+              <i class="fas fa-align-right"></i>
+              <span>Right</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-arrows-alt-v"></i>
+          Section Height
+        </label>
+        <select name="min_height">
+          <option value="100vh" {% if hero.min_height == '100vh' %}selected{% endif %}>Full Screen (100vh)</option>
+          <option value="90vh" {% if hero.min_height == '90vh' %}selected{% endif %}>90% Screen (90vh)</option>
+          <option value="80vh" {% if hero.min_height == '80vh' %}selected{% endif %}>80% Screen (80vh)</option>
+          <option value="70vh" {% if hero.min_height == '70vh' %}selected{% endif %}>70% Screen (70vh)</option>
+          <option value="auto" {% if hero.min_height == 'auto' %}selected{% endif %}>Auto (Content Height)</option>
+        </select>
+        <span class="form-help">
+          <i class="fas fa-lightbulb"></i>
+          Minimum height of the hero section
+        </span>
+      </div>
+    </div>
+
+    <!-- Status Section -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-toggle-on"></i>
+        </div>
+        <div class="section-header-text">
+          <h3>Visibility Status</h3>
+          <p>Control if this hero section is active</p>
+        </div>
+      </div>
+
+      <div class="checkbox-wrapper">
+        <input type="checkbox" name="active" id="active" {% if hero.active %}checked{% endif %}>
+        <div class="checkbox-toggle"></div>
+        <label for="active" class="checkbox-label">
+          <i class="fas fa-eye"></i>
+          Hero section is active and visible on the {{ hero.page }} page
+        </label>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i>
+        Save Changes
+      </button>
+      <a href="{{ url_for('admin_hero_sections') }}" class="btn btn-secondary">
+        <i class="fas fa-times"></i>
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Toggle conditional fields based on badge icon type
+  const badgeIconInputs = document.querySelectorAll('input[name="badge_icon_type"]');
+  const conditionalFields = {
+    'emoji': document.getElementById('emoji_field'),
+    'image': document.getElementById('image_field'),
+    'svg': document.getElementById('svg_field')
+  };
+
+  badgeIconInputs.forEach(input => {
+    input.addEventListener('change', function() {
+      Object.values(conditionalFields).forEach(field => {
+        if (field) field.classList.remove('active');
+      });
+      
+      if (conditionalFields[this.value]) {
+        conditionalFields[this.value].classList.add('active');
+      }
+    });
+  });
+
+  // Toggle background fields
+  const bgTypeInputs = document.querySelectorAll('input[name="background_type"]');
+  const bgImageField = document.getElementById('bg_image_field');
+  const bgVideoField = document.getElementById('bg_video_field');
+
+  bgTypeInputs.forEach(input => {
+    input.addEventListener('change', function() {
+      bgImageField.style.display = 'none';
+      bgVideoField.style.display = 'none';
+      
+      if (this.value === 'image') {
+        bgImageField.style.display = 'block';
+      } else if (this.value === 'video') {
+        bgVideoField.style.display = 'block';
+      }
+    });
+  });
+
+  // Opacity slider
+  const opacitySlider = document.getElementById('opacitySlider');
+  const opacityValue = document.getElementById('opacityValue');
+  
+  if (opacitySlider && opacityValue) {
+    opacitySlider.addEventListener('input', function() {
+      opacityValue.textContent = this.value + '%';
+    });
+  }
+
+  // Form validation
+  const form = document.getElementById('heroForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          isValid = false;
+          field.style.borderColor = '#ef4444';
+          
+          setTimeout(() => {
+            field.style.borderColor = '';
+          }, 3000);
+        }
+      });
+
+      if (!isValid) {
+        e.preventDefault();
+        alert('Please fill in all required fields marked with *');
+        return;
+      }
+
+      // Show loading state
+      const submitBtn = form.querySelector('.btn-primary');
+      if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        submitBtn.disabled = true;
+      }
+    });
+  }
+
+  // Auto-save indication
+  let saveTimeout;
+  const inputs = form.querySelectorAll('input, textarea, select');
+  
+  inputs.forEach(input => {
+    input.addEventListener('input', function() {
+      clearTimeout(saveTimeout);
+      
+      const saveBtn = document.querySelector('.btn-primary');
+      if (saveBtn && !saveBtn.disabled) {
+        saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes *';
+        saveBtn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+        
+        saveTimeout = setTimeout(() => {
+          saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+          saveBtn.style.background = '';
+        }, 2000);
+      }
+    });
+  });
+
+  // Checkbox toggle animation
+  const checkboxWrapper = document.querySelector('.checkbox-wrapper');
+  if (checkboxWrapper) {
+    checkboxWrapper.addEventListener('click', function(e) {
+      if (e.target.tagName !== 'INPUT') {
+        const checkbox = this.querySelector('input[type="checkbox"]');
+        if (checkbox) {
+          checkbox.checked = !checkbox.checked;
+        }
+      }
+    });
+  }
+</script>
+{% endblock %}
