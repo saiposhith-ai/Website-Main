@@ -646,11 +646,22 @@ def admin_login():
         password = request.form.get('password')
         
         admin = Admin.query.filter_by(username=username).first()
-        if admin and check_password_hash(admin.password, password):
+        
+        # Fix: Explicit check with early returns for type narrowing
+        if not admin:
+            flash('Invalid credentials', 'error')
+            return render_template('admin/login.html')
+        
+        if not admin.password:
+            flash('Invalid credentials', 'error')
+            return render_template('admin/login.html')
+        
+        if check_password_hash(admin.password, password or ""):
             session.permanent = True  
             session['admin_id'] = admin.id
             flash('Login successful!', 'success')
             return redirect(url_for('admin_dashboard'))
+        
         flash('Invalid credentials', 'error')
     
     return render_template('admin/login.html')
@@ -2133,12 +2144,15 @@ def admin_footer_links_import():
         flash('No file selected', 'error')
         return redirect(url_for('admin_footer_links'))
     
-    if not file.filename.endswith('.json'):
+    # Fix for Error 2: Check if filename exists before calling endswith
+    if not file.filename or not file.filename.endswith('.json'):
         flash('Invalid file format. Please upload a JSON file.', 'error')
         return redirect(url_for('admin_footer_links'))
     
     try:
-        data = json.load(file)
+        # Fix for Error 1: Read file content properly
+        file_content = file.read().decode('utf-8')
+        data = json.loads(file_content)
         
         if 'footer_links' not in data:
             flash('Invalid file format. Missing footer_links data.', 'error')
