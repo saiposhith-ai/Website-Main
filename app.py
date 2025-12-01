@@ -19,9 +19,18 @@ app.config['PERMANENT_SESSION_LIFETIME'] = 86400
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sharmic.db'
+if os.environ.get('VERCEL'):
+    db_path = '/tmp/sharmic.db'
+else:
+    db_path = 'sharmic.db'
+    
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+# Use /tmp for uploads on Vercel
+if os.environ.get('VERCEL'):
+    app.config['UPLOAD_FOLDER'] = '/tmp/uploads'
+else:
+    app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -2194,199 +2203,127 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
-
+# Replace the bottom of your app.py (from init_db() onwards) with this:
 
 def init_db():
+    """Initialize database - only run locally or in specific deployment contexts"""
     with app.app_context():
-        db.create_all()
-        
-        # Create default admin
-        if not Admin.query.first():
-            admin = Admin(
-                username='admin',
-                password=generate_password_hash('admin123'),
-                email='admin@sharmic.com'
-            )
-            db.session.add(admin)
-        
-        # Create default hero sections
-        if not HeroSection.query.filter_by(page='home').first():
-            home_hero = HeroSection(
-                page='home',
-                badge_text='WELCOME TO SHARMIC',
-                title_line1='We Engineer Payments',
-                title_line2='for Global Scale',
-                subtitle='Trusted by leading enterprises worldwide. Simplify payment orchestration, boost conversions, reduce fraud, and deliver seamless customer experiences.',
-                cta_text='Get Started',
-                cta_link='/contact',
-                active=True
-            )
-            db.session.add(home_hero)
-        
-        if not HeroSection.query.filter_by(page='about').first():
-            about_hero = HeroSection(
-                page='about',
-                badge_text='ABOUT US',
-                title_line1='We Engineer Payments',
-                title_line2='for Global Scale',
-                subtitle='Trusted by leading enterprises worldwide, SHARMIC simplifies payment orchestration and global coverage, boosts conversions, reduces fraud, and delivers seamless customer experiences.',
-                cta_text='Schedule a call',
-                cta_link='/contact',
-                active=True
-            )
-            db.session.add(about_hero)
-        
-        # Create default pages
-        if not Page.query.filter_by(slug='home').first():
-            home_page = Page(
-                slug='home',
-                title='Home',
-                meta_title='SHARMIC - Payment Solutions for Global Scale',
-                meta_description='We engineer payments for global scale',
-                template='index.html',
-                active=True,
-                show_in_nav=True,
-                order=1
-            )
-            db.session.add(home_page)
-        
-        if not Page.query.filter_by(slug='about').first():
-            about_page = Page(
-                slug='about',
-                title='About Us',
-                meta_title='About SHARMIC - Our Story',
-                meta_description='Learn about SHARMIC and our mission',
-                template='about.html',
-                active=True,
-                show_in_nav=True,
-                order=2
-            )
-            db.session.add(about_page)
-        
-        legal_pages_data = [
-            {
-                'slug': 'privacy-policy',
-                'title': 'Privacy Policy',
-                'content': '''
-<h2>1. Information We Collect</h2>
-<p>We collect information that you provide directly to us, including:</p>
-<ul>
-    <li>Personal identification information (name, email address, phone number)</li>
-    <li>Payment information</li>
-    <li>Usage data and analytics</li>
-</ul>
-
-<h2>2. How We Use Your Information</h2>
-<p>We use the information we collect to:</p>
-<ul>
-    <li>Provide and improve our services</li>
-    <li>Process transactions</li>
-    <li>Send administrative information</li>
-    <li>Respond to your requests</li>
-</ul>
-
-<h2>3. Information Sharing</h2>
-<p>We do not sell or rent your personal information to third parties. We may share your information with:</p>
-<ul>
-    <li>Service providers who assist in our operations</li>
-    <li>Legal authorities when required by law</li>
-</ul>
-
-<h2>4. Data Security</h2>
-<p>We implement appropriate security measures to protect your personal information from unauthorized access, alteration, or destruction.</p>
-
-<h2>5. Your Rights</h2>
-<p>You have the right to:</p>
-<ul>
-    <li>Access your personal data</li>
-    <li>Correct inaccurate data</li>
-    <li>Request deletion of your data</li>
-    <li>Object to data processing</li>
-</ul>
-
-<h2>6. Contact Us</h2>
-<p>If you have questions about this Privacy Policy, please contact us.</p>
-'''
-            },
-            {
-                'slug': 'terms-conditions',
-                'title': 'Terms & Conditions',
-                'content': '''
-<h2>1. Acceptance of Terms</h2>
-<p>By accessing and using our services, you accept and agree to be bound by these Terms and Conditions.</p>
-
-<h2>2. Use of Services</h2>
-<p>You agree to use our services only for lawful purposes and in accordance with these terms.</p>
-
-<h2>3. User Accounts</h2>
-<p>You are responsible for:</p>
-<ul>
-    <li>Maintaining the confidentiality of your account</li>
-    <li>All activities that occur under your account</li>
-    <li>Notifying us of any unauthorized use</li>
-</ul>
-
-<h2>4. Intellectual Property</h2>
-<p>All content, trademarks, and data on this platform are the property of the company and are protected by intellectual property laws.</p>
-
-<h2>5. Payment Terms</h2>
-<p>Payment obligations are as specified at the time of purchase. All fees are non-refundable unless otherwise stated.</p>
-
-<h2>6. Limitation of Liability</h2>
-<p>We shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of our services.</p>
-
-<h2>7. Termination</h2>
-<p>We reserve the right to terminate or suspend your account at our discretion if you violate these terms.</p>
-
-<h2>8. Changes to Terms</h2>
-<p>We may modify these terms at any time. Continued use of our services constitutes acceptance of modified terms.</p>
-
-<h2>9. Governing Law</h2>
-<p>These terms are governed by the laws of the applicable jurisdiction.</p>
-'''
-            },
-            {
-                'slug': 'cookie-policy',
-                'title': 'Cookie Policy',
-                'content': '''
-<h2>What Are Cookies</h2>
-<p>Cookies are small text files stored on your device when you visit our website. They help us provide you with a better experience.</p>
-
-<h2>Types of Cookies We Use</h2>
-<h3>Essential Cookies</h3>
-<p>These cookies are necessary for the website to function properly. They enable basic features like page navigation and access to secure areas.</p>
-
-<h3>Analytics Cookies</h3>
-<p>We use analytics cookies to understand how visitors interact with our website, helping us improve our services.</p>
-
-<h3>Functional Cookies</h3>
-<p>These cookies enable enhanced functionality and personalization, such as remembering your preferences.</p>
-
-<h2>Managing Cookies</h2>
-<p>You can control and manage cookies through your browser settings. However, disabling cookies may affect your experience on our website.</p>
-'''
-            }
-        ]
-        for page_data in legal_pages_data:
-            if not Page.query.filter_by(slug=page_data['slug']).first():
-                page = Page(
-                    slug=page_data['slug'],
-                    title=page_data['title'],
-                    meta_title=f"{page_data['title']} - SHARMIC",
-                    meta_description=f"Read our {page_data['title'].lower()}",
-                    content=page_data['content'],
-                    template='legal.html',
-                    active=True,
-                    show_in_nav=False,
-                    order=100
+        try:
+            db.create_all()
+            
+            # Create default admin
+            if not Admin.query.first():
+                admin = Admin(
+                    username='admin',
+                    password=generate_password_hash('admin123'),
+                    email='admin@sharmic.com'
                 )
-                db.session.add(page)
-                
-        initialize_default_footer_links()
-        db.session.commit()
-        print("Database initialized successfully!")
-        print("Default admin credentials - Username: admin, Password: admin123")
+                db.session.add(admin)
+            
+            # Create default hero sections
+            if not HeroSection.query.filter_by(page='home').first():
+                home_hero = HeroSection(
+                    page='home',
+                    badge_text='WELCOME TO SHARMIC',
+                    title_line1='We Engineer Payments',
+                    title_line2='for Global Scale',
+                    subtitle='Trusted by leading enterprises worldwide. Simplify payment orchestration, boost conversions, reduce fraud, and deliver seamless customer experiences.',
+                    cta_text='Get Started',
+                    cta_link='/contact',
+                    active=True
+                )
+                db.session.add(home_hero)
+            
+            if not HeroSection.query.filter_by(page='about').first():
+                about_hero = HeroSection(
+                    page='about',
+                    badge_text='ABOUT US',
+                    title_line1='We Engineer Payments',
+                    title_line2='for Global Scale',
+                    subtitle='Trusted by leading enterprises worldwide, SHARMIC simplifies payment orchestration and global coverage, boosts conversions, reduces fraud, and delivers seamless customer experiences.',
+                    cta_text='Schedule a call',
+                    cta_link='/contact',
+                    active=True
+                )
+                db.session.add(about_hero)
+            
+            # Create default pages
+            if not Page.query.filter_by(slug='home').first():
+                home_page = Page(
+                    slug='home',
+                    title='Home',
+                    meta_title='SHARMIC - Payment Solutions for Global Scale',
+                    meta_description='We engineer payments for global scale',
+                    template='index.html',
+                    active=True,
+                    show_in_nav=True,
+                    order=1
+                )
+                db.session.add(home_page)
+            
+            if not Page.query.filter_by(slug='about').first():
+                about_page = Page(
+                    slug='about',
+                    title='About Us',
+                    meta_title='About SHARMIC - Our Story',
+                    meta_description='Learn about SHARMIC and our mission',
+                    template='about.html',
+                    active=True,
+                    show_in_nav=True,
+                    order=2
+                )
+                db.session.add(about_page)
+            
+            legal_pages_data = [
+                {
+                    'slug': 'privacy-policy',
+                    'title': 'Privacy Policy',
+                    'content': '''<h2>1. Information We Collect</h2><p>We collect information that you provide directly to us...</p>'''
+                },
+                {
+                    'slug': 'terms-conditions',
+                    'title': 'Terms & Conditions',
+                    'content': '''<h2>1. Acceptance of Terms</h2><p>By accessing and using our services...</p>'''
+                },
+                {
+                    'slug': 'cookie-policy',
+                    'title': 'Cookie Policy',
+                    'content': '''<h2>What Are Cookies</h2><p>Cookies are small text files...</p>'''
+                }
+            ]
+            
+            for page_data in legal_pages_data:
+                if not Page.query.filter_by(slug=page_data['slug']).first():
+                    page = Page(
+                        slug=page_data['slug'],
+                        title=page_data['title'],
+                        meta_title=f"{page_data['title']} - SHARMIC",
+                        meta_description=f"Read our {page_data['title'].lower()}",
+                        content=page_data['content'],
+                        template='legal.html',
+                        active=True,
+                        show_in_nav=False,
+                        order=100
+                    )
+                    db.session.add(page)
+                    
+            initialize_default_footer_links()
+            db.session.commit()
+            print("Database initialized successfully!")
+        except Exception as e:
+            print(f"Database initialization error: {e}")
+            db.session.rollback()
 
+# Initialize database tables on app start (but don't populate data on Vercel)
+with app.app_context():
+    try:
+        db.create_all()
+    except Exception as e:
+        print(f"Error creating tables: {e}")
+
+# This is for running locally only
 if __name__ == '__main__':
-    init_db()
+    # Only initialize data when running locally
+    if os.environ.get('FLASK_ENV') != 'production':
+        init_db()
     app.run(debug=True, host='0.0.0.0', port=5000)
