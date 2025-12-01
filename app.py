@@ -330,7 +330,7 @@ def save_image(file, folder='uploads'):
             # Save optimized image
             img.save(filepath, quality=85, optimize=True)
         
-        return f'uploads/{folder}/{filename}'
+        return f'{folder}/{filename}'
     return None
 
 def get_site_settings():
