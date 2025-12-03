@@ -17,7 +17,17 @@
     <meta property="og:url" content="{{ request.url }}">
     <meta property="og:title" content="{% block og_title %}{{ site_settings.meta_title }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}{{ site_settings.meta_description }}{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{% if site_settings.logo_path %}{{ url_for('static', filename=site_settings.logo_path, _external=True) }}{% endif %}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}
+    {% if site_settings.logo_path %}
+        {% if site_settings.logo_path.startswith('http') %}
+            {{ site_settings.logo_path }}
+        {% else %}
+            {{ url_for('static', filename=site_settings.logo_path, _external=True) }}
+        {% endif %}
+    {% else %}
+        {{ url_for('static', filename='images/logo.svg', _external=True) }}
+    {% endif %}
+{% endblock %}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -796,14 +806,23 @@
     <nav id="navbar">
         <div class="nav-container">
             <a href="{{ url_for('index') }}" class="logo">
-                {% if site_settings.logo_path %}
-                    <img src="{{ url_for('static', filename=site_settings.logo_path) }}" alt="{{ site_settings.site_name }}" class="logo-image">
-                    <span>{{ site_settings.site_name }}</span>
-                {% else %}
-                    <span class="logo-default-icon"></span>
-                    <span>{{ site_settings.site_name }}</span>
-                {% endif %}
-            </a>
+    {% set logo = site_settings.logo_path %}
+    {% if logo %}
+        {% if logo.startswith('http') %}
+            {# External URL (e.g. CDN / Cloudinary) #}
+            <img src="{{ logo }}" alt="{{ site_settings.site_name }}" class="logo-image">
+        {% else %}
+            {# Local static file (relative to /static) #}
+            <img src="{{ url_for('static', filename=logo) }}" alt="{{ site_settings.site_name }}" class="logo-image">
+        {% endif %}
+        <span>{{ site_settings.site_name }}</span>
+    {% else %}
+        {# Fallback to a committed logo in your repo #}
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="{{ site_settings.site_name }}" class="logo-image">
+        <span>{{ site_settings.site_name }}</span>
+    {% endif %}
+</a>
+
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
                 <svg viewBox="0 0 24 24" fill="none">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -830,16 +849,21 @@
     <footer>
         <div class="footer-content">
             <!-- Brand Column -->
-            <div class="footer-brand">
-                <div class="footer-logo">
-                    {% if site_settings.logo_path %}
-                        <img src="{{ url_for('static', filename=site_settings.logo_path) }}" alt="{{ site_settings.site_name }}" class="footer-logo-image">
-                        <span class="footer-logo-text">{{ site_settings.site_name }}</span>
-                    {% else %}
-                        <span class="footer-logo-default-icon"></span>
-                        <span class="footer-logo-text">{{ site_settings.site_name }}</span>
-                    {% endif %}
-                </div>
+            <div class="footer-logo">
+    {% set logo = site_settings.logo_path %}
+    {% if logo %}
+        {% if logo.startswith('http') %}
+            <img src="{{ logo }}" alt="{{ site_settings.site_name }}" class="footer-logo-image">
+        {% else %}
+            <img src="{{ url_for('static', filename=logo) }}" alt="{{ site_settings.site_name }}" class="footer-logo-image">
+        {% endif %}
+        <span class="footer-logo-text">{{ site_settings.site_name }}</span>
+    {% else %}
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="{{ site_settings.site_name }}" class="footer-logo-image">
+        <span class="footer-logo-text">{{ site_settings.site_name }}</span>
+    {% endif %}
+</div>
+
                 <p class="footer-description">{{ site_settings.meta_description }}</p>
 
                 <!-- Social Links -->

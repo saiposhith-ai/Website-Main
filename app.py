@@ -302,36 +302,30 @@ def initialize_default_footer_links():
 
 def save_image(file, folder='uploads'):
     """
-    Save uploaded image file with proper path handling for web URLs
-    Returns: relative path from static folder (e.g., 'uploads/folder/filename.jpg')
+    Returns: path relative to /static, e.g. 'uploads/logos/file.png'
     """
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{filename}"
-        
-        # Create full directory path
+
+        # e.g. local: static/uploads/logos
         upload_dir = os.path.join(app.config['UPLOAD_FOLDER'], folder)
         os.makedirs(upload_dir, exist_ok=True)
-        
-        # Full file system path
+
         filepath = os.path.join(upload_dir, filename)
-        
-        # Check if it's SVG
+
         if filename.lower().endswith('.svg'):
             file.save(filepath)
         else:
-            # Open and process image
             img = Image.open(file)
-            
-            # Convert RGBA to RGB if necessary
             if img.mode == 'RGBA':
                 img = img.convert('RGB')
-            
-            # Save optimized image
             img.save(filepath, quality=85, optimize=True)
-        
-        return f'{folder}/{filename}'
+
+        # 🔴 IMPORTANT: include 'uploads/' here
+        return f'uploads/{folder}/{filename}'
     return None
+
 
 def get_site_settings():
     settings = SiteSettings.query.first()
