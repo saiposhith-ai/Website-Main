@@ -339,10 +339,22 @@ def save_image(file, folder='uploads'):
 def get_site_settings():
     settings = SiteSettings.query.first()
     if not settings:
-        settings = SiteSettings()
+        settings = SiteSettings(
+            logo_path='images/logo.png',        # ✅ use the committed logo
+            favicon_path=''                     # or 'images/favicon.ico' if you have one
+        )
         db.session.add(settings)
         db.session.commit()
+
+    # Optional: ensure logo_path is never empty
+    if not settings.logo_path:
+        settings.logo_path = 'images/logo.png'
+        db.session.commit()
+
     return settings
+
+
+
 
 def get_navigation_pages():
     return Page.query.filter_by(active=True, show_in_nav=True).order_by(Page.order).all()
