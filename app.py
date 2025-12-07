@@ -19,12 +19,10 @@ app.config['PERMANENT_SESSION_LIFETIME'] = 86400
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-if os.environ.get('VERCEL'):
-    db_path = '/tmp/sharmic.db'
-else:
-    db_path = 'sharmic.db'
-    
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+if app.config['SQLALCHEMY_DATABASE_URI'].startswith("postgres://"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI'].replace("postgres://", "postgresql://")
+
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Use /tmp for uploads on Vercel
 if os.environ.get('VERCEL'):
