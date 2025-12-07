@@ -353,9 +353,6 @@ def get_site_settings():
 
     return settings
 
-
-
-
 def get_navigation_pages():
     return Page.query.filter_by(active=True, show_in_nav=True).order_by(Page.order).all()
 
