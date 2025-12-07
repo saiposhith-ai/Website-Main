@@ -19,16 +19,27 @@ app.config['PERMANENT_SESSION_LIFETIME'] = 86400
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-if app.config['SQLALCHEMY_DATABASE_URI'].startswith("postgres://"):
-    app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI'].replace("postgres://", "postgresql://")
+# ---------- DATABASE CONFIG (Vercel DB + local fallback) ----------
+db_url = os.environ.get("DATABASE_URL")  # set this in Vercel
 
+# Local fallback for development
+if not db_url:
+    db_url = "sqlite:///sharmic.db"
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Fix older postgres:// scheme for SQLAlchemy
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# ---------------------------------------------------------------
+
 # Use /tmp for uploads on Vercel
 if os.environ.get('VERCEL'):
     app.config['UPLOAD_FOLDER'] = '/tmp/uploads'
 else:
     app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -2307,11 +2318,30 @@ def init_db():
             db.session.rollback()
 
 # Initialize database tables on app start (but don't populate data on Vercel)
+# Initialize database tables on app start and ensure an admin exists
 with app.app_context():
     try:
         db.create_all()
+
+        # Ensure there's at least one admin (works on Vercel + local)
+        if not Admin.query.first():
+            default_username = os.environ.get('ADMIN_USERNAME', 'admin')
+            default_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+            default_email = os.environ.get('ADMIN_EMAIL', 'admin@sharmic.com')
+
+            admin = Admin(
+                username=default_username,
+                password=generate_password_hash(default_password),
+                email=default_email
+            )
+            db.session.add(admin)
+            db.session.commit()
+            print(f"Created default admin user: {default_username}")
+
     except Exception as e:
-        print(f"Error creating tables: {e}")
+        print(f"Error creating tables or seeding admin: {e}")
+        db.session.rollback()
+
 
 # This is for running locally only
 if __name__ == '__main__':
