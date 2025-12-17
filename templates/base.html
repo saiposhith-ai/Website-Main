@@ -809,21 +809,19 @@
     <nav id="navbar">
         <div class="nav-container">
             <a href="{{ url_for('index') }}" class="logo">
-    {% set logo = site_settings.logo_path %}
-    {% if logo %}
-        {% if logo.startswith('http') %}
-            {# External URL (e.g. CDN / Cloudinary) #}
-            <img src="{{ logo }}" alt="{{ site_settings.site_name }}" class="logo-image">
+    {% if site_settings.logo_path %}
+        {% if site_settings.logo_path.startswith('http://') or site_settings.logo_path.startswith('https://') %}
+            {# External URL (CDN/Cloudinary) #}
+            <img src="{{ site_settings.logo_path }}" alt="{{ site_settings.site_name }}" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
         {% else %}
-            {# Local static file (relative to /static) #}
-            <img src="{{ url_for('static', filename=logo) }}" alt="{{ site_settings.site_name }}" class="logo-image">
+            {# Local file - use url_for #}
+            <img src="{{ url_for('static', filename=site_settings.logo_path) }}" alt="{{ site_settings.site_name }}" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
         {% endif %}
-        <span>{{ site_settings.site_name }}</span>
     {% else %}
-        {# Fallback to a committed logo in your repo #}
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ site_settings.site_name }}" class="logo-image">
-        <span>{{ site_settings.site_name }}</span>
+        {# Fallback to default logo #}
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ site_settings.site_name }}" class="logo-image" onerror="this.style.display='none';">
     {% endif %}
+    <span>{{ site_settings.site_name }}</span>
 </a>
 
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
@@ -850,21 +848,22 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <!-- Brand Column -->
-            <div class="footer-logo">
-    {% set logo = site_settings.logo_path %}
-    {% if logo %}
-        {% if logo.startswith('http') %}
-            <img src="{{ logo }}" alt="{{ site_settings.site_name }}" class="footer-logo-image">
+        <div class="footer-brand">
+    <div class="footer-logo">
+        {% if site_settings.logo_path %}
+            {% if site_settings.logo_path.startswith('http://') or site_settings.logo_path.startswith('https://') %}
+                {# External URL #}
+                <img src="{{ site_settings.logo_path }}" alt="{{ site_settings.site_name }}" class="footer-logo-image" onerror="this.style.display='none';">
+            {% else %}
+                {# Local file #}
+                <img src="{{ url_for('static', filename=site_settings.logo_path) }}" alt="{{ site_settings.site_name }}" class="footer-logo-image" onerror="this.style.display='none';">
+            {% endif %}
         {% else %}
-            <img src="{{ url_for('static', filename=logo) }}" alt="{{ site_settings.site_name }}" class="footer-logo-image">
+            {# Fallback #}
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ site_settings.site_name }}" class="footer-logo-image" onerror="this.style.display='none';">
         {% endif %}
         <span class="footer-logo-text">{{ site_settings.site_name }}</span>
-    {% else %}
-    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="{{ site_settings.site_name }}" class="footer-logo-image">
-    <span class="footer-logo-text">{{ site_settings.site_name }}</span>
-{% endif %}
+    </div>
 </div>
 
                 <p class="footer-description">{{ site_settings.meta_description }}</p>

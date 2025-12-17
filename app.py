@@ -311,18 +311,28 @@ def initialize_default_footer_links():
 
 def save_image(file, folder='uploads'):
     """
-    Returns: path relative to /static, e.g. 'uploads/logos/file.png'
+    Save uploaded image and return the path relative to static directory.
+    
+    Returns: 
+    - For local: 'uploads/logos/file.png' (will be used with url_for('static'))
+    - For Vercel/production: Full URL or path as needed
     """
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{filename}"
 
-        # e.g. local: static/uploads/logos
-        upload_dir = os.path.join(app.config['UPLOAD_FOLDER'], folder)
+        # Determine upload directory based on environment
+        if os.environ.get('VERCEL'):
+            # On Vercel, use /tmp
+            upload_dir = os.path.join('/tmp/uploads', folder)
+        else:
+            # Local: save to static/uploads/folder
+            upload_dir = os.path.join('static', 'uploads', folder)
+        
         os.makedirs(upload_dir, exist_ok=True)
-
         filepath = os.path.join(upload_dir, filename)
 
+        # Save the file
         if filename.lower().endswith('.svg'):
             file.save(filepath)
         else:
@@ -331,22 +341,23 @@ def save_image(file, folder='uploads'):
                 img = img.convert('RGB')
             img.save(filepath, quality=85, optimize=True)
 
-        # 🔴 IMPORTANT: include 'uploads/' here
+        # Return path relative to static directory
+        # This will work with url_for('static', filename=path)
         return f'uploads/{folder}/{filename}'
+    
     return None
-
 
 def get_site_settings():
     settings = SiteSettings.query.first()
     if not settings:
         settings = SiteSettings(
-            logo_path='images/logo.png',        # ✅ use the committed logo
-            favicon_path=''                     # or 'images/favicon.ico' if you have one
+            logo_path='images/logo.png',  # Default to committed logo
+            favicon_path='images/logo.png'
         )
         db.session.add(settings)
         db.session.commit()
 
-    # Optional: ensure logo_path is never empty
+    # Ensure logo_path is never empty - fallback to default
     if not settings.logo_path:
         settings.logo_path = 'images/logo.png'
         db.session.commit()
