@@ -596,7 +596,7 @@
 
               setTimeout(() => {
                 // Redirect to admin dashboard
-                window.location.href = "admin-dashboard.html";
+                window.location.href = "dashboard";
               }, 1500);
             } else {
               showAlert(
@@ -622,7 +622,7 @@
         if (hoursDiff < 24) {
           showAlert("You are already logged in. Redirecting...", "success");
           setTimeout(() => {
-            window.location.href = "admin-dashboard.html";
+            window.location.href = "dashboard";
           }, 1500);
         } else {
           // Session expired
