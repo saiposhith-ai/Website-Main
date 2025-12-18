@@ -3,33 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Login - Shramic Networks</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <title>Admin Login - Shramic</title>
     <style>
-      :root {
-        --dark-bg: #0f0a1e;
-        --dark-secondary: #1a1333;
-        --dark-accent: #2d1f5c;
-        --purple-primary: #6c5ce7;
-        --purple-light: #a29bfe;
-        --blue-accent: #4834df;
-        --violet-glow: #7f5af0;
-        --text-light: #e8e6f0;
-        --text-muted: #a8a4b8;
-        --danger: #ff3838;
-      }
-
       * {
         margin: 0;
         padding: 0;
@@ -37,192 +12,118 @@
       }
 
       body {
-        font-family: "Poppins", sans-serif;
-        background: linear-gradient(
-          135deg,
-          var(--dark-bg) 0%,
-          var(--dark-secondary) 100%
-        );
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        position: relative;
-        overflow: hidden;
-      }
-
-      /* Animated Background */
-      .bg-animation {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: 0;
-      }
-
-      .bg-animation span {
-        position: absolute;
-        display: block;
-        width: 20px;
-        height: 20px;
-        background: var(--purple-primary);
-        border-radius: 50%;
-        opacity: 0.1;
-        animation: float 15s infinite;
-      }
-
-      .bg-animation span:nth-child(1) {
-        left: 10%;
-        animation-delay: 0s;
-        animation-duration: 20s;
-      }
-
-      .bg-animation span:nth-child(2) {
-        left: 20%;
-        animation-delay: 2s;
-        animation-duration: 15s;
-      }
-
-      .bg-animation span:nth-child(3) {
-        left: 30%;
-        animation-delay: 4s;
-        animation-duration: 18s;
-      }
-
-      .bg-animation span:nth-child(4) {
-        left: 40%;
-        animation-delay: 1s;
-        animation-duration: 22s;
-      }
-
-      .bg-animation span:nth-child(5) {
-        left: 50%;
-        animation-delay: 3s;
-        animation-duration: 17s;
-      }
-
-      .bg-animation span:nth-child(6) {
-        left: 60%;
-        animation-delay: 5s;
-        animation-duration: 19s;
-      }
-
-      .bg-animation span:nth-child(7) {
-        left: 70%;
-        animation-delay: 2s;
-        animation-duration: 21s;
-      }
-
-      .bg-animation span:nth-child(8) {
-        left: 80%;
-        animation-delay: 4s;
-        animation-duration: 16s;
-      }
-
-      @keyframes float {
-        0% {
-          transform: translateY(100vh) scale(0);
-          opacity: 0;
-        }
-        10% {
-          opacity: 0.1;
-        }
-        90% {
-          opacity: 0.1;
-        }
-        100% {
-          transform: translateY(-100vh) scale(1);
-          opacity: 0;
-        }
-      }
-
-      .login-container {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        max-width: 480px;
         padding: 20px;
       }
 
-      .login-card {
-        background: linear-gradient(
-          135deg,
-          var(--dark-secondary) 0%,
-          var(--dark-accent) 100%
-        );
-        border-radius: 25px;
-        padding: 50px 40px;
-        box-shadow: 0 20px 60px rgba(108, 92, 231, 0.3);
-        border: 1px solid rgba(108, 92, 231, 0.2);
-        backdrop-filter: blur(10px);
+      .login-container {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        max-width: 420px;
+        width: 100%;
+        animation: slideUp 0.5s ease-out;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       .login-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px 30px;
         text-align: center;
-        margin-bottom: 40px;
       }
 
-      .logo-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 25px;
+      .login-header h1 {
+        font-size: 28px;
+        margin-bottom: 8px;
+        font-weight: 600;
       }
 
-      .logo-wrapper {
-        width: 100px;
-        height: 100px;
-        background: linear-gradient(
-          135deg,
-          var(--purple-primary) 0%,
-          var(--blue-accent) 100%
-        );
+      .login-header p {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .login-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 10px 40px rgba(108, 92, 231, 0.5);
-        animation: pulse 2s infinite;
+        margin: 0 auto 20px;
+        font-size: 28px;
       }
 
-      @keyframes pulse {
-        0%,
-        100% {
-          box-shadow: 0 10px 40px rgba(108, 92, 231, 0.5);
-        }
-        50% {
-          box-shadow: 0 10px 60px rgba(108, 92, 231, 0.8);
-        }
+      .login-body {
+        padding: 40px 30px;
       }
 
-      .logo-wrapper img {
-        width: 60px;
-        height: 60px;
-        filter: brightness(0) invert(1);
+      .flash-messages {
+        margin-bottom: 20px;
       }
 
-      .login-title {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--purple-light);
-        margin-bottom: 10px;
-        text-shadow: 0 0 30px var(--purple-primary);
+      .alert {
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
-      .login-subtitle {
-        color: var(--text-muted);
-        font-size: 1rem;
+      .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .alert-warning {
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+
+      .alert-info {
+        background: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
       }
 
       .form-group {
-        margin-bottom: 25px;
+        margin-bottom: 24px;
       }
 
-      .form-label {
-        color: var(--purple-light);
-        font-weight: 600;
-        margin-bottom: 10px;
+      .form-group label {
         display: block;
-        font-size: 0.95rem;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+        font-size: 14px;
       }
 
       .input-wrapper {
@@ -231,416 +132,224 @@
 
       .input-icon {
         position: absolute;
-        left: 20px;
+        left: 14px;
         top: 50%;
         transform: translateY(-50%);
-        color: var(--text-muted);
-        font-size: 1.2rem;
+        color: #999;
+        font-size: 18px;
       }
 
       .form-control {
         width: 100%;
-        padding: 15px 20px 15px 55px;
-        background: var(--dark-bg);
-        border: 2px solid rgba(108, 92, 231, 0.2);
-        border-radius: 15px;
-        color: var(--text-light);
-        font-size: 1rem;
+        padding: 12px 14px 12px 44px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 15px;
         transition: all 0.3s ease;
+        font-family: inherit;
       }
 
       .form-control:focus {
         outline: none;
-        border-color: var(--purple-primary);
-        box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
-        background: var(--dark-secondary);
-      }
-
-      .form-control::placeholder {
-        color: var(--text-muted);
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
       }
 
       .password-toggle {
         position: absolute;
-        right: 20px;
+        right: 14px;
         top: 50%;
         transform: translateY(-50%);
-        color: var(--text-muted);
         cursor: pointer;
-        transition: all 0.3s ease;
+        color: #999;
+        font-size: 18px;
+        user-select: none;
       }
 
       .password-toggle:hover {
-        color: var(--purple-primary);
+        color: #667eea;
       }
 
-      .remember-forgot {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
+      .btn-login {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-login:active {
+        transform: translateY(0);
+      }
+
+      .login-footer {
+        text-align: center;
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #e0e0e0;
+      }
+
+      .login-footer a {
+        color: #667eea;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+      }
+
+      .login-footer a:hover {
+        color: #764ba2;
+        text-decoration: underline;
       }
 
       .remember-me {
         display: flex;
         align-items: center;
-        gap: 10px;
-        color: var(--text-light);
-        font-size: 0.9rem;
+        gap: 8px;
+        margin-bottom: 20px;
       }
 
       .remember-me input[type="checkbox"] {
         width: 18px;
         height: 18px;
         cursor: pointer;
-        accent-color: var(--purple-primary);
       }
 
-      .forgot-link {
-        color: var(--purple-light);
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-      }
-
-      .forgot-link:hover {
-        color: var(--purple-primary);
-        text-shadow: 0 0 10px var(--purple-primary);
-      }
-
-      .btn-login {
-        width: 100%;
-        padding: 16px;
-        background: linear-gradient(
-          135deg,
-          var(--purple-primary) 0%,
-          var(--blue-accent) 100%
-        );
-        border: none;
-        border-radius: 15px;
-        color: white;
-        font-size: 1.1rem;
-        font-weight: 600;
+      .remember-me label {
+        margin: 0;
         cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 20px rgba(108, 92, 231, 0.4);
+        font-size: 14px;
+        color: #666;
       }
 
-      .btn-login:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 40px rgba(108, 92, 231, 0.6);
-      }
-
-      .btn-login:active {
-        transform: translateY(-1px);
-      }
-
-      .btn-login:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      .alert {
-        padding: 15px 20px;
-        border-radius: 12px;
-        margin-bottom: 25px;
-        border: none;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .alert-danger {
-        background: rgba(255, 56, 56, 0.2);
-        color: #ff6b6b;
-        border-left: 4px solid var(--danger);
-      }
-
-      .alert-success {
-        background: rgba(0, 210, 211, 0.2);
-        color: #00d2d3;
-        border-left: 4px solid #00d2d3;
-      }
-
-      .back-home {
-        text-align: center;
-        margin-top: 30px;
-      }
-
-      .back-home a {
-        color: var(--text-muted);
-        text-decoration: none;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .back-home a:hover {
-        color: var(--purple-light);
-      }
-
-      .demo-credentials {
-        background: rgba(108, 92, 231, 0.1);
-        border: 1px solid rgba(108, 92, 231, 0.3);
-        border-radius: 12px;
-        padding: 20px;
-        margin-top: 30px;
-      }
-
-      .demo-credentials h6 {
-        color: var(--purple-light);
-        font-weight: 600;
-        margin-bottom: 15px;
-        font-size: 0.95rem;
-      }
-
-      .demo-credentials p {
-        color: var(--text-light);
-        margin: 5px 0;
-        font-size: 0.9rem;
-      }
-
-      .demo-credentials code {
-        color: var(--purple-primary);
-        background: var(--dark-bg);
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-family: monospace;
-      }
-
-      @media (max-width: 576px) {
-        .login-card {
-          padding: 40px 25px;
+      @media (max-width: 480px) {
+        .login-container {
+          margin: 10px;
         }
 
-        .login-title {
-          font-size: 1.6rem;
+        .login-header {
+          padding: 30px 20px;
         }
 
-        .logo-wrapper {
-          width: 80px;
-          height: 80px;
+        .login-body {
+          padding: 30px 20px;
         }
 
-        .logo-wrapper img {
-          width: 50px;
-          height: 50px;
+        .login-header h1 {
+          font-size: 24px;
         }
       }
     </style>
   </head>
   <body>
-    <!-- Animated Background -->
-    <div class="bg-animation">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <!-- Login Container -->
     <div class="login-container">
-      <div class="login-card">
-        <div class="login-header">
-          <div class="logo-container">
-            <div class="logo-wrapper">
-              <img
-                src="https://careers.shramic.com/static/img/logo.png"
-                alt="Shramic Logo"
-              />
-            </div>
+      <div class="login-header">
+        <div class="login-icon">🔐</div>
+        <h1>Admin Login</h1>
+        <p>Enter your credentials to access the dashboard</p>
+      </div>
+
+      <div class="login-body">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <span>
+              {% if category == 'success' %}✓{% elif category == 'error' %}✗{%
+              elif category == 'warning' %}⚠{% else %}ℹ{% endif %}
+            </span>
+            <span>{{ message }}</span>
           </div>
-          <h1 class="login-title">Admin Portal</h1>
-          <p class="login-subtitle">Sign in to access your dashboard</p>
+          {% endfor %}
         </div>
+        {% endif %} {% endwith %}
 
-        <div id="alertContainer"></div>
-
-        <form id="loginForm">
+        <!-- Login Form -->
+        <form method="POST" action="{{ url_for('admin_login') }}">
           <div class="form-group">
-            <label for="username" class="form-label">Username</label>
+            <label for="username">Username</label>
             <div class="input-wrapper">
-              <i class="fas fa-user input-icon"></i>
+              <span class="input-icon">👤</span>
               <input
                 type="text"
-                class="form-control"
                 id="username"
                 name="username"
+                class="form-control"
                 placeholder="Enter your username"
                 required
                 autocomplete="username"
+                autofocus
               />
             </div>
           </div>
 
           <div class="form-group">
-            <label for="password" class="form-label">Password</label>
+            <label for="password">Password</label>
             <div class="input-wrapper">
-              <i class="fas fa-lock input-icon"></i>
+              <span class="input-icon">🔒</span>
               <input
                 type="password"
-                class="form-control"
                 id="password"
                 name="password"
+                class="form-control"
                 placeholder="Enter your password"
                 required
                 autocomplete="current-password"
               />
-              <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+              <span class="password-toggle" onclick="togglePassword()">👁️</span>
             </div>
           </div>
 
-          <div class="remember-forgot">
-            <label class="remember-me">
-              <input type="checkbox" id="rememberMe" />
-              <span>Remember me</span>
-            </label>
-            <a href="#" class="forgot-link">Forgot Password?</a>
+          <div class="remember-me">
+            <input type="checkbox" id="remember" name="remember" />
+            <label for="remember">Remember me</label>
           </div>
 
-          <button type="submit" class="btn-login" id="loginBtn">
-            <i class="fas fa-sign-in-alt me-2"></i> Sign In
-          </button>
+          <button type="submit" class="btn-login">Login</button>
         </form>
 
-        <div class="demo-credentials">
-          <h6><i class="fas fa-info-circle me-2"></i>Demo Credentials</h6>
-          <p><strong>Username:</strong> <code>Shramicadmin</code></p>
-          <p><strong>Password:</strong> <code>Shramic123</code></p>
-        </div>
-
-        <div class="back-home">
-          <a href="/">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-          </a>
+        <div class="login-footer">
+          <a href="{{ url_for('home') }}">← Back to Home</a>
         </div>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // Demo credentials
-      const ADMIN_CREDENTIALS = {
-        username: "Shramicadmin",
-        password: "Shramic123",
-      };
+      function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const toggleIcon = document.querySelector(".password-toggle");
 
-      // Password toggle
-      const togglePassword = document.getElementById("togglePassword");
-      const passwordInput = document.getElementById("password");
-
-      togglePassword.addEventListener("click", function () {
-        const type =
-          passwordInput.getAttribute("type") === "password"
-            ? "text"
-            : "password";
-        passwordInput.setAttribute("type", type);
-        this.classList.toggle("fa-eye");
-        this.classList.toggle("fa-eye-slash");
-      });
-
-      // Show alert function
-      function showAlert(message, type) {
-        const alertHtml = `
-                <div class="alert alert-${type}">
-                    <i class="fas fa-${
-                      type === "danger" ? "exclamation-circle" : "check-circle"
-                    }"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-        document.getElementById("alertContainer").innerHTML = alertHtml;
-
-        setTimeout(() => {
-          document.getElementById("alertContainer").innerHTML = "";
-        }, 5000);
-      }
-
-      // Login form submission
-      document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          const username = document.getElementById("username").value.trim();
-          const password = document.getElementById("password").value;
-          const loginBtn = document.getElementById("loginBtn");
-
-          // Disable button
-          loginBtn.disabled = true;
-          loginBtn.innerHTML =
-            '<i class="fas fa-spinner fa-spin me-2"></i> Signing In...';
-
-          // Simulate API call delay
-          setTimeout(() => {
-            if (
-              username === ADMIN_CREDENTIALS.username &&
-              password === ADMIN_CREDENTIALS.password
-            ) {
-              // Store admin session
-              localStorage.setItem("shramic_admin_logged_in", "true");
-              localStorage.setItem("shramic_admin_username", username);
-              localStorage.setItem(
-                "shramic_admin_login_time",
-                new Date().toISOString()
-              );
-
-              showAlert("Login successful! Redirecting...", "success");
-
-              setTimeout(() => {
-                // Redirect to admin dashboard
-                window.location.href = "dashboard";
-              }, 1500);
-            } else {
-              showAlert(
-                "Invalid username or password. Please try again.",
-                "danger"
-              );
-              loginBtn.disabled = false;
-              loginBtn.innerHTML =
-                '<i class="fas fa-sign-in-alt me-2"></i> Sign In';
-            }
-          }, 1000);
-        });
-
-      // Check if already logged in
-      if (localStorage.getItem("shramic_admin_logged_in") === "true") {
-        const loginTime = new Date(
-          localStorage.getItem("shramic_admin_login_time")
-        );
-        const currentTime = new Date();
-        const hoursDiff = (currentTime - loginTime) / (1000 * 60 * 60);
-
-        // Session valid for 24 hours
-        if (hoursDiff < 24) {
-          showAlert("You are already logged in. Redirecting...", "success");
-          setTimeout(() => {
-            window.location.href = "dashboard";
-          }, 1500);
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleIcon.textContent = "👁️‍🗨️";
         } else {
-          // Session expired
-          localStorage.removeItem("shramic_admin_logged_in");
-          localStorage.removeItem("shramic_admin_username");
-          localStorage.removeItem("shramic_admin_login_time");
+          passwordInput.type = "password";
+          toggleIcon.textContent = "👁️";
         }
       }
 
-      // Auto-fill on demo credentials click
-      document
-        .querySelector(".demo-credentials")
-        .addEventListener("click", function () {
-          document.getElementById("username").value =
-            ADMIN_CREDENTIALS.username;
-          document.getElementById("password").value =
-            ADMIN_CREDENTIALS.password;
+      // Auto-hide flash messages after 5 seconds
+      setTimeout(() => {
+        const alerts = document.querySelectorAll(".alert");
+        alerts.forEach((alert) => {
+          alert.style.transition = "opacity 0.5s ease";
+          alert.style.opacity = "0";
+          setTimeout(() => alert.remove(), 500);
         });
+      }, 5000);
     </script>
   </body>
 </html>
