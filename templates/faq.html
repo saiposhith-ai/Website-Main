@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FAQ - Shramic</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .faq-item {
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 0 25px 25px;
+            max-height: 500px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+            font-size: 24px;
+        }
+
+        .faq-icon.active {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body id="top">
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="./assets/images/logo.png" alt="Shramic logo">
+                <span class="logo-text">Shramic Networks</span>
+            </a>
+            <div class="navbar-wrapper">
+                <button class="navbar-menu-btn" data-navbar-toggle-btn>
+                    <ion-icon name="menu-outline"></ion-icon>
+                </button>
+                <nav class="navbar" data-navbar>
+                    <ul class="navbar-list">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="about.html" class="nav-link">AboutUs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="blog.html" class="nav-link">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="testimonial.html" class="nav-link">Testimonials</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="faq.html" class="nav-link">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">Contact</a>
+                        </li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="window.location.href='contact.html'">Get in touch</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <section class="hero" style="padding: 100px 0 60px;">
+                <div class="container">
+                    <div class="hero-content" style="max-width: 100%; text-align: center;">
+                        <h1 class="h1 hero-title">Frequently Asked Questions</h1>
+                        <p class="hero-text">
+                            Find answers to common questions about Shramic's services, technology, and how we support
+                            farmers.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about">
+                <div class="container">
+                    <h2 class="h2 section-title">General Questions</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What is Shramic and what services do you provide?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                Shramic is an agricultural technology platform that bridges traditional farming with
+                                modern innovation. We provide smart farming solutions including IoT sensors for crop
+                                monitoring, AI-powered crop advisory, weather forecasting, market intelligence, direct
+                                market linkages, and comprehensive farmer training programs. Our goal is to help farmers
+                                increase productivity while ensuring sustainability.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How can Shramic help improve my farm's productivity?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                Our platform combines real-time data monitoring, AI-driven insights, and expert
+                                agricultural knowledge to optimize every aspect of farming. From precision irrigation
+                                recommendations to pest detection and market timing, we help you make data-driven
+                                decisions that can increase yields by up to 30% while reducing resource waste.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Is Shramic suitable for small-scale farmers?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                Absolutely! We believe that every farmer deserves access to modern agricultural tools,
+                                regardless of farm size. Our solutions are scalable and affordable, with flexible
+                                pricing options designed specifically for small and marginal farmers. We also offer
+                                training and support in regional languages to ensure accessibility.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2 class="h2 section-title" style="margin-top: 60px;">Technology & Services</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What technology do I need to use Shramic's services?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                All you need is a smartphone with internet connectivity. Our mobile app works on both
+                                Android and iOS devices and is designed to be user-friendly, even for those with limited
+                                technical experience. For advanced features like soil sensors, we provide all necessary
+                                equipment and installation support.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How accurate are your weather forecasts and crop advisories?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                Our weather forecasts use advanced meteorological models with over 85% accuracy for
+                                7-day predictions. Crop advisories are generated by combining AI analysis with inputs
+                                from experienced agronomists, ensuring recommendations are both data-driven and
+                                practically validated. We continuously improve our models based on local conditions and
+                                farmer feedback.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Do you provide support in regional languages?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                Yes! Our platform supports multiple Indian languages including Hindi, Tamil, Telugu,
+                                Kannada, Marathi, Bengali, and more. Our customer support team is also available in
+                                regional languages to ensure you get help in the language you're most comfortable with.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2 class="h2 section-title" style="margin-top: 60px;">Pricing & Plans</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How much do Shramic's services cost?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                We offer flexible pricing plans starting from as low as ₹500 per month for basic
+                                services. Our pricing is transparent with no hidden fees. We also have a free tier that
+                                includes basic weather updates and market prices. Premium features like IoT sensors and
+                                personalized crop advisory are available in higher-tier plans. Contact us for a
+                                customized quote based on your farm size and needs.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Is there a free trial available?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                Yes! We offer a 7-day free trial of our premium features so you can experience the full
+                                benefits of Shramic before committing. No credit card required to start your trial.
+                                Simply sign up through our app or website, and you'll have access to all features for 7
+                                days.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Are there any government subsidies or schemes that cover your services?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                Yes, several state and central government schemes provide subsidies for digital
+                                agriculture services. We help farmers navigate these programs and apply for subsidies.
+                                Our team can guide you through schemes like PM-KISAN, Rashtriya Krishi Vikas Yojana, and
+                                state-specific digital farming initiatives that can significantly reduce your costs.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2 class="h2 section-title" style="margin-top: 60px;">Support & Training</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What kind of training do you provide to farmers?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                We offer comprehensive training programs covering app usage, modern farming techniques,
+                                sustainable practices, and technology adoption. Training is available through video
+                                tutorials, webinars, on-ground workshops, and one-on-one sessions with agricultural
+                                experts. All training materials are available in regional languages.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How can I contact customer support?</span>
+                            <ion-icon name="chevron-down-outline" class="faq-icon"></ion-icon>
+                        </div>
+                        <div class="faq-answer">
+                            <p class="section-text">
+                                Our support team is available Monday to Saturday from 9:00 AM to 6:00 PM IST. You can
+                                reach us via phone at +91 1800-123-4567, email at support@shramic.com, or through the
+                                in-app chat feature. We typically respond within 2 hours during business hours.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta">
+                <div class="container">
+                    <div class="cta-card">
+                        <h3 class="cta-title">Still Have Questions?</h3>
+                        <p class="cta-text">
+                            Can't find the answer you're looking for? Our team is here to help. Reach out to us and
+                            we'll get back to you shortly.
+                        </p>
+                        <button class="btn btn-secondary" onclick="window.location.href='contact.html'"
+                            style="margin-top: 20px;">Contact Support</button>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="./assets/images/logo.png" alt="Shramic logo">
+                    </a>
+                    <p class="footer-text">Empowering Agriculture Through Innovation</p>
+                    <p class="footer-text">Follow us on</p>
+                    <ul class="social-list">
+                        <li>
+                            <a href="https://github.com/Amit-Ashok-Swain" class="social-link">
+                                <ion-icon name="logo-github"></ion-icon>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://instagram.com/_sanatani_hindutva_?igshid=OGQ5ZDc2ODk2ZA=="
+                                class="social-link">
+                                <ion-icon name="logo-instagram"></ion-icon>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-youtube"></ion-icon>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-facebook"></ion-icon>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-link-box">
+                    <ul class="footer-link-list">
+                        <li>
+                            <h3 class="h4 link-title">Company</h3>
+                        </li>
+                        <li>
+                            <a href="about.html" class="footer-link">About Us</a>
+                        </li>
+                        <li>
+                            <a href="blog.html" class="footer-link">Blog</a>
+                        </li>
+                        <li>
+                            <a href="testimonial.html" class="footer-link">Testimonials</a>
+                        </li>
+                    </ul>
+                    <ul class="footer-link-list">
+                        <li>
+                            <h3 class="h4 link-title">Resources</h3>
+                        </li>
+                        <li>
+                            <a href="faq.html" class="footer-link">FAQ'S</a>
+                        </li>
+                        <li>
+                            <a href="contact.html" class="footer-link">Contact</a>
+                        </li>
+                        <li>
+                            <a href="terms.html" class="footer-link">Terms & Conditions</a>
+                        </li>
+                    </ul>
+                    <ul class="footer-link-list">
+                        <li>
+                            <h3 class="h4 link-title">Services</h3>
+                        </li>
+                        <li>
+                            <a href="index.html#about" class="footer-link">Smart Farming</a>
+                        </li>
+                        <li>
+                            <a href="index.html#about" class="footer-link">Training Programs</a>
+                        </li>
+                        <li>
+                            <a href="index.html#about" class="footer-link">Market Intelligence</a>
+                        </li>
+                    </ul>
+                    <ul class="footer-link-list">
+                        <li>
+                            <h3 class="h4 link-title">Support</h3>
+                        </li>
+                        <li>
+                            <a href="contact.html" class="footer-link">Help Center</a>
+                        </li>
+                        <li>
+                            <a href="faq.html" class="footer-link">FAQ</a>
+                        </li>
+                        <li>
+                            <a href="contact.html" class="footer-link">Get in Touch</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="copyright">
+                &copy; 2024 <a href="https://shramic.com">Shramic.com</a> All rights reserved
+            </p>
+        </div>
+    </footer>
+
+    <a href="#top" class="go-top active" data-go-top>
+        <ion-icon name="chevron-up-outline"></ion-icon>
+    </a>
+
+    <script>
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            const allAnswers = document.querySelectorAll('.faq-answer');
+            const allIcons = document.querySelectorAll('.faq-icon');
+
+            allAnswers.forEach(item => {
+                if (item !== answer) {
+                    item.classList.remove('active');
+                }
+            });
+
+            allIcons.forEach(item => {
+                if (item !== icon) {
+                    item.classList.remove('active');
+                }
+            });
+
+            answer.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+    </script>
+    <script src="./assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

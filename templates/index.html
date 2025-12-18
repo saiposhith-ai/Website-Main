@@ -1,1351 +1,1125 @@
-{% extends "base.html" %} {% block title %}{{ hero.title_line1 if hero else
-'SHARMIC - Payment Solutions for Global Scale' }}{% endblock %} {% block
-meta_description %}{{ hero.subtitle if hero else 'We engineer payments for
-global scale. Trusted by leading enterprises worldwide.' }}{% endblock %} {%
-block extra_css %}
-<!-- Keep all your existing CSS styles here - unchanged -->
-<style>
-  .hero {
-    min-height: 100vh;
-    min-height: 100svh; /* Safari iOS fix */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 10rem 2rem 6rem;
-    overflow: hidden;
-    background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
-  }
-
-  .hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    opacity: 0.8;
-  }
-
-  .particle {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-  }
-
-  .particle-blue {
-    background: radial-gradient(
-      circle,
-      rgba(0, 153, 255, 0.6) 0%,
-      rgba(0, 153, 255, 0) 70%
-    );
-    animation: float 25s infinite ease-in-out;
-    filter: blur(50px);
-  }
-
-  .particle-ring {
-    border: 2px solid rgba(0, 153, 255, 0.2);
-    background: transparent;
-    animation: pulse 5s infinite ease-in-out;
-  }
-
-  .particle-dot {
-    background: rgba(0, 153, 255, 0.4);
-    width: 3px;
-    height: 3px;
-    animation: twinkle 4s infinite ease-in-out;
-  }
-
-  .particle-icon {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: rgba(20, 30, 50, 0.8);
-    border: 1px solid rgba(85, 165, 255, 0.3);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #55a5ff;
-    font-size: 1.5rem;
-    animation: float 20s infinite ease-in-out;
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translate(0, 0);
-    }
-    25% {
-      transform: translate(30px, -30px);
-    }
-    50% {
-      transform: translate(-20px, 20px);
-    }
-    75% {
-      transform: translate(20px, 30px);
-    }
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 0.5;
-    }
-    50% {
-      transform: scale(1.2);
-      opacity: 0.8;
-    }
-  }
-
-  @keyframes twinkle {
-    0%,
-    100% {
-      opacity: 0.3;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  .hero-content {
-    max-width: 1200px;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 0 1rem;
-  }
-
-  .badge {
-    display: inline-block;
-    background: rgba(9, 29, 53, 0.8);
-    border: 1px solid rgba(85, 165, 255, 0.3);
-    padding: 0.5rem 1.5rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #55a5ff;
-    margin-bottom: 2rem;
-    animation: fadeInUp 0.6s ease-out;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
-  h1 {
-    font-size: clamp(2rem, 6vw, 4.5rem);
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-    animation: fadeInUp 0.6s ease-out 0.2s both;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-  }
-
-  .gradient-text {
-    background: linear-gradient(135deg, #0099ff 0%, #60efff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    display: inline-block;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
-  .hero p {
-    font-size: clamp(0.95rem, 2vw, 1.125rem);
-    color: #b1b0b6;
-    max-width: 600px;
-    margin: 0 auto 2.5rem;
-    line-height: 1.6;
-    animation: fadeInUp 0.6s ease-out 0.4s both;
-    padding: 0 1rem;
-  }
-
-  .cta-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    background: #fff;
-    color: #000;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.6s ease-out 0.6s both;
-    border: none;
-    cursor: pointer;
-    min-height: 48px;
-    min-width: 160px;
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 153, 255, 0.2);
-    touch-action: manipulation;
-  }
-
-  .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
-  }
-
-  .cta-button:active {
-    transform: translateY(0);
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* ============================================
-   FEATURES SECTION
-   ============================================ */
-  .features {
-    padding: 6rem 2rem;
-    background: #000;
-  }
-
-  .features-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-
-  .section-header h2 {
-    font-size: clamp(1.75rem, 4vw, 3.25rem);
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #fff;
-    line-height: 1.3;
-    word-wrap: break-word;
-  }
-
-  .section-header p {
-    font-size: clamp(0.95rem, 2vw, 1.125rem);
-    color: #b1b0b6;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-    padding: 0 1rem;
-  }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-  }
-
-  .feature-card {
-    background: linear-gradient(135deg, #121316 0%, #1a1a20 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 2.5rem 2rem;
-    transition: all 0.3s ease;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-8px);
-    border-color: #0099ff;
-    box-shadow: 0 20px 40px rgba(0, 153, 255, 0.2);
-  }
-
-  .feature-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #0099ff, #0561e2);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.75rem;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-
-  .feature-icon-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  .feature-icon-text {
-    font-size: 1.75rem;
-    display: block;
-  }
-
-  .feature-card h3 {
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #fff;
-    line-height: 1.4;
-  }
-
-  .feature-card p {
-    color: #b1b0b6;
-    line-height: 1.6;
-    font-size: clamp(0.875rem, 1.5vw, 0.95rem);
-  }
-
-  /* ============================================
-   STATS SECTION
-   ============================================ */
-  .stats {
-    padding: 4rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    background: #000;
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .stat-card {
-    background: #121316;
-    border: 1px solid #2d2b2b;
-    border-radius: 20px;
-    padding: 2.5rem 1.5rem;
-    text-align: center;
-    transition: all 0.4s ease;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  .stat-card:hover {
-    transform: translateY(-10px);
-    border-color: #0561e2;
-    box-shadow: 0 20px 40px rgba(5, 97, 226, 0.2);
-  }
-
-  .stat-number {
-    font-size: clamp(2rem, 5vw, 2.5rem);
-    font-weight: 700;
-    background: linear-gradient(135deg, #00ff87 0%, #60efff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 1rem;
-    display: inline-block;
-    will-change: transform;
-  }
-
-  .stat-label {
-    color: #c4c4c7;
-    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-    line-height: 1.5;
-  }
-
-  /* ============================================
-   PARTNERS SECTION
-   ============================================ */
-  .partners {
-    padding: 3rem 2rem;
-    background: #fff;
-    text-align: center;
-  }
-
-  .partners-text {
-    color: #838383;
-    font-size: clamp(0.8rem, 1.5vw, 0.875rem);
-    margin-bottom: 2rem;
-  }
-
-  .partners-text span {
-    color: #1c1c1c;
-    font-weight: 600;
-  }
-
-  .partners-grid {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-  }
-
-  .partners-grid:hover {
-    opacity: 1;
-  }
-
-  .partner-logo {
-    height: 40px;
-    max-width: 120px;
-    object-fit: contain;
-    filter: grayscale(100%);
-    transition: all 0.3s;
-    cursor: pointer;
-  }
-
-  .partner-logo:hover {
-    filter: grayscale(0%);
-    opacity: 1;
-    transform: scale(1.1);
-  }
-
-  /* ============================================
-   TESTIMONIALS SECTION
-   ============================================ */
-  .testimonials {
-    padding: 6rem 2rem;
-    background: #121316;
-  }
-
-  .testimonials-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .testimonial-card {
-    background: #1a1a20;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 2rem;
-    transition: all 0.3s ease;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  .testimonial-card:hover {
-    transform: translateY(-5px);
-    border-color: #0099ff;
-  }
-
-  .testimonial-stars {
-    color: #ffd700;
-    font-size: 1.125rem;
-    margin-bottom: 1rem;
-  }
-
-  .testimonial-text {
-    color: #b1b0b6;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    font-size: clamp(0.875rem, 1.5vw, 0.95rem);
-  }
-
-  .testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .author-avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #0099ff, #0561e2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-  }
-
-  .author-avatar-img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(0, 153, 255, 0.3);
-    flex-shrink: 0;
-  }
-
-  .author-info h4 {
-    margin: 0 0 0.25rem 0;
-    font-size: clamp(0.85rem, 1.5vw, 0.9rem);
-    color: #fff;
-    line-height: 1.3;
-  }
-
-  .author-info p {
-    margin: 0;
-    font-size: clamp(0.75rem, 1.5vw, 0.8rem);
-    color: #777e90;
-    line-height: 1.3;
-  }
-
-  /* ============================================
-   CTA SECTION
-   ============================================ */
-  .cta-section {
-    padding: 6rem 2rem;
-    background: #121316;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-section::before {
-    content: "";
-    position: absolute;
-    top: -10%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 150px;
-    background: radial-gradient(
-      ellipse,
-      rgba(64, 130, 222, 0.4) 0%,
-      transparent 70%
-    );
-    filter: blur(80px);
-  }
-
-  .cta-section h2 {
-    font-size: clamp(2rem, 6vw, 4.5rem);
-    font-weight: 600;
-    margin-bottom: 2rem;
-    line-height: 1.3;
-    position: relative;
-    z-index: 1;
-    color: #fff;
-    word-wrap: break-word;
-    padding: 0 1rem;
-  }
-
-  /* ============================================
-   SCROLL REVEAL
-   ============================================ */
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.8s ease;
-  }
-
-  .scroll-reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ============================================
-   MOBILE RESPONSIVE - TABLET
-   ============================================ */
-  @media (max-width: 1024px) {
-    .hero {
-      padding: 8rem 2rem 5rem;
-    }
-
-    .features {
-      padding: 5rem 2rem;
-    }
-
-    .features-grid {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .testimonials {
-      padding: 5rem 2rem;
-    }
-  }
-
-  /* ============================================
-   MOBILE RESPONSIVE - MOBILE
-   ============================================ */
-  @media (max-width: 768px) {
-    .hero {
-      padding: 7rem 1.5rem 4rem;
-      min-height: 90vh;
-      min-height: 90svh;
-    }
-
-    h1 {
-      font-size: clamp(1.75rem, 8vw, 2.25rem);
-      margin-bottom: 1.25rem;
-    }
-
-    .badge {
-      font-size: 0.7rem;
-      padding: 0.4rem 1.2rem;
-      letter-spacing: 1.2px;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero p {
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-      padding: 0 0.5rem;
-    }
-
-    .cta-button {
-      padding: 0.9rem 1.75rem;
-      font-size: 0.95rem;
-      width: auto;
-      max-width: 100%;
-    }
-
-    .features {
-      padding: 4rem 1.5rem;
-    }
-
-    .section-header {
-      margin-bottom: 3rem;
-    }
-
-    .section-header h2 {
-      font-size: 1.75rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .section-header p {
-      font-size: 0.95rem;
-    }
-
-    .features-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .feature-card {
-      padding: 2rem 1.5rem;
-    }
-
-    .stats {
-      padding: 3rem 1.5rem;
-    }
-
-    .stats-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-
-    .stat-card {
-      padding: 2rem 1rem;
-    }
-
-    .partners {
-      padding: 2.5rem 1.5rem;
-    }
-
-    .partners-grid {
-      gap: 2rem;
-    }
-
-    .partner-logo {
-      height: 32px;
-    }
-
-    .testimonials {
-      padding: 4rem 1.5rem;
-    }
-
-    .testimonials-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .testimonial-card {
-      padding: 1.75rem 1.5rem;
-    }
-
-    .cta-section {
-      padding: 5rem 1.5rem;
-    }
-
-    .cta-section h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Reduce particle effects on mobile for performance */
-    .particle-blue {
-      filter: blur(30px);
-    }
-
-    .particle-icon {
-      width: 40px;
-      height: 40px;
-      font-size: 1.25rem;
-    }
-  }
-
-  /* ============================================
-   MOBILE RESPONSIVE - SMALL MOBILE
-   ============================================ */
-  @media (max-width: 480px) {
-    .hero {
-      padding: 6rem 1rem 3rem;
-      min-height: 85vh;
-      min-height: 85svh;
-    }
-
-    h1 {
-      font-size: 1.75rem;
-      line-height: 1.25;
-    }
-
-    .hero p {
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    .cta-button {
-      padding: 0.85rem 1.5rem;
-      font-size: 0.9rem;
-      gap: 0.5rem;
-    }
-
-    .badge {
-      font-size: 0.65rem;
-      padding: 0.35rem 1rem;
-    }
-
-    .features {
-      padding: 3rem 1rem;
-    }
-
-    .section-header {
-      margin-bottom: 2.5rem;
-    }
-
-    .section-header h2 {
-      font-size: 1.5rem;
-    }
-
-    .features-grid {
-      gap: 1.25rem;
-    }
-
-    .feature-card {
-      padding: 1.75rem 1.25rem;
-    }
-
-    .feature-icon {
-      width: 50px;
-      height: 50px;
-      font-size: 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .stats {
-      padding: 2.5rem 1rem;
-    }
-
-    .stats-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .stat-card {
-      padding: 1.75rem 1rem;
-    }
-
-    .stat-number {
-      font-size: 2rem;
-    }
-
-    .partners {
-      padding: 2rem 1rem;
-    }
-
-    .partners-grid {
-      gap: 1.5rem;
-    }
-
-    .partner-logo {
-      height: 28px;
-    }
-
-    .testimonials {
-      padding: 3rem 1rem;
-    }
-
-    .testimonials-grid {
-      gap: 1.25rem;
-    }
-
-    .testimonial-card {
-      padding: 1.5rem 1rem;
-    }
-
-    .cta-section {
-      padding: 4rem 1rem;
-    }
-
-    .cta-section h2 {
-      font-size: 1.75rem;
-    }
-
-    /* Hide some particles on very small screens */
-    .particle-icon:nth-child(n + 3) {
-      display: none;
-    }
-  }
-
-  /* ============================================
-   WEBKIT SPECIFIC FIXES
-   ============================================ */
-  @supports (-webkit-touch-callout: none) {
-    /* iOS Safari specific fixes */
-    .hero {
-      min-height: -webkit-fill-available;
-    }
-
-    .cta-button {
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    input,
-    textarea,
-    select {
-      -webkit-appearance: none;
-      appearance: none;
-    }
-  }
-
-  /* Prevent text inflation on mobile */
-  body {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-
-  /* Better font smoothing */
-  * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Hardware acceleration for animations */
-  .feature-card,
-  .stat-card,
-  .testimonial-card {
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-  }
-
-  /* Safe area insets for notched devices */
-  @supports (padding: max(0px)) {
-    .hero {
-      padding-left: max(1rem, env(safe-area-inset-left));
-      padding-right: max(1rem, env(safe-area-inset-right));
-    }
-
-    .hero-content {
-      padding-left: max(1rem, env(safe-area-inset-left));
-      padding-right: max(1rem, env(safe-area-inset-right));
-    }
-  }
-  .hero[style*="text-align: left"] .hero-content {
-    text-align: left;
-    align-items: flex-start;
-  }
-
-  .hero[style*="text-align: right"] .hero-content {
-    text-align: right;
-    align-items: flex-end;
-  }
-
-  .hero[style*="text-align: center"] .hero-content {
-    text-align: center;
-    align-items: center;
-  }
-
-  /* Hero content layout */
-  .hero-content {
-    max-width: 1200px;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Background types */
-  .hero-background,
-  .hero-background-image,
-  .hero-background-video,
-  .hero-background-gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .hero-background-image {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  .hero-background-video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .hero-background-gradient {
-    background: linear-gradient(
-      135deg,
-      rgba(0, 153, 255, 0.2),
-      rgba(5, 97, 226, 0.2)
-    );
-  }
-
-  /* Badge with icon support */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(9, 29, 53, 0.8);
-    border: 1px solid rgba(85, 165, 255, 0.3);
-    padding: 0.5rem 1.5rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #55a5ff;
-    margin-bottom: 2rem;
-    animation: fadeInUp 0.6s ease-out;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-
-  .badge-icon-emoji {
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
-  .badge-icon-image {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-  }
-
-  .badge-icon-svg {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-  }
-
-  .badge-icon-svg svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Title style variations */
-  .hero-title-gradient h1 .gradient-text,
-  h1 .gradient-text {
-    background: linear-gradient(135deg, #0099ff 0%, #60efff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    display: inline-block;
-  }
-
-  .hero-title-solid h1 .title-highlight {
-    background: none;
-    -webkit-text-fill-color: inherit;
-    color: #0099ff;
-  }
-
-  .hero-title-outline h1 .title-highlight {
-    background: none;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 2px #0099ff;
-    text-stroke: 2px #0099ff;
-  }
-
-  /* CTA button styles */
-  .cta-solid {
-    background: #fff;
-    color: #000;
-  }
-
-  .cta-solid:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
-  }
-
-  .cta-outline {
-    background: transparent;
-    border: 2px solid #fff;
-    color: #fff;
-  }
-
-  .cta-outline:hover {
-    background: #fff;
-    color: #000;
-  }
-
-  .cta-ghost {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .cta-ghost:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-</style>
-{% endblock %} {% block content %}
-<!-- Hero Section - Dynamic -->
-<section
-  class="hero {% if hero %}hero-title-{{ hero.title_style }}{% else %}hero-title-gradient{% endif %}"
-  style="min-height: {{ hero.min_height if hero else '100vh' }}; 
-                text-align: {{ hero.text_alignment if hero else 'center' }};"
->
-  <!-- Background Layer - Dynamic -->
-  {% if hero %} {% if hero.background_type == 'image' and
-  hero.background_image_path %}
-  <div
-    class="hero-background-image"
-    style="background-image: url('{{ url_for('static', filename=hero.background_image_path) }}'); 
-                opacity: {{ (hero.background_overlay_opacity / 100) if hero.background_overlay_opacity else 0.8 }};"
-  ></div>
-
-  {% elif hero.background_type == 'video' and hero.background_video_url %}
-  <div class="hero-background-video">
-    <video
-      autoplay
-      muted
-      loop
-      playsinline
-      style="opacity: {{ (hero.background_overlay_opacity / 100) if hero.background_overlay_opacity else 0.8 }};"
-    >
-      <source src="{{ hero.background_video_url }}" type="video/mp4" />
-    </video>
-  </div>
-
-  {% elif hero.background_type == 'gradient' %}
-  <div
-    class="hero-background-gradient"
-    style="opacity: {{ (hero.background_overlay_opacity / 100) if hero.background_overlay_opacity else 0.8 }};"
-  ></div>
-
-  {% else %}
-  <!-- Default: Particles -->
-  <div class="hero-background" id="particleCanvas"></div>
-  {% endif %} {% else %}
-  <!-- Fallback: Particles -->
-  <div class="hero-background" id="particleCanvas"></div>
-  {% endif %}
-
-  <!-- Content Layer -->
-  <div class="hero-content">
-    {% if hero %}
-    <!-- Badge with Dynamic Icon -->
-    <div class="badge">
-      {% if hero.badge_icon_type == 'emoji' and hero.badge_icon_content %}
-      <span class="badge-icon-emoji">{{ hero.badge_icon_content }}</span>
-      {% elif hero.badge_icon_type == 'image' and hero.badge_icon_content %}
-      <img
-        src="{{ url_for('static', filename=hero.badge_icon_content) }}"
-        alt="Badge icon"
-        class="badge-icon-image"
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
+    <title>Shramic Networks - Empowering Agriculture Through Innovation</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta
+      name="description"
+      content="Transforming traditional farming with cutting-edge technology"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://careers.shramic.com/static/img/logo.png"
+      type="image/png"
+    />
+
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Load CSS asynchronously to prevent render blocking -->
+    <link
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       />
-      {% elif hero.badge_icon_type == 'svg' and hero.badge_icon_content %}
-      <span class="badge-icon-svg">{{ hero.badge_icon_content|safe }}</span>
-      {% endif %}
-      <span>{{ hero.badge_text }}</span>
-    </div>
+    </noscript>
 
-    <!-- Dynamic Title -->
-    <h1>
-      {{ hero.title_line1 }}<br />
-      {% if hero.title_style == 'gradient' %}
-      <span class="gradient-text">{{ hero.title_line2 }}</span>
-      {% elif hero.title_style == 'solid' %}
-      <span class="title-highlight">{{ hero.title_line2 }}</span>
-      {% elif hero.title_style == 'outline' %}
-      <span class="title-highlight">{{ hero.title_line2 }}</span>
-      {% else %}
-      <span class="gradient-text">{{ hero.title_line2 }}</span>
-      {% endif %}
-    </h1>
-
-    <!-- Subtitle -->
-    <p>{{ hero.subtitle }}</p>
-
-    <!-- Dynamic CTA Button -->
-    <a href="{{ hero.cta_link }}" class="cta-button cta-{{ hero.cta_style }}">
-      {{ hero.cta_text }}
-      <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
-        <path
-          d="M1 1L5 5L1 9"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-      </svg>
-    </a>
-    {% else %}
-    <!-- Fallback Content -->
-    <div class="badge">WELCOME TO SHARMIC</div>
-    <h1>
-      We Engineer Payments<br />
-      <span class="gradient-text">for Global Scale</span>
-    </h1>
-    <p>Trusted by leading enterprises worldwide.</p>
-    <a href="{{ url_for('contact') }}" class="cta-button cta-solid">
-      Get Started
-      <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
-        <path
-          d="M1 1L5 5L1 9"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        />
-      </svg>
-    </a>
-    {% endif %}
-  </div>
-</section>
-
-<!-- Features Section -->
-{% if features %}
-<section class="features scroll-reveal">
-  <div class="features-container">
-    <div class="section-header">
-      <h2>Why Choose SHARMIC?</h2>
-      <p>Industry-leading solutions designed for modern payment needs</p>
-    </div>
-    <div class="features-grid">
-      {% for feature in features %}
-      <div class="feature-card">
-        <div class="feature-icon">
-          {% if feature.icon_path %}
-          <img
-            src="{{ url_for('static', filename=feature.icon_path) }}"
-            alt="{{ feature.title }}"
-            class="feature-icon-img"
-          />
-          {% else %}
-          <span class="feature-icon-text">{{ feature.icon }}</span>
-          {% endif %}
-        </div>
-        <h3>{{ feature.title }}</h3>
-        <p>{{ feature.description }}</p>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<!-- Stats Section -->
-{% if stats %}
-<section class="stats scroll-reveal">
-  <div class="stats-grid">
-    {% for stat in stats %}
-    <div class="stat-card">
-      <div class="stat-number">{{ stat.number }}</div>
-      <div class="stat-label">
-        {{ stat.label_line1 }} {% if stat.label_line2 %}<br />{{
-        stat.label_line2 }}{% endif %}
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
-
-<!-- Partners Section -->
-{% if partners %}
-<section class="partners scroll-reveal">
-  <p class="partners-text">
-    <span>Trusted</span> by the fastest growing companies
-  </p>
-  <div class="partners-grid">
-    {% for partner in partners %}
-    <a
-      href="{{ partner.website or '#' }}"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img
-        src="{{ url_for('static', filename=partner.logo_path) }}"
-        alt="{{ partner.name }}"
-        class="partner-logo"
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       />
-    </a>
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
+    </noscript>
 
-<!-- Testimonials Section -->
-{% if testimonials %}
-<section class="testimonials scroll-reveal">
-  <div class="testimonials-container">
-    <div class="section-header">
-      <h2>What Our Clients Say</h2>
-    </div>
-    <div class="testimonials-grid">
-      {% for testimonial in testimonials %}
-      <div class="testimonial-card">
-        <div class="testimonial-stars">
-          {% for i in range(testimonial.rating) %}★{% endfor %}
-        </div>
-        <p class="testimonial-text">{{ testimonial.text }}</p>
-        <div class="testimonial-author">
-          {% if testimonial.image_path %}
-          <img
-            src="{{ url_for('static', filename=testimonial.image_path) }}"
-            alt="{{ testimonial.author_name }}"
-            class="author-avatar-img"
-          />
-          {% else %}
-          <div class="author-avatar">
-            {{ testimonial.author_name[0].upper() }}
-          </div>
-          {% endif %}
-          <div class="author-info">
-            <h4>{{ testimonial.author_name }}</h4>
-            <p>{{ testimonial.author_title }}</p>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<!-- CTA Section -->
-<section class="cta-section scroll-reveal">
-  <h2>
-    <span class="gradient-text">Ready to transform</span><br />
-    your payment experience?
-  </h2>
-  <a href="{{ url_for('contact') }}" class="cta-button cta-solid">
-    Schedule a Demo
-    <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
-      <path
-        d="M1 1L5 5L1 9"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
       />
-    </svg>
-  </a>
-</section>
-{% endblock %} {% block extra_js %}
-<script>
-  // Particle Animation (only runs for particles background)
-  function createParticles() {
-    const canvas = document.getElementById("particleCanvas");
-    if (!canvas) return;
+    </noscript>
 
-    const particles = [
-      { size: 200, x: 15, y: 20, class: "particle-blue" },
-      { size: 150, x: 75, y: 30, class: "particle-blue" },
-      { size: 120, x: 85, y: 65, class: "particle-blue" },
-    ];
-
-    particles.forEach((p, i) => {
-      const particle = document.createElement("div");
-      particle.className = `particle ${p.class}`;
-      particle.style.width = p.size + "px";
-      particle.style.height = p.size + "px";
-      particle.style.left = p.x + "%";
-      particle.style.top = p.y + "%";
-      particle.style.animationDelay = i * 3 + "s";
-      canvas.appendChild(particle);
-    });
-
-    const icons = [
-      { symbol: "₹", x: 75, y: 25 },
-      { symbol: "€", x: 80, y: 55 },
-      { symbol: "£", x: 85, y: 35 },
-      { symbol: "🛒", x: 70, y: 60 },
-    ];
-
-    icons.forEach((icon, i) => {
-      const iconEl = document.createElement("div");
-      iconEl.className = "particle particle-icon";
-      iconEl.textContent = icon.symbol;
-      iconEl.style.left = icon.x + "%";
-      iconEl.style.top = icon.y + "%";
-      iconEl.style.animationDelay = i * 2.5 + "s";
-      canvas.appendChild(iconEl);
-    });
-
-    for (let i = 0; i < 4; i++) {
-      const ring = document.createElement("div");
-      ring.className = "particle particle-ring";
-      ring.style.width = 60 + i * 40 + "px";
-      ring.style.height = 60 + i * 40 + "px";
-      ring.style.left = 62 + i * 4 + "%";
-      ring.style.top = 42 - i * 3 + "%";
-      ring.style.animationDelay = i * 0.7 + "s";
-      canvas.appendChild(ring);
-    }
-
-    for (let i = 0; i < 30; i++) {
-      const dot = document.createElement("div");
-      dot.className = "particle particle-dot";
-      dot.style.left = Math.random() * 100 + "%";
-      dot.style.top = Math.random() * 100 + "%";
-      dot.style.animationDelay = Math.random() * 4 + "s";
-      canvas.appendChild(dot);
-    }
-  }
-
-  // Scroll Reveal
-  const observerOptions = {
-    threshold: 0.15,
-    rootMargin: "0px 0px -80px 0px",
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
+    <style>
+      /* Critical CSS - Inline for instant rendering */
+      :root {
+        --cream: #fff8f0;
+        --cream-dark: #f5ebe0;
+        --primary: #2c3e50;
+        --secondary: #e67e22;
+        --accent: #d4a574;
+        --text-dark: #2c3e50;
+        --text-light: #6c757d;
+        --success: #27ae60;
+        --white: #ffffff;
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-lg: rgba(0, 0, 0, 0.12);
       }
-    });
-  }, observerOptions);
 
-  document.querySelectorAll(".scroll-reveal").forEach((el) => {
-    observer.observe(el);
-  });
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  // Initialize particles
-  document.addEventListener("DOMContentLoaded", createParticles);
-</script>
-{% endblock %}
+      body {
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background-color: var(--cream);
+        color: var(--text-dark);
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      /* Enhanced Mobile Navigation */
+      .navbar {
+        background-color: var(--white);
+        box-shadow: 0 2px 10px var(--shadow);
+        padding: 0.75rem 0;
+        transition: all 0.3s ease;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--primary) !important;
+      }
+
+      .navbar-brand img {
+        height: 40px;
+        width: auto;
+        transition: transform 0.3s ease;
+      }
+
+      .nav-link {
+        color: var(--text-dark) !important;
+        font-weight: 500;
+        padding: 0.7rem 1rem !important;
+        transition: all 0.3s ease;
+        position: relative;
+        font-size: 0.95rem;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: var(--secondary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 70%;
+      }
+
+      .btn-primary {
+        background-color: var(--secondary);
+        border: 2px solid var(--secondary);
+        color: var(--white);
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .btn-primary:hover {
+        background-color: transparent;
+        color: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+      }
+
+      /* Hero Section - Mobile Optimized */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--cream) 0%,
+          var(--cream-dark) 100%
+        );
+        padding: 80px 0 100px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-content {
+        text-align: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2.2rem;
+        line-height: 1.3;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .hero-title span {
+        color: var(--secondary);
+      }
+
+      .hero-text {
+        font-size: 1.05rem;
+        color: var(--text-light);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .shape-content {
+        position: absolute;
+        width: 600px;
+        top: -100px;
+        right: -200px;
+        z-index: 0;
+        opacity: 0.3;
+      }
+
+      /* About Section - Mobile Optimized */
+      .about {
+        background: var(--primary);
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+      }
+
+      .about .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      .about-top {
+        margin-bottom: 60px;
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--white);
+        font-weight: 700;
+      }
+
+      .section-text {
+        color: var(--white);
+        font-size: 1rem;
+        margin-bottom: 3rem;
+        line-height: 1.7;
+      }
+
+      .about-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        margin-top: 40px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .about-card {
+        background: var(--white);
+        padding: 35px 25px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px var(--shadow);
+        transition: all 0.3s ease;
+      }
+
+      .about-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px var(--shadow-lg);
+      }
+
+      .card-icon {
+        color: var(--secondary);
+        font-size: 45px;
+        margin: 0 auto 15px;
+      }
+
+      .card-title {
+        font-family: "Playfair Display", serif;
+        margin-bottom: 15px;
+        color: var(--primary);
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+
+      .card-text {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .about-bottom {
+        margin-top: 80px;
+      }
+
+      .about-bottom-banner {
+        margin-bottom: 40px;
+      }
+
+      .about-bottom-banner img {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        display: block;
+        border-radius: 12px;
+      }
+
+      .btn-secondary {
+        background-color: transparent;
+        border: 2px solid var(--white);
+        color: var(--white);
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        display: inline-block;
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--white);
+        color: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      /* Features Section - Mobile Optimized */
+      .features {
+        padding: 80px 0;
+        background: var(--white);
+      }
+
+      .features .section-title {
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .features .section-text {
+        color: var(--text-light);
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .features-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .features-item {
+        margin-bottom: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .features-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .features-item-banner {
+        width: 100%;
+        max-width: 400px;
+        margin-bottom: 30px;
+      }
+
+      .features-item-banner img {
+        width: 100%;
+        border-radius: 50%;
+        box-shadow: 0 10px 30px var(--shadow);
+      }
+
+      .feature-item-content {
+        text-align: center;
+      }
+
+      .item-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .item-text {
+        color: var(--text-light);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      /* Footer - Mobile Optimized */
+      footer {
+        background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+        color: var(--white);
+        padding: 3rem 0 1rem;
+      }
+
+      footer h5 {
+        color: var(--white);
+        font-size: 1.1rem;
+        margin-bottom: 1.2rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      footer h5::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--secondary);
+      }
+
+      footer a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      footer a:hover {
+        color: var(--secondary);
+        padding-left: 5px;
+      }
+
+      .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        margin-bottom: 0;
+      }
+
+      .social-links a:hover {
+        background-color: var(--secondary);
+        transform: translateY(-3px);
+        padding-left: 0;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.85rem;
+      }
+
+      .footer-bottom a {
+        display: inline;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .hero-banner {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: -100px;
+        transform: translateY(-50%);
+        width: 500px;
+        height: 500px;
+        background: url("https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&h=600&fit=crop")
+          no-repeat center;
+        background-size: contain;
+        z-index: 1;
+        transition: right 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+      }
+
+      /* DESKTOP ONLY - Show and slide-in ready */
+      @media (min-width: 992px) {
+        .hero-banner {
+          display: block !important;
+          right: -100px;
+        }
+
+        .hero-banner.active {
+          right: 50px !important;
+        }
+
+        @media (min-width: 1200px) {
+          .hero-banner {
+            right: -150px;
+            width: 600px;
+            height: 600px;
+          }
+
+          .hero-banner.active {
+            right: 100px !important;
+          }
+        }
+      }
+
+      /* Tablet - Smaller size */
+      @media (min-width: 768px) and (max-width: 991px) {
+        .hero-banner {
+          display: block !important;
+          width: 400px;
+          height: 400px;
+          right: -80px;
+        }
+
+        .hero-banner.active {
+          right: 20px !important;
+        }
+      }
+
+      .page-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--cream);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.3s;
+      }
+
+      .page-loader.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid var(--cream-dark);
+        border-top-color: var(--secondary);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Tablet Styles */
+      @media (min-width: 768px) {
+        .hero-title {
+          font-size: 2.8rem;
+        }
+
+        .hero-text {
+          font-size: 1.15rem;
+        }
+
+        .about-list {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 30px;
+        }
+
+        .section-title {
+          font-size: 2.3rem;
+        }
+
+        .section-text {
+          font-size: 1.05rem;
+        }
+      }
+
+      /* Desktop Styles */
+      @media (min-width: 1024px) {
+        .hero {
+          padding: 120px 0 140px;
+        }
+
+        .hero-title {
+          font-size: 3.5rem;
+          text-align: left;
+        }
+
+        .hero-text {
+          font-size: 1.25rem;
+          text-align: left;
+        }
+
+        .hero-content {
+          text-align: left;
+          max-width: 600px;
+        }
+
+        .about {
+          padding: 120px 0;
+        }
+
+        .about-top {
+          margin-bottom: 80px;
+        }
+
+        .about-list {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 30px;
+        }
+
+        .about-bottom {
+          display: flex;
+          align-items: center;
+          gap: 60px;
+          margin-top: 100px;
+        }
+
+        .about-bottom-banner {
+          flex: 1;
+          margin-bottom: 0;
+        }
+
+        .about-bottom-content {
+          flex: 1;
+          text-align: left;
+        }
+
+        .features {
+          padding: 120px 0;
+        }
+
+        .features .section-text {
+          margin-bottom: 80px;
+        }
+
+        .features-item {
+          flex-direction: row;
+          gap: 50px;
+          margin-bottom: 80px;
+          align-items: center;
+        }
+
+        .features-item:last-child {
+          flex-direction: row-reverse;
+        }
+
+        .features-item-banner {
+          flex: 1;
+          margin-bottom: 0;
+        }
+
+        .feature-item-content {
+          flex: 1;
+          text-align: left;
+        }
+
+        .item-title {
+          font-size: 2rem;
+        }
+
+        .item-text {
+          font-size: 1.1rem;
+        }
+
+        footer {
+          padding: 4rem 0 1.5rem;
+        }
+      }
+
+      /* Large Desktop */
+      @media (min-width: 1200px) {
+        .container {
+          max-width: 1140px;
+        }
+
+        .hero-title {
+          font-size: 4rem;
+        }
+
+        .section-title {
+          font-size: 2.5rem;
+        }
+      }
+
+      /* Small Mobile Optimization */
+      @media (max-width: 576px) {
+        .hero-title {
+          font-size: 1.8rem;
+        }
+
+        .hero-text {
+          font-size: 0.95rem;
+        }
+
+        .navbar-brand {
+          font-size: 1.1rem;
+        }
+
+        .navbar-brand img {
+          height: 35px;
+        }
+
+        .section-title {
+          font-size: 1.7rem;
+        }
+
+        .section-text {
+          font-size: 0.95rem;
+        }
+
+        .about-card {
+          padding: 30px 20px;
+        }
+
+        .card-title {
+          font-size: 1.2rem;
+        }
+
+        .item-title {
+          font-size: 1.4rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-loader" id="pageLoader">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img
+            src="https://careers.shramic.com/static/img/logo.png"
+            alt="Shramic Logo"
+            width="40"
+            height="40"
+            loading="eager"
+          />
+          <span>Shramic Networks</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#features">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/testimonial">Testimonials</a>
+            </li>
+            <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+              <a
+                class="btn btn-primary btn-sm"
+                href="https://careers.shramic.com/contact"
+                >Get in touch</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <article>
+        <section class="hero" id="home">
+          <div class="container position-relative">
+            <div class="hero-content">
+              <h1 class="hero-title">
+                Empowering Agriculture Through Innovation
+              </h1>
+              <p class="hero-text">
+                Transforming traditional farming with cutting-edge technology to
+                maximize productivity while ensuring sustainability for future
+                generations.
+              </p>
+              <button class="btn btn-primary">Get Started Today</button>
+            </div>
+            <div class="hero-banner"></div>
+          </div>
+          <img
+            src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=900&h=900&fit=crop"
+            alt="shape"
+            class="shape-content"
+            loading="lazy"
+            width="900"
+            height="900"
+          />
+        </section>
+
+        <section class="about" id="about">
+          <div class="container">
+            <div class="about-top">
+              <h2 class="section-title">What We Do</h2>
+              <p class="section-text">
+                At Shramic, we bridge the gap between traditional agriculture
+                and modern technology. Our mission is to empower farmers with
+                innovative tools, knowledge, and resources to maximize
+                productivity while ensuring sustainability.
+              </p>
+              <ul class="about-list">
+                <li>
+                  <div class="about-card">
+                    <div class="card-icon">
+                      <ion-icon name="leaf-outline"></ion-icon>
+                    </div>
+                    <h3 class="card-title">Smart Farming Solutions</h3>
+                    <p class="card-text">
+                      Leverage IoT sensors, AI analytics, and precision
+                      agriculture techniques to optimize crop yield and resource
+                      management.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <div class="about-card">
+                    <div class="card-icon">
+                      <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                    <h3 class="card-title">Farmer Training Programs</h3>
+                    <p class="card-text">
+                      Comprehensive training modules on modern farming
+                      techniques, sustainable practices, and technology
+                      adoption.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <div class="about-card">
+                    <div class="card-icon">
+                      <ion-icon name="analytics-outline"></ion-icon>
+                    </div>
+                    <h3 class="card-title">Market Intelligence</h3>
+                    <p class="card-text">
+                      Real-time market data, price forecasting, and direct
+                      market linkages to ensure fair prices for farmers'
+                      produce.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="about-bottom">
+              <figure class="about-bottom-banner">
+                <img
+                  src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=500&h=500&fit=crop"
+                  alt="Farmers working together"
+                  loading="lazy"
+                  width="500"
+                  height="500"
+                />
+              </figure>
+              <div class="about-bottom-content">
+                <h2 class="section-title">Growing Together with Farmers</h2>
+                <p class="section-text">
+                  We believe in sustainable growth that benefits everyone in the
+                  agricultural ecosystem. From soil health to market access, we
+                  provide end-to-end support to help farmers thrive in the
+                  modern agricultural landscape.
+                </p>
+                <button
+                  class="btn btn-secondary"
+                  onclick="window.location.href='about.html'"
+                >
+                  Learn More About Us
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section class="features" id="features">
+          <div class="container">
+            <h2 class="section-title">Why Choose Shramic?</h2>
+            <p class="section-text">
+              Our platform combines years of agricultural expertise with
+              state-of-the-art technology to deliver solutions that truly make a
+              difference in farmers' lives.
+            </p>
+            <ul class="features-list">
+              <li class="features-item">
+                <figure class="features-item-banner">
+                  <img
+                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop"
+                    alt="Technology platform interface"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  />
+                </figure>
+                <div class="feature-item-content">
+                  <h3 class="item-title">Technology That Works</h3>
+                  <p class="item-text">
+                    Our user-friendly mobile and web applications are designed
+                    specifically for farmers, providing easy access to weather
+                    forecasts, crop advisory, and expert consultations right at
+                    their fingertips.
+                  </p>
+                </div>
+              </li>
+              <li class="features-item">
+                <figure class="features-item-banner">
+                  <img
+                    src="https://images.unsplash.com/photo-1593113646773-028c19d7e1e5?w=400&h=400&fit=crop"
+                    alt="Sustainable farming practices"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  />
+                </figure>
+                <div class="feature-item-content">
+                  <h3 class="item-title">Sustainable & Affordable</h3>
+                  <p class="item-text">
+                    We're committed to making advanced agricultural solutions
+                    accessible to all. Our transparent pricing and flexible
+                    payment options ensure that every farmer can benefit from
+                    our services.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="https://careers.shramic.com/static/img/logo.png"
+                alt="Shramic Networks Logo"
+                style="height: 50px; margin-right: 15px"
+                width="50"
+                height="50"
+                loading="lazy"
+              />
+              <h5 class="mb-0">Shramic Networks</h5>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Empowering Agriculture Through Innovation
+            </p>
+            <div class="social-links">
+              <a href="#" aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="https://www.instagram.com/shramic.info"
+                aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="https://github.com/Amit-Ashok-Swain" aria-label="GitHub"
+                ><i class="fab fa-github"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h5>Company</h5>
+            <a href="about.html">About Us</a>
+            <a href="blog.html">Blog</a>
+            <a href="testimonial.html">Testimonials</a>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Services</h5>
+            <a href="#about">Smart Farming</a>
+            <a href="#about">Training Programs</a>
+            <a href="#about">Market Intelligence</a>
+            <a href="#about">Farmer Support</a>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Contact Info</h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-envelope me-2"></i>
+              <a href="mailto:shramicnetworks@gmail.com" style="display: inline"
+                >shramicnetworks@gmail.com</a
+              >
+            </p>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-phone me-2"></i>
+              <a href="tel:+919876543210" style="display: inline"
+                >+91 98765 43210</a
+              >
+            </p>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-map-marker-alt me-2"></i>
+              Bengaluru, Karnataka, India
+            </p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Shramic Networks. All rights reserved. |
+            <a
+              href="terms.html"
+              style="display: inline; color: rgba(255, 255, 255, 0.7)"
+              >Terms & Conditions</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS - Deferred loading -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+    <!-- Ionicons - Deferred loading -->
+    <script
+      type="module"
+      defer
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      defer
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <script>
+      // Hide loader immediately when DOM is ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", hideLoader);
+      } else {
+        hideLoader();
+      }
+
+      function hideLoader() {
+        setTimeout(() => {
+          document.getElementById("pageLoader").classList.add("hidden");
+        }, 100);
+      }
+
+      // Navbar scroll effect
+      window.addEventListener("scroll", () => {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          navbar.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.15)";
+        } else {
+          navbar.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.08)";
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            const navbarHeight = document.querySelector(".navbar").offsetHeight;
+            const targetPosition = target.offsetTop - navbarHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
+            });
+
+            // Close mobile menu if open
+            const navbarCollapse = document.querySelector(".navbar-collapse");
+            if (navbarCollapse && navbarCollapse.classList.contains("show")) {
+              const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+              if (bsCollapse) bsCollapse.hide();
+            }
+          }
+        });
+      });
+
+      // Add active class to nav links on scroll
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (window.pageYOffset >= sectionTop - 100) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${current}`) {
+            link.classList.add("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
