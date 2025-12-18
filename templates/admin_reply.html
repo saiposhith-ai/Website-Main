@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reply to Submission - Shramic Admin</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --dark-bg: #0f0a1e;
+        --dark-secondary: #1a1333;
+        --dark-accent: #2d1f5c;
+        --purple-primary: #6c5ce7;
+        --purple-light: #a29bfe;
+        --blue-accent: #4834df;
+        --violet-glow: #7f5af0;
+        --text-light: #e8e6f0;
+        --text-muted: #a8a4b8;
+        --success: #00d2d3;
+        --warning: #ffa502;
+        --danger: #ff3838;
+        --card-shadow: rgba(108, 92, 231, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--dark-bg) 0%,
+          var(--dark-secondary) 100%
+        );
+        color: var(--text-light);
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 280px;
+        background: linear-gradient(
+          180deg,
+          var(--dark-secondary) 0%,
+          var(--dark-accent) 100%
+        );
+        padding: 30px 0;
+        border-right: 1px solid rgba(108, 92, 231, 0.2);
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      .sidebar-brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 0 20px 30px;
+        border-bottom: 1px solid rgba(108, 92, 231, 0.2);
+        margin-bottom: 30px;
+      }
+
+      .sidebar-brand img {
+        height: 50px;
+        width: 50px;
+        filter: drop-shadow(0 0 10px var(--purple-primary));
+      }
+
+      .sidebar-brand-text {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--purple-light);
+        text-shadow: 0 0 20px var(--purple-primary);
+      }
+
+      .sidebar-menu {
+        list-style: none;
+        padding: 0 15px;
+      }
+
+      .sidebar-menu li {
+        margin-bottom: 10px;
+      }
+
+      .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        color: var(--text-muted);
+        text-decoration: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background: linear-gradient(
+          135deg,
+          var(--purple-primary) 0%,
+          var(--blue-accent) 100%
+        );
+        color: white;
+        box-shadow: 0 5px 20px var(--card-shadow);
+        transform: translateX(5px);
+      }
+
+      .sidebar-menu i {
+        font-size: 1.2rem;
+        width: 25px;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-left: 280px;
+        padding: 30px;
+        min-height: 100vh;
+      }
+
+      /* Page Header */
+      .page-header {
+        background: var(--dark-secondary);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(108, 92, 231, 0.2);
+        box-shadow: 0 5px 30px var(--card-shadow);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .page-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--purple-light);
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .btn-back {
+        padding: 10px 25px;
+        border-radius: 10px;
+        border: none;
+        background: rgba(108, 92, 231, 0.2);
+        color: var(--purple-light);
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+
+      .btn-back:hover {
+        background: linear-gradient(
+          135deg,
+          var(--purple-primary) 0%,
+          var(--blue-accent) 100%
+        );
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+      }
+
+      /* Reply Container */
+      .reply-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      .info-card,
+      .reply-card {
+        background: var(--dark-secondary);
+        padding: 35px;
+        border-radius: 15px;
+        border: 1px solid rgba(108, 92, 231, 0.2);
+        box-shadow: 0 5px 30px var(--card-shadow);
+      }
+
+      .card-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--purple-light);
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(108, 92, 231, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .info-group {
+        margin-bottom: 25px;
+      }
+
+      .info-label {
+        color: var(--purple-primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .info-value {
+        color: var(--text-light);
+        font-size: 1rem;
+        padding: 12px 18px;
+        background: var(--dark-accent);
+        border-radius: 10px;
+        border-left: 3px solid var(--purple-primary);
+      }
+
+      .tracking-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background: linear-gradient(
+          135deg,
+          var(--purple-primary) 0%,
+          var(--blue-accent) 100%
+        );
+        color: white;
+        border-radius: 25px;
+        font-weight: 700;
+        font-family: monospace;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+      }
+
+      .status-pending {
+        background: linear-gradient(135deg, var(--warning) 0%, #ff7979 100%);
+        color: white;
+      }
+
+      .status-replied {
+        background: linear-gradient(135deg, var(--success) 0%, #00b894 100%);
+        color: white;
+      }
+
+      .message-box {
+        background: var(--dark-accent);
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 3px solid var(--purple-primary);
+        color: var(--text-light);
+        line-height: 1.7;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .form-label {
+        color: var(--purple-primary);
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+      }
+
+      .form-control {
+        background: var(--dark-accent);
+        border: 2px solid rgba(108, 92, 231, 0.2);
+        color: var(--text-light);
+        padding: 15px 20px;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        resize: vertical;
+      }
+
+      .form-control:focus {
+        background: var(--dark-bg);
+        border-color: var(--purple-primary);
+        color: var(--text-light);
+        box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
+        outline: none;
+      }
+
+      .form-control::placeholder {
+        color: var(--text-muted);
+      }
+
+      textarea.form-control {
+        min-height: 250px;
+        font-family: "Poppins", sans-serif;
+        line-height: 1.7;
+      }
+
+      .char-counter {
+        text-align: right;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 8px;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      .btn-send {
+        flex: 1;
+        padding: 15px;
+        background: linear-gradient(135deg, var(--success) 0%, #00b894 100%);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .btn-send:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 210, 211, 0.4);
+      }
+
+      .btn-draft {
+        padding: 15px 30px;
+        background: rgba(108, 92, 231, 0.2);
+        border: 2px solid var(--purple-primary);
+        border-radius: 12px;
+        color: var(--purple-light);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-draft:hover {
+        background: var(--purple-primary);
+        color: white;
+      }
+
+      .alert {
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .alert-success {
+        background: rgba(0, 210, 211, 0.2);
+        color: #00d2d3;
+        border-left: 4px solid var(--success);
+      }
+
+      .alert-danger {
+        background: rgba(255, 56, 56, 0.2);
+        color: #ff6b6b;
+        border-left: 4px solid var(--danger);
+      }
+
+      .template-section {
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 2px solid rgba(108, 92, 231, 0.2);
+      }
+
+      .template-title {
+        color: var(--purple-light);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+
+      .template-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .btn-template {
+        padding: 8px 16px;
+        background: var(--dark-accent);
+        border: 1px solid rgba(108, 92, 231, 0.3);
+        border-radius: 8px;
+        color: var(--text-light);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .btn-template:hover {
+        background: var(--purple-primary);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 1200px) {
+        .reply-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .page-header {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .info-card,
+        .reply-card {
+          padding: 25px 20px;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img
+          src="https://careers.shramic.com/static/img/logo.png"
+          alt="Shramic Logo"
+        />
+        <span class="sidebar-brand-text">Shramic Admin</span>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="admin-dashboard.html"
+            ><i class="fas fa-th-large"></i> Dashboard</a
+          >
+        </li>
+        <li>
+          <a href="#" class="active"
+            ><i class="fas fa-envelope"></i> Messages</a
+          >
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-users"></i> Users</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-chart-line"></i> Analytics</a>
+        </li>
+        <li>
+          <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title">
+          <i class="fas fa-reply"></i>
+          Reply to Submission
+        </h1>
+        <a href="admin-dashboard.html" class="btn-back">
+          <i class="fas fa-arrow-left"></i>
+          Back to Dashboard
+        </a>
+      </div>
+
+      <div id="alertContainer"></div>
+
+      <!-- Reply Container -->
+      <div class="reply-container">
+        <!-- Submission Info -->
+        <div class="info-card">
+          <h2 class="card-title">
+            <i class="fas fa-info-circle"></i>
+            Submission Details
+          </h2>
+
+          <div class="info-group">
+            <div class="info-label">Tracking ID</div>
+            <div class="info-value">
+              <span class="tracking-badge" id="trackingId">-</span>
+            </div>
+          </div>
+
+          <div class="info-group">
+            <div class="info-label">Status</div>
+            <div class="info-value">
+              <span class="status-badge" id="statusBadge">-</span>
+            </div>
+          </div>
+
+          <div class="info-group">
+            <div class="info-label">Name</div>
+            <div class="info-value" id="userName">-</div>
+          </div>
+
+          <div class="info-group">
+            <div class="info-label">Email</div>
+            <div class="info-value" id="userEmail">-</div>
+          </div>
+
+          <div class="info-group">
+            <div class="info-label">Phone</div>
+            <div class="info-value" id="userPhone">-</div>
+          </div>
+
+          <div class="info-group">
+            <div class="info-label">Subject</div>
+            <div class="info-value" id="subject">-</div>
+          </div>
+
+          <div class="info-group">
+            <div class="info-label">Message</div>
+            <div class="message-box" id="userMessage">-</div>
+          </div>
+
+          <div class="info-group">
+            <div class="info-label">Submitted On</div>
+            <div class="info-value" id="timestamp">-</div>
+          </div>
+
+          <div id="previousReplySection" style="display: none">
+            <div
+              class="info-group"
+              style="
+                margin-top: 30px;
+                padding-top: 30px;
+                border-top: 2px solid rgba(108, 92, 231, 0.2);
+              "
+            >
+              <div class="info-label">Previous Reply</div>
+              <div
+                class="message-box"
+                id="previousReply"
+                style="border-left-color: var(--success)"
+              >
+                -
+              </div>
+            </div>
+            <div class="info-group">
+              <div class="info-label">Replied On</div>
+              <div class="info-value" id="replyTimestamp">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reply Form -->
+        <div class="reply-card">
+          <h2 class="card-title">
+            <i class="fas fa-pen"></i>
+            Compose Reply
+          </h2>
+
+          <form id="replyForm">
+            <div class="mb-4">
+              <label for="replyMessage" class="form-label"
+                >Your Reply Message *</label
+              >
+              <textarea
+                class="form-control"
+                id="replyMessage"
+                name="replyMessage"
+                placeholder="Type your reply here... Be professional and helpful."
+                required
+              ></textarea>
+              <div class="char-counter">
+                <span id="charCount">0</span> characters
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button type="button" class="btn-draft" onclick="saveDraft()">
+                <i class="fas fa-save"></i>
+                Save Draft
+              </button>
+              <button type="submit" class="btn-send">
+                <i class="fas fa-paper-plane"></i>
+                Send Reply
+              </button>
+            </div>
+          </form>
+
+          <div class="template-section">
+            <div class="template-title">
+              <i class="fas fa-file-alt me-2"></i>
+              Quick Templates
+            </div>
+            <div class="template-buttons">
+              <button class="btn-template" onclick="useTemplate('thank')">
+                Thank You
+              </button>
+              <button class="btn-template" onclick="useTemplate('info')">
+                Need More Info
+              </button>
+              <button class="btn-template" onclick="useTemplate('resolved')">
+                Issue Resolved
+              </button>
+              <button class="btn-template" onclick="useTemplate('schedule')">
+                Schedule Call
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Get submission ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const submissionId = parseInt(urlParams.get("id"));
+
+      let submissions = JSON.parse(
+        localStorage.getItem("shramic_submissions") || "[]"
+      );
+      let currentSubmission = submissions.find((s) => s.id === submissionId);
+
+      // Templates
+      const templates = {
+        thank: `Dear [Name],
+
+Thank you for reaching out to Shramic Networks. We have received your inquiry and appreciate your interest in our services.
+
+Our team is reviewing your message and will get back to you with a detailed response within 24-48 hours.
+
+If you have any urgent concerns, please don't hesitate to call us at +91 1800-123-4567.
+
+Best regards,
+Shramic Networks Team`,
+
+        info: `Dear [Name],
+
+Thank you for contacting Shramic Networks.
+
+To better assist you with your inquiry, we would need some additional information:
+
+1. [Specific detail needed]
+2. [Another detail needed]
+
+Please provide these details at your earliest convenience, and we'll be happy to help you further.
+
+Best regards,
+Shramic Networks Team`,
+
+        resolved: `Dear [Name],
+
+Thank you for bringing this to our attention.
+
+We're pleased to inform you that your issue has been resolved. [Brief explanation of the resolution].
+
+If you experience any further issues or have additional questions, please don't hesitate to reach out to us.
+
+We appreciate your patience and look forward to serving you better.
+
+Best regards,
+Shramic Networks Team`,
+
+        schedule: `Dear [Name],
+
+Thank you for your inquiry.
+
+We would like to schedule a call with you to discuss your requirements in detail. Please let us know your preferred date and time, and we'll arrange a convenient slot for you.
+
+Alternatively, you can reach us directly at +91 1800-123-4567 during our business hours (Mon-Sat, 9:00 AM - 6:00 PM IST).
+
+Looking forward to speaking with you.
+
+Best regards,
+Shramic Networks Team`,
+      };
+
+      // Initialize page
+      function initPage() {
+        if (!currentSubmission) {
+          showAlert(
+            "Submission not found. Redirecting to dashboard...",
+            "danger"
+          );
+          setTimeout(() => {
+            window.location.href = "admin-dashboard.html";
+          }, 2000);
+          return;
+        }
+
+        // Populate submission details
+        document.getElementById("trackingId").textContent =
+          currentSubmission.trackingId;
+        document.getElementById("userName").textContent =
+          currentSubmission.name;
+        document.getElementById("userEmail").textContent =
+          currentSubmission.email;
+        document.getElementById("userPhone").textContent =
+          currentSubmission.phone;
+        document.getElementById("subject").textContent =
+          currentSubmission.subject;
+        document.getElementById("userMessage").textContent =
+          currentSubmission.message;
+        document.getElementById("timestamp").textContent = new Date(
+          currentSubmission.timestamp
+        ).toLocaleString("en-IN");
+
+        const statusBadge = document.getElementById("statusBadge");
+        statusBadge.textContent = currentSubmission.status.toUpperCase();
+        statusBadge.className = `status-badge status-${currentSubmission.status}`;
+
+        // Show previous reply if exists
+        if (currentSubmission.reply) {
+          document.getElementById("previousReplySection").style.display =
+            "block";
+          document.getElementById("previousReply").textContent =
+            currentSubmission.reply;
+          document.getElementById("replyTimestamp").textContent = new Date(
+            currentSubmission.replyTimestamp
+          ).toLocaleString("en-IN");
+          document.getElementById("replyMessage").value =
+            currentSubmission.reply;
+        }
+
+        // Load draft if exists
+        const draftKey = `draft_${submissionId}`;
+        const savedDraft = localStorage.getItem(draftKey);
+        if (savedDraft && !currentSubmission.reply) {
+          document.getElementById("replyMessage").value = savedDraft;
+          showAlert("Draft loaded successfully!", "success");
+        }
+      }
+
+      // Character counter
+      const replyMessage = document.getElementById("replyMessage");
+      const charCount = document.getElementById("charCount");
+
+      replyMessage.addEventListener("input", function () {
+        charCount.textContent = this.value.length;
+      });
+
+      // Use template
+      function useTemplate(type) {
+        const template = templates[type].replace(
+          "[Name]",
+          currentSubmission.name
+        );
+        replyMessage.value = template;
+        charCount.textContent = template.length;
+      }
+
+      // Save draft
+      function saveDraft() {
+        const message = replyMessage.value.trim();
+        if (!message) {
+          showAlert("Please write a reply before saving draft.", "danger");
+          return;
+        }
+
+        const draftKey = `draft_${submissionId}`;
+        localStorage.setItem(draftKey, message);
+        showAlert("Draft saved successfully!", "success");
+      }
+
+      // Submit reply
+      document
+        .getElementById("replyForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const message = replyMessage.value.trim();
+          if (!message) {
+            showAlert("Please write a reply before sending.", "danger");
+            return;
+          }
+
+          if (confirm("Are you sure you want to send this reply?")) {
+            // Update submission
+            const index = submissions.findIndex((s) => s.id === submissionId);
+            if (index !== -1) {
+              submissions[index].reply = message;
+              submissions[index].status = "replied";
+              submissions[index].replyTimestamp = new Date().toISOString();
+
+              localStorage.setItem(
+                "shramic_submissions",
+                JSON.stringify(submissions)
+              );
+
+              // Remove draft
+              const draftKey = `draft_${submissionId}`;
+              localStorage.removeItem(draftKey);
+
+              showAlert("Reply sent successfully! Redirecting...", "success");
+
+              setTimeout(() => {
+                window.location.href = "admin-dashboard.html";
+              }, 2000);
+            }
+          }
+        });
+
+      // Show alert
+      function showAlert(message, type) {
+        const alertHtml = `
+                <div class="alert alert-${type}">
+                    <i class="fas fa-${
+                      type === "success" ? "check-circle" : "exclamation-circle"
+                    }"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+        document.getElementById("alertContainer").innerHTML = alertHtml;
+
+        setTimeout(() => {
+          document.getElementById("alertContainer").innerHTML = "";
+        }, 5000);
+      }
+
+      // Initialize
+      initPage();
+    </script>
+  </body>
+</html>
