@@ -13,7 +13,7 @@ app.secret_key = 'your_secret_key_here_change_this_in_production'
 # Username: Shramicadmin, Password: Shramic123
 ADMIN_CREDENTIALS = {
     'username': 'Shramicadmin',
-    'password_hash': '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'  
+    'password_hash': '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'  # SHA-256 of 'Shramic123'
 }
 
 # Store contact form submissions in memory (will reset on server restart)
