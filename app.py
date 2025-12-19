@@ -9,11 +9,21 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here_change_this_in_production'
+app.secret_key = os.environ.get('SECRET_KEY', 'your_secret_key_here_change_this_in_production')
 
-# Database configuration
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'shramic.db')
+# Database configuration - supports both local SQLite and Vercel Postgres
+if os.environ.get('POSTGRES_URL'):
+    # Production: Use Vercel Postgres
+    database_url = os.environ.get('POSTGRES_URL')
+    # Fix for SQLAlchemy (postgres:// -> postgresql://)
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+else:
+    # Local development: Use SQLite
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'shramic.db')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -715,7 +725,7 @@ if __name__ == '__main__':
         os.makedirs('templates')
         print("Created 'templates' directory")
     
-    # Initialize database
+    # Initialize database only if tables don't exist
     initialize_database()
     print("Database initialized successfully!")
     
