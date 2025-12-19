@@ -1,1121 +1,841 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
-    />
-    <title>Shramic Networks - Empowering Agriculture Through Innovation</title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta name="format-detection" content="telephone=no" />
-    <meta
-      name="description"
-      content="Transforming traditional farming with cutting-edge technology"
-    />
-    <link
-      rel="shortcut icon"
-      href="https://careers.shramic.com/static/img/logo.png"
-      type="image/png"
-    />
-
-    <!-- Preconnect to external domains for faster loading -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Load CSS asynchronously to prevent render blocking -->
-    <link
-      rel="preload"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      />
-    </noscript>
-
-    <link
-      rel="preload"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      />
-    </noscript>
-
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
-
-    <style>
-      /* Critical CSS - Inline for instant rendering */
-      :root {
-        --cream: #fff8f0;
-        --cream-dark: #f5ebe0;
-        --primary: #2c3e50;
-        --secondary: #e67e22;
-        --accent: #d4a574;
-        --text-dark: #2c3e50;
-        --text-light: #6c757d;
-        --success: #27ae60;
-        --white: #ffffff;
-        --shadow: rgba(0, 0, 0, 0.08);
-        --shadow-lg: rgba(0, 0, 0, 0.12);
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background-color: var(--cream);
-        color: var(--text-dark);
-        line-height: 1.7;
-        overflow-x: hidden;
-      }
-
-      /* Enhanced Mobile Navigation */
-      .navbar {
-        background-color: var(--white);
-        box-shadow: 0 2px 10px var(--shadow);
-        padding: 0.75rem 0;
-        transition: all 0.3s ease;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-
-      .navbar-brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-family: "Playfair Display", serif;
-        font-weight: 700;
-        font-size: 1.3rem;
-        color: var(--primary) !important;
-      }
-
-      .navbar-brand img {
-        height: 40px;
-        width: auto;
-        transition: transform 0.3s ease;
-      }
-
-      .nav-link {
-        color: var(--text-dark) !important;
-        font-weight: 500;
-        padding: 0.7rem 1rem !important;
-        transition: all 0.3s ease;
-        position: relative;
-        font-size: 0.95rem;
-      }
-
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 2px;
-        background-color: var(--secondary);
-        transition: width 0.3s ease;
-      }
-
-      .nav-link:hover::after,
-      .nav-link.active::after {
-        width: 70%;
-      }
-
-      .btn-primary {
-        background-color: var(--secondary);
-        border: 2px solid var(--secondary);
-        color: var(--white);
-        padding: 0.6rem 1.5rem;
-        font-weight: 600;
-        border-radius: 50px;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-      }
-
-      .btn-primary:hover {
-        background-color: transparent;
-        color: var(--secondary);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
-      }
-
-      /* Hero Section - Mobile Optimized */
-      .hero {
-        background: linear-gradient(
-          135deg,
-          var(--cream) 0%,
-          var(--cream-dark) 100%
-        );
-        padding: 80px 0 100px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .hero-content {
-        text-align: center;
-        position: relative;
-        z-index: 2;
-      }
-
-      .hero-title {
-        font-family: "Playfair Display", serif;
-        font-size: 2.2rem;
-        line-height: 1.3;
-        margin-bottom: 1.5rem;
-        color: var(--primary);
-        font-weight: 700;
-      }
-
-      .hero-title span {
-        color: var(--secondary);
-      }
-
-      .hero-text {
-        font-size: 1.05rem;
-        color: var(--text-light);
-        margin-bottom: 2rem;
-        line-height: 1.6;
-      }
-
-      .shape-content {
-        position: absolute;
-        width: 600px;
-        top: -100px;
-        right: -200px;
-        z-index: 0;
-        opacity: 0.3;
-      }
-
-      /* About Section - Mobile Optimized */
-      .about {
-        background: var(--primary);
-        padding: 80px 0;
-        text-align: center;
-        position: relative;
-      }
-
-      .about .container {
-        position: relative;
-        z-index: 1;
-      }
-
-      .about-top {
-        margin-bottom: 60px;
-      }
-
-      .section-title {
-        font-family: "Playfair Display", serif;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        color: var(--white);
-        font-weight: 700;
-      }
-
-      .section-text {
-        color: var(--white);
-        font-size: 1rem;
-        margin-bottom: 3rem;
-        line-height: 1.7;
-      }
-
-      .about-list {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 25px;
-        margin-top: 40px;
-        padding: 0;
-        list-style: none;
-      }
-
-      .about-card {
-        background: var(--white);
-        padding: 35px 25px;
-        border-radius: 12px;
-        box-shadow: 0 5px 20px var(--shadow);
-        transition: all 0.3s ease;
-      }
-
-      .about-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 40px var(--shadow-lg);
-      }
-
-      .card-icon {
-        color: var(--secondary);
-        font-size: 45px;
-        margin: 0 auto 15px;
-      }
-
-      .card-title {
-        font-family: "Playfair Display", serif;
-        margin-bottom: 15px;
-        color: var(--primary);
-        font-size: 1.3rem;
-        font-weight: 600;
-      }
-
-      .card-text {
-        color: var(--text-light);
-        font-size: 0.95rem;
-        line-height: 1.6;
-      }
-
-      .about-bottom {
-        margin-top: 80px;
-      }
-
-      .about-bottom-banner {
-        margin-bottom: 40px;
-      }
-
-      .about-bottom-banner img {
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-        display: block;
-        border-radius: 12px;
-      }
-
-      .btn-secondary {
-        background-color: transparent;
-        border: 2px solid var(--white);
-        color: var(--white);
-        padding: 0.6rem 1.5rem;
-        font-weight: 600;
-        border-radius: 50px;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-        display: inline-block;
-      }
-
-      .btn-secondary:hover {
-        background-color: var(--white);
-        color: var(--primary);
-        transform: translateY(-2px);
-      }
-
-      /* Features Section - Mobile Optimized */
-      .features {
-        padding: 80px 0;
-        background: var(--white);
-      }
-
-      .features .section-title {
-        color: var(--primary);
-        text-align: center;
-        margin-bottom: 1rem;
-      }
-
-      .features .section-text {
-        color: var(--text-light);
-        text-align: center;
-        margin-bottom: 50px;
-      }
-
-      .features-list {
-        list-style: none;
-        padding: 0;
-      }
-
-      .features-item {
-        margin-bottom: 60px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .features-item:last-child {
-        margin-bottom: 0;
-      }
-
-      .features-item-banner {
-        width: 100%;
-        max-width: 400px;
-        margin-bottom: 30px;
-      }
-
-      .features-item-banner img {
-        width: 100%;
-        border-radius: 50%;
-        box-shadow: 0 10px 30px var(--shadow);
-      }
-
-      .feature-item-content {
-        text-align: center;
-      }
-
-      .item-title {
-        font-family: "Playfair Display", serif;
-        font-size: 1.6rem;
-        margin-bottom: 20px;
-        color: var(--primary);
-        font-weight: 700;
-      }
-
-      .item-text {
-        color: var(--text-light);
-        font-size: 1rem;
-        line-height: 1.7;
-      }
-
-      /* Footer - Mobile Optimized */
-      footer {
-        background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
-        color: var(--white);
-        padding: 3rem 0 1rem;
-      }
-
-      footer h5 {
-        color: var(--white);
-        font-size: 1.1rem;
-        margin-bottom: 1.2rem;
-        position: relative;
-        padding-bottom: 0.5rem;
-      }
-
-      footer h5::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 50px;
-        height: 3px;
-        background-color: var(--secondary);
-      }
-
-      footer a {
-        color: rgba(255, 255, 255, 0.8);
-        text-decoration: none;
-        transition: all 0.3s ease;
-        display: block;
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-      }
-
-      footer a:hover {
-        color: var(--secondary);
-        padding-left: 5px;
-      }
-
-      .social-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 15px;
-      }
-
-      .social-links a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        transition: all 0.3s ease;
-        margin-bottom: 0;
-      }
-
-      .social-links a:hover {
-        background-color: var(--secondary);
-        transform: translateY(-3px);
-        padding-left: 0;
-      }
-
-      .footer-bottom {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.85rem;
-      }
-
-      .footer-bottom a {
-        display: inline;
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      .hero-banner {
-        display: none;
-        position: absolute;
-        top: 50%;
-        right: -100px;
-        transform: translateY(-50%);
-        width: 500px;
-        height: 500px;
-        background: url("https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&h=600&fit=crop")
-          no-repeat center;
-        background-size: contain;
-        z-index: 1;
-        transition: right 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-      }
-
-      /* DESKTOP ONLY - Show and slide-in ready */
-      @media (min-width: 992px) {
-        .hero-banner {
-          display: block !important;
-          right: -100px;
-        }
-
-        .hero-banner.active {
-          right: 50px !important;
-        }
-
-        @media (min-width: 1200px) {
-          .hero-banner {
-            right: -150px;
-            width: 600px;
-            height: 600px;
-          }
-
-          .hero-banner.active {
-            right: 100px !important;
-          }
-        }
-      }
-
-      /* Tablet - Smaller size */
-      @media (min-width: 768px) and (max-width: 991px) {
-        .hero-banner {
-          display: block !important;
-          width: 400px;
-          height: 400px;
-          right: -80px;
-        }
-
-        .hero-banner.active {
-          right: 20px !important;
-        }
-      }
-
-      .page-loader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--cream);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        transition: opacity 0.3s;
-      }
-
-      .page-loader.hidden {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid var(--cream-dark);
-        border-top-color: var(--secondary);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Tablet Styles */
-      @media (min-width: 768px) {
-        .hero-title {
-          font-size: 2.8rem;
-        }
-
-        .hero-text {
-          font-size: 1.15rem;
-        }
-
-        .about-list {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 30px;
-        }
-
-        .section-title {
-          font-size: 2.3rem;
-        }
-
-        .section-text {
-          font-size: 1.05rem;
-        }
-      }
-
-      /* Desktop Styles */
-      @media (min-width: 1024px) {
-        .hero {
-          padding: 120px 0 140px;
-        }
-
-        .hero-title {
-          font-size: 3.5rem;
-          text-align: left;
-        }
-
-        .hero-text {
-          font-size: 1.25rem;
-          text-align: left;
-        }
-
-        .hero-content {
-          text-align: left;
-          max-width: 600px;
-        }
-
-        .about {
-          padding: 120px 0;
-        }
-
-        .about-top {
-          margin-bottom: 80px;
-        }
-
-        .about-list {
-          grid-template-columns: repeat(3, 1fr);
-          gap: 30px;
-        }
-
-        .about-bottom {
-          display: flex;
-          align-items: center;
-          gap: 60px;
-          margin-top: 100px;
-        }
-
-        .about-bottom-banner {
-          flex: 1;
-          margin-bottom: 0;
-        }
-
-        .about-bottom-content {
-          flex: 1;
-          text-align: left;
-        }
-
-        .features {
-          padding: 120px 0;
-        }
-
-        .features .section-text {
-          margin-bottom: 80px;
-        }
-
-        .features-item {
-          flex-direction: row;
-          gap: 50px;
-          margin-bottom: 80px;
-          align-items: center;
-        }
-
-        .features-item:last-child {
-          flex-direction: row-reverse;
-        }
-
-        .features-item-banner {
-          flex: 1;
-          margin-bottom: 0;
-        }
-
-        .feature-item-content {
-          flex: 1;
-          text-align: left;
-        }
-
-        .item-title {
-          font-size: 2rem;
-        }
-
-        .item-text {
-          font-size: 1.1rem;
-        }
-
-        footer {
-          padding: 4rem 0 1.5rem;
-        }
-      }
-
-      /* Large Desktop */
-      @media (min-width: 1200px) {
-        .container {
-          max-width: 1140px;
-        }
-
-        .hero-title {
-          font-size: 4rem;
-        }
-
-        .section-title {
-          font-size: 2.5rem;
-        }
-      }
-
-      /* Small Mobile Optimization */
-      @media (max-width: 576px) {
-        .hero-title {
-          font-size: 1.8rem;
-        }
-
-        .hero-text {
-          font-size: 0.95rem;
-        }
-
-        .navbar-brand {
-          font-size: 1.1rem;
-        }
-
-        .navbar-brand img {
-          height: 35px;
-        }
-
-        .section-title {
-          font-size: 1.7rem;
-        }
-
-        .section-text {
-          font-size: 0.95rem;
-        }
-
-        .about-card {
-          padding: 30px 20px;
-        }
-
-        .card-title {
-          font-size: 1.2rem;
-        }
-
-        .item-title {
-          font-size: 1.4rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="page-loader" id="pageLoader">
-      <div class="spinner"></div>
-    </div>
-
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container">
-        <a class="navbar-brand" href="/">
-          <img
-            src="https://careers.shramic.com/static/img/logo.png"
-            alt="Shramic Logo"
-            width="40"
-            height="40"
-            loading="eager"
-          />
-          <span>Shramic Networks</span>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+{% extends "base.html" %} {% block title %}Shramic Networks - Empowering
+Agriculture Through Innovation{% endblock %} {% block description %}Transforming
+traditional farming with cutting-edge technology{% endblock %} {% block
+extra_css %}
+<style>
+  /* Hero Section - Mobile Optimized */
+  .hero {
+    background: linear-gradient(
+      135deg,
+      var(--cream) 0%,
+      var(--cream-dark) 100%
+    );
+    padding: 80px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-title {
+    font-family: "Playfair Display", serif;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .hero-title span {
+    color: var(--secondary);
+  }
+
+  .hero-text {
+    font-size: 1.05rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .shape-content {
+    position: absolute;
+    width: 600px;
+    top: -100px;
+    right: -200px;
+    z-index: 0;
+    opacity: 0.3;
+  }
+
+  /* About Section - Mobile Optimized */
+  .about {
+    background: var(--primary);
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .about .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-top {
+    margin-bottom: 60px;
+  }
+
+  .section-title {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .section-text {
+    color: var(--white);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+
+  .about-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 40px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-card {
+    background: var(--white);
+    padding: 35px 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px var(--shadow);
+    transition: all 0.3s ease;
+  }
+
+  .about-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px var(--shadow-lg);
+  }
+
+  .card-icon {
+    color: var(--secondary);
+    font-size: 45px;
+    margin: 0 auto 15px;
+  }
+
+  .card-title {
+    font-family: "Playfair Display", serif;
+    margin-bottom: 15px;
+    color: var(--primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .card-text {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .about-bottom {
+    margin-top: 80px;
+  }
+
+  .about-bottom-banner {
+    margin-bottom: 40px;
+  }
+
+  .about-bottom-banner img {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 12px;
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    border: 2px solid var(--white);
+    color: var(--white);
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--white);
+    color: var(--primary);
+    transform: translateY(-2px);
+  }
+
+  /* Features Section - Enhanced "Why Choose Shramic?" */
+  .features {
+    padding: 80px 0;
+    background: var(--white);
+  }
+
+  .features .section-title {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .features .section-text {
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .features-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--cream);
+    padding: 40px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .features-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px var(--shadow-lg);
+  }
+
+  .features-item-banner {
+    width: 100%;
+    max-width: 450px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  .features-item-banner img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+  }
+
+  .features-item:hover .features-item-banner img {
+    transform: scale(1.05);
+  }
+
+  .feature-item-content {
+    text-align: center;
+  }
+
+  .item-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .item-text {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 25px;
+  }
+
+  .feature-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary);
+    display: block;
+    font-family: "Playfair Display", serif;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .hero-banner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: -100px;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    background: url("https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&h=600&fit=crop")
+      no-repeat center;
+    background-size: contain;
+    z-index: 1;
+    transition: right 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.3s;
+  }
+
+  .page-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--cream-dark);
+    border-top-color: var(--secondary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Tablet Styles */
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 2.8rem;
+    }
+
+    .hero-text {
+      font-size: 1.15rem;
+    }
+
+    .about-list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .section-title {
+      font-size: 2.3rem;
+    }
+
+    .section-text {
+      font-size: 1.05rem;
+    }
+
+    .hero-banner {
+      display: block !important;
+      width: 400px;
+      height: 400px;
+      right: -80px;
+    }
+
+    .hero-banner.active {
+      right: 20px !important;
+    }
+  }
+
+  /* Desktop Styles */
+  @media (min-width: 1024px) {
+    .hero {
+      padding: 120px 0 140px;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      text-align: left;
+    }
+
+    .hero-text {
+      font-size: 1.25rem;
+      text-align: left;
+    }
+
+    .hero-content {
+      text-align: left;
+      max-width: 600px;
+    }
+
+    .about {
+      padding: 120px 0;
+    }
+
+    .about-top {
+      margin-bottom: 80px;
+    }
+
+    .about-list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .about-bottom {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      margin-top: 100px;
+    }
+
+    .about-bottom-banner {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .about-bottom-content {
+      flex: 1;
+      text-align: left;
+    }
+
+    .features {
+      padding: 120px 0;
+    }
+
+    .features .section-text {
+      margin-bottom: 80px;
+    }
+
+    .features-list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+    }
+
+    .features-item {
+      flex-direction: column;
+    }
+
+    .features-item-banner {
+      margin-bottom: 30px;
+    }
+
+    .feature-item-content {
+      text-align: center;
+    }
+
+    .item-title {
+      font-size: 2rem;
+    }
+
+    .item-text {
+      font-size: 1.1rem;
+    }
+
+    .hero-banner {
+      display: block !important;
+      right: -100px;
+    }
+
+    .hero-banner.active {
+      right: 50px !important;
+    }
+  }
+
+  /* Large Desktop */
+  @media (min-width: 1200px) {
+    .hero-title {
+      font-size: 4rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-banner {
+      right: -150px;
+      width: 600px;
+      height: 600px;
+    }
+
+    .hero-banner.active {
+      right: 100px !important;
+    }
+  }
+
+  /* Small Mobile Optimization */
+  @media (max-width: 576px) {
+    .hero-title {
+      font-size: 1.8rem;
+    }
+
+    .hero-text {
+      font-size: 0.95rem;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+    }
+
+    .section-text {
+      font-size: 0.95rem;
+    }
+
+    .about-card {
+      padding: 30px 20px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+    }
+
+    .item-title {
+      font-size: 1.4rem;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="page-loader" id="pageLoader">
+  <div class="spinner"></div>
+</div>
+
+<article>
+  <section class="hero" id="home">
+    <div class="container position-relative">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Empowering <span>Rural India</span> Through Digital Innovation
+        </h1>
+        <p class="hero-text">
+          Building a trusted ecosystem where farmers, workers, experts, and
+          service providers connect — creating employment, knowledge sharing,
+          and sustainable livelihoods across agriculture, construction, and
+          livestock sectors.
+        </p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary"
+          >Get Started Today</a
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto align-items-lg-center">
-            <li class="nav-item">
-              <a class="nav-link active" href="#home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#features">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/testimonial">Testimonials</a>
-            </li>
-            <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-              <a class="btn btn-primary btn-sm" href="/contact">Get in touch</a>
-            </li>
-          </ul>
+      </div>
+      <div class="hero-banner"></div>
+    </div>
+    <img
+      src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=900&h=900&fit=crop"
+      alt="shape"
+      class="shape-content"
+      loading="lazy"
+      width="900"
+      height="900"
+    />
+  </section>
+
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-top">
+        <h2 class="section-title">The Shramic Ecosystem</h2>
+        <p class="section-text">
+          At Shramic Networks, we're building more than apps — we're creating a
+          comprehensive digital ecosystem that bridges the gap between rural
+          communities and opportunity, connecting people to work, knowledge, and
+          growth.
+        </p>
+        <ul class="about-list">
+          <li>
+            <div class="about-card">
+              <div class="card-icon">
+                <ion-icon name="briefcase-outline"></ion-icon>
+              </div>
+              <h3 class="card-title">Employment Marketplace</h3>
+              <p class="card-text">
+                Connect farmers with verified skilled workers, from seasonal
+                agricultural labor to construction and livestock care — instant
+                job matching with fair wages and trust-based verification.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div class="about-card">
+              <div class="card-icon">
+                <ion-icon name="people-outline"></ion-icon>
+              </div>
+              <h3 class="card-title">Expert Consultation Network</h3>
+              <p class="card-text">
+                Access agricultural experts, veterinarians, construction
+                advisors, and business consultants through video calls, chat,
+                and on-field visits — bringing professional guidance to your
+                doorstep.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div class="about-card">
+              <div class="card-icon">
+                <ion-icon name="construct-outline"></ion-icon>
+              </div>
+              <h3 class="card-title">Service Booking Platform</h3>
+              <p class="card-text">
+                Book tractors, harvesters, construction equipment, veterinary
+                services, and more with transparent pricing — making essential
+                services accessible to every farmer and rural entrepreneur.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="about-bottom">
+        <figure class="about-bottom-banner">
+          <img
+            src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=500&h=500&fit=crop"
+            alt="Farmers working together"
+            loading="lazy"
+            width="500"
+            height="500"
+          />
+        </figure>
+        <div class="about-bottom-content">
+          <h2 class="section-title">Growing Together with Communities</h2>
+          <p class="section-text">
+            We believe in sustainable growth that benefits everyone. From
+            connecting daily wage workers with employment to helping farmers
+            access market intelligence and livestock owners find veterinary care
+            — we're building an ecosystem where no one is left behind.
+          </p>
+          <a href="{{ url_for('about') }}" class="btn btn-secondary"
+            >Learn More About Us</a
+          >
         </div>
       </div>
-    </nav>
+    </div>
+  </section>
 
-    <main>
-      <article>
-        <section class="hero" id="home">
-          <div class="container position-relative">
-            <div class="hero-content">
-              <h1 class="hero-title">
-                Empowering Agriculture Through Innovation
-              </h1>
-              <p class="hero-text">
-                Transforming traditional farming with cutting-edge technology to
-                maximize productivity while ensuring sustainability for future
-                generations.
-              </p>
-              <button class="btn btn-primary">Get Started Today</button>
-            </div>
-            <div class="hero-banner"></div>
-          </div>
-          <img
-            src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=900&h=900&fit=crop"
-            alt="shape"
-            class="shape-content"
-            loading="lazy"
-            width="900"
-            height="900"
-          />
-        </section>
-
-        <section class="about" id="about">
-          <div class="container">
-            <div class="about-top">
-              <h2 class="section-title">What We Do</h2>
-              <p class="section-text">
-                At Shramic, we bridge the gap between traditional agriculture
-                and modern technology. Our mission is to empower farmers with
-                innovative tools, knowledge, and resources to maximize
-                productivity while ensuring sustainability.
-              </p>
-              <ul class="about-list">
-                <li>
-                  <div class="about-card">
-                    <div class="card-icon">
-                      <ion-icon name="leaf-outline"></ion-icon>
-                    </div>
-                    <h3 class="card-title">Smart Farming Solutions</h3>
-                    <p class="card-text">
-                      Leverage IoT sensors, AI analytics, and precision
-                      agriculture techniques to optimize crop yield and resource
-                      management.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="about-card">
-                    <div class="card-icon">
-                      <ion-icon name="people-outline"></ion-icon>
-                    </div>
-                    <h3 class="card-title">Farmer Training Programs</h3>
-                    <p class="card-text">
-                      Comprehensive training modules on modern farming
-                      techniques, sustainable practices, and technology
-                      adoption.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="about-card">
-                    <div class="card-icon">
-                      <ion-icon name="analytics-outline"></ion-icon>
-                    </div>
-                    <h3 class="card-title">Market Intelligence</h3>
-                    <p class="card-text">
-                      Real-time market data, price forecasting, and direct
-                      market linkages to ensure fair prices for farmers'
-                      produce.
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <div class="about-bottom">
-              <figure class="about-bottom-banner">
-                <img
-                  src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=500&h=500&fit=crop"
-                  alt="Farmers working together"
-                  loading="lazy"
-                  width="500"
-                  height="500"
-                />
-              </figure>
-              <div class="about-bottom-content">
-                <h2 class="section-title">Growing Together with Farmers</h2>
-                <p class="section-text">
-                  We believe in sustainable growth that benefits everyone in the
-                  agricultural ecosystem. From soil health to market access, we
-                  provide end-to-end support to help farmers thrive in the
-                  modern agricultural landscape.
-                </p>
-                <button
-                  class="btn btn-secondary"
-                  onclick="window.location.href='/about'"
-                >
-                  Learn More About Us
-                </button>
+  <!-- ENHANCED FEATURES SECTION -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Shramic?</h2>
+      <p class="section-text">
+        We're not just another tech platform. We're a community-first ecosystem
+        built by listening to real needs, designed for simplicity, and focused
+        on creating measurable impact in rural lives.
+      </p>
+      <ul class="features-list">
+        <li class="features-item">
+          <figure class="features-item-banner">
+            <img
+              src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600&h=400&fit=crop"
+              alt="Rural employment platform"
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+          </figure>
+          <div class="feature-item-content">
+            <h3 class="item-title">🚀 Built for Rural India</h3>
+            <p class="item-text">
+              Our platforms work in low-bandwidth areas, support multiple
+              regional languages, and are designed to be simple enough for
+              anyone to use — no matter their digital literacy level. We meet
+              people where they are.
+            </p>
+            <div class="feature-stats">
+              <div class="stat-item">
+                <span class="stat-number">5,000+</span>
+                <span class="stat-label">Active Users</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">12+</span>
+                <span class="stat-label">Languages</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Rural Focus</span>
               </div>
             </div>
           </div>
-        </section>
+        </li>
 
-        <!-- FEATURES SECTION -->
-        <section class="features" id="features">
-          <div class="container">
-            <h2 class="section-title">Why Choose Shramic?</h2>
-            <p class="section-text">
-              Our platform combines years of agricultural expertise with
-              state-of-the-art technology to deliver solutions that truly make a
-              difference in farmers' lives.
+        <li class="features-item">
+          <figure class="features-item-banner">
+            <img
+              src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop"
+              alt="Trust and verification system"
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+          </figure>
+          <div class="feature-item-content">
+            <h3 class="item-title">🛡️ Trust & Verification First</h3>
+            <p class="item-text">
+              Every worker, expert, and service provider is verified through
+              multi-step authentication. We include ratings, work history, and
+              community feedback — because trust is the foundation of everything
+              we build.
             </p>
-            <ul class="features-list">
-              <li class="features-item">
-                <figure class="features-item-banner">
-                  <img
-                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop"
-                    alt="Technology platform interface"
-                    loading="lazy"
-                    width="400"
-                    height="400"
-                  />
-                </figure>
-                <div class="feature-item-content">
-                  <h3 class="item-title">Technology That Works</h3>
-                  <p class="item-text">
-                    Our user-friendly mobile and web applications are designed
-                    specifically for farmers, providing easy access to weather
-                    forecasts, crop advisory, and expert consultations right at
-                    their fingertips.
-                  </p>
-                </div>
-              </li>
-              <li class="features-item">
-                <figure class="features-item-banner">
-                  <img
-                    src="https://images.unsplash.com/photo-1593113646773-028c19d7e1e5?w=400&h=400&fit=crop"
-                    alt="Sustainable farming practices"
-                    loading="lazy"
-                    width="400"
-                    height="400"
-                  />
-                </figure>
-                <div class="feature-item-content">
-                  <h3 class="item-title">Sustainable & Affordable</h3>
-                  <p class="item-text">
-                    We're committed to making advanced agricultural solutions
-                    accessible to all. Our transparent pricing and flexible
-                    payment options ensure that every farmer can benefit from
-                    our services.
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </section>
-      </article>
-    </main>
-
-    <!-- FOOTER -->
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="d-flex align-items-center mb-3">
-              <img
-                src="https://careers.shramic.com/static/img/logo.png"
-                alt="Shramic Networks Logo"
-                style="height: 50px; margin-right: 15px"
-                width="50"
-                height="50"
-                loading="lazy"
-              />
-              <h5 class="mb-0">Shramic Networks</h5>
-            </div>
-            <p style="color: rgba(255, 255, 255, 0.8)">
-              Empowering Agriculture Through Innovation
-            </p>
-            <div class="social-links">
-              <a href="#" aria-label="Facebook"
-                ><i class="fab fa-facebook-f"></i
-              ></a>
-              <a href="#" aria-label="Twitter"
-                ><i class="fab fa-twitter"></i
-              ></a>
-              <a href="#" aria-label="LinkedIn"
-                ><i class="fab fa-linkedin-in"></i
-              ></a>
-              <a
-                href="https://www.instagram.com/shramic.info"
-                aria-label="Instagram"
-                ><i class="fab fa-instagram"></i
-              ></a>
-              <a href="https://github.com/Amit-Ashok-Swain" aria-label="GitHub"
-                ><i class="fab fa-github"></i
-              ></a>
+            <div class="feature-stats">
+              <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">Trust Score</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">3-Step</span>
+                <span class="stat-label">Verification</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Support</span>
+              </div>
             </div>
           </div>
-          <div class="col-lg-2 col-md-6 mb-4">
-            <h5>Company</h5>
-            <a href="/about">About Us</a>
-            <a href="/blog">Blog</a>
-            <a href="/testimonial">Testimonials</a>
-          </div>
-          <div class="col-lg-3 col-md-6 mb-4">
-            <h5>Services</h5>
-            <a href="#about">Smart Farming</a>
-            <a href="#about">Training Programs</a>
-            <a href="#about">Market Intelligence</a>
-            <a href="#about">Farmer Support</a>
-          </div>
-          <div class="col-lg-3 col-md-6 mb-4">
-            <h5>Contact Info</h5>
-            <p style="color: rgba(255, 255, 255, 0.8)">
-              <i class="fas fa-envelope me-2"></i>
-              <a href="mailto:shramicnetworks@gmail.com" style="display: inline"
-                >shramicnetworks@gmail.com</a
-              >
+        </li>
+
+        <li class="features-item">
+          <figure class="features-item-banner">
+            <img
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
+              alt="Comprehensive ecosystem"
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+          </figure>
+          <div class="feature-item-content">
+            <h3 class="item-title">🌾 Complete Ecosystem, One Platform</h3>
+            <p class="item-text">
+              From finding workers to booking services, consulting experts to
+              accessing market prices and government schemes — everything a
+              farmer or rural worker needs in one connected platform. No more
+              jumping between multiple apps.
             </p>
-            <p style="color: rgba(255, 255, 255, 0.8)">
-              <i class="fas fa-phone me-2"></i>
-              <a href="tel:+919876543210" style="display: inline"
-                >+91 98765 43210</a
-              >
-            </p>
-            <p style="color: rgba(255, 255, 255, 0.8)">
-              <i class="fas fa-map-marker-alt me-2"></i>
-              Bengaluru, Karnataka, India
-            </p>
+            <div class="feature-stats">
+              <div class="stat-item">
+                <span class="stat-number">4</span>
+                <span class="stat-label">Core Platforms</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Services</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">∞</span>
+                <span class="stat-label">Possibilities</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="footer-bottom">
-          <p>
-            &copy; 2025 Shramic Networks. All rights reserved. |
-            <a
-              href="/terms"
-              style="display: inline; color: rgba(255, 255, 255, 0.7)"
-              >Terms & Conditions</a
-            >
-          </p>
-        </div>
-      </div>
-    </footer>
+        </li>
 
-    <!-- Bootstrap JS - Deferred loading -->
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    ></script>
+        <li class="features-item">
+          <figure class="features-item-banner">
+            <img
+              src="https://images.unsplash.com/photo-1593113646773-028c19d7e1e5?w=600&h=400&fit=crop"
+              alt="Affordable and transparent pricing"
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+          </figure>
+          <div class="feature-item-content">
+            <h3 class="item-title">💰 Affordable & Transparent</h3>
+            <p class="item-text">
+              No hidden fees, no complicated pricing models. We believe
+              technology should be accessible to everyone. Transparent pricing,
+              flexible payment options, and a commitment to keeping costs low
+              for rural communities.
+            </p>
+            <div class="feature-stats">
+              <div class="stat-item">
+                <span class="stat-number">₹0</span>
+                <span class="stat-label">Registration Fee</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">Fair</span>
+                <span class="stat-label">Pricing Always</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Transparent</span>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</article>
+{% endblock %} {% block extra_js %}
+<script>
+  // Hide loader immediately when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", hideLoader);
+  } else {
+    hideLoader();
+  }
 
-    <!-- Ionicons - Deferred loading -->
-    <script
-      type="module"
-      defer
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      defer
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
+  function hideLoader() {
+    setTimeout(() => {
+      const loader = document.getElementById("pageLoader");
+      if (loader) loader.classList.add("hidden");
+    }, 100);
+  }
 
-    <script>
-      // Hide loader immediately when DOM is ready
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", hideLoader);
-      } else {
-        hideLoader();
-      }
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        const navbarHeight = document.querySelector(".navbar").offsetHeight;
+        const targetPosition = target.offsetTop - navbarHeight;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth",
+        });
 
-      function hideLoader() {
-        setTimeout(() => {
-          document.getElementById("pageLoader").classList.add("hidden");
-        }, 100);
-      }
-
-      // Navbar scroll effect
-      window.addEventListener("scroll", () => {
-        const navbar = document.querySelector(".navbar");
-        if (window.scrollY > 50) {
-          navbar.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.15)";
-        } else {
-          navbar.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.08)";
+        // Close mobile menu if open
+        const navbarCollapse = document.querySelector(".navbar-collapse");
+        if (navbarCollapse && navbarCollapse.classList.contains("show")) {
+          const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+          if (bsCollapse) bsCollapse.hide();
         }
-      });
+      }
+    });
+  });
 
-      // Smooth scrolling for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            const navbarHeight = document.querySelector(".navbar").offsetHeight;
-            const targetPosition = target.offsetTop - navbarHeight;
-            window.scrollTo({
-              top: targetPosition,
-              behavior: "smooth",
-            });
+  // Add active class to nav links on scroll
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-link");
 
-            // Close mobile menu if open
-            const navbarCollapse = document.querySelector(".navbar-collapse");
-            if (navbarCollapse && navbarCollapse.classList.contains("show")) {
-              const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-              if (bsCollapse) bsCollapse.hide();
-            }
-          }
-        });
-      });
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (window.pageYOffset >= sectionTop - 100) {
+        current = section.getAttribute("id");
+      }
+    });
 
-      // Add active class to nav links on scroll
-      const sections = document.querySelectorAll("section[id]");
-      const navLinks = document.querySelectorAll(".nav-link");
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
+      }
+    });
+  });
 
-      window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (window.pageYOffset >= sectionTop - 100) {
-            current = section.getAttribute("id");
-          }
-        });
-
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === `#${current}`) {
-            link.classList.add("active");
-          }
-        });
-      });
-    </script>
-  </body>
-</html>
+  // Hero banner slide-in effect
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const heroBanner = document.querySelector(".hero-banner");
+      if (heroBanner) {
+        heroBanner.classList.add("active");
+      }
+    }, 300);
+  });
+</script>
+{% endblock %}

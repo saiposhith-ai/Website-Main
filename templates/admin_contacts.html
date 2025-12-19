@@ -1,0 +1,306 @@
+{% extends "admin_base.html" %} {% block title %}Contact Messages{% endblock %}
+{% block page_title %}Contact Messages{% endblock %} {% block page_subtitle
+%}Manage and respond to contact submissions{% endblock %} {% block content %}
+<style>
+  .filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: linear-gradient(
+      135deg,
+      var(--purple-primary) 0%,
+      var(--blue-accent) 100%
+    );
+    color: white;
+    border-color: transparent;
+  }
+
+  .submissions-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    overflow-x: auto;
+    display: block;
+  }
+
+  .submissions-table thead,
+  .submissions-table tbody,
+  .submissions-table tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .submissions-table thead th {
+    color: var(--purple-light);
+    font-weight: 600;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid rgba(108, 92, 231, 0.2);
+  }
+
+  .submissions-table tbody tr {
+    background: var(--dark-accent);
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+  }
+
+  .submissions-table tbody tr:hover {
+    background: rgba(108, 92, 231, 0.1);
+    transform: scale(1.01);
+  }
+
+  .submissions-table td {
+    padding: 20px 15px;
+    color: var(--text-light);
+  }
+
+  .submissions-table tr td:first-child {
+    border-radius: 10px 0 0 10px;
+  }
+
+  .submissions-table tr td:last-child {
+    border-radius: 0 10px 10px 0;
+  }
+
+  .tracking-id {
+    font-weight: 600;
+    color: var(--purple-light);
+    font-family: monospace;
+    font-size: 1.1rem;
+  }
+
+  .badge {
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-block;
+  }
+
+  .badge-pending {
+    background: linear-gradient(135deg, var(--warning) 0%, #ff7979 100%);
+    color: white;
+  }
+
+  .badge-replied {
+    background: linear-gradient(135deg, var(--success) 0%, #00b894 100%);
+    color: white;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn-action {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .btn-reply {
+    background: linear-gradient(
+      135deg,
+      var(--purple-primary) 0%,
+      var(--blue-accent) 100%
+    );
+    color: white;
+  }
+
+  .btn-reply:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+    color: white;
+  }
+
+  .btn-delete {
+    background: linear-gradient(135deg, var(--danger) 0%, #e84118 100%);
+    color: white;
+  }
+
+  .btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 56, 56, 0.4);
+    color: white;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .empty-state i {
+    font-size: 4rem;
+    color: var(--purple-primary);
+    opacity: 0.5;
+  }
+
+  .empty-state h3 {
+    color: var(--text-muted);
+    margin-top: 20px;
+  }
+
+  /* Mobile Table */
+  @media (max-width: 992px) {
+    .submissions-table thead {
+      display: none;
+    }
+
+    .submissions-table,
+    .submissions-table tbody,
+    .submissions-table tr,
+    .submissions-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .submissions-table tr {
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .submissions-table td {
+      padding: 15px 20px;
+      border-radius: 0 !important;
+      border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+    }
+
+    .submissions-table td:last-child {
+      border-bottom: none;
+    }
+
+    .submissions-table td::before {
+      content: attr(data-label);
+      font-weight: 600;
+      color: var(--purple-light);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .action-buttons {
+      margin-top: 10px;
+    }
+  }
+</style>
+
+<div class="content-card">
+  <div class="filter-buttons">
+    <button class="filter-btn active" onclick="filterTable('all')">
+      All ({{ submissions|length }})
+    </button>
+    <button class="filter-btn" onclick="filterTable('pending')">
+      Pending ({{ submissions|selectattr('status', 'equalto',
+      'pending')|list|length }})
+    </button>
+    <button class="filter-btn" onclick="filterTable('replied')">
+      Replied ({{ submissions|selectattr('status', 'equalto',
+      'replied')|list|length }})
+    </button>
+  </div>
+
+  {% if submissions %}
+  <div class="submissions-table">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 15%">Tracking ID</th>
+          <th style="width: 18%">Name</th>
+          <th style="width: 22%">Subject</th>
+          <th style="width: 12%">Date</th>
+          <th style="width: 10%">Status</th>
+          <th style="width: 23%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sub in submissions %}
+        <tr data-status="{{ sub.status }}">
+          <td data-label="Tracking ID">
+            <span class="tracking-id">{{ sub.tracking_id }}</span>
+          </td>
+          <td data-label="Name">{{ sub.name }}</td>
+          <td data-label="Subject">{{ sub.subject }}</td>
+          <td data-label="Date">{{ sub.timestamp.split()[0] }}</td>
+          <td data-label="Status">
+            <span class="badge badge-{{ sub.status }}">
+              {{ sub.status.upper() }}
+            </span>
+          </td>
+          <td data-label="Actions">
+            <div class="action-buttons">
+              <a
+                href="/admin/submission/{{ sub.id }}/reply"
+                class="btn-action btn-reply"
+              >
+                <i class="fas fa-reply"></i>
+                {% if sub.status == 'pending' %}Reply{% else %}View{% endif %}
+              </a>
+              <a
+                href="/admin/submission/{{ sub.id }}/delete"
+                class="btn-action btn-delete"
+                onclick="return confirm('Are you sure you want to delete this submission?')"
+              >
+                <i class="fas fa-trash"></i> Delete
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="fas fa-inbox"></i>
+    <h3>No contact submissions yet</h3>
+    <p style="color: var(--text-muted); margin-top: 10px">
+      Messages will appear here when users submit the contact form.
+    </p>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  function filterTable(status) {
+    const rows = document.querySelectorAll(".submissions-table tbody tr");
+    const buttons = document.querySelectorAll(".filter-btn");
+
+    buttons.forEach((btn) => btn.classList.remove("active"));
+    event.target.classList.add("active");
+
+    rows.forEach((row) => {
+      if (status === "all" || row.dataset.status === status) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
+</script>
+{% endblock %}

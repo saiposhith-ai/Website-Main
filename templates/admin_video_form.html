@@ -1,0 +1,376 @@
+{% extends "admin_base.html" %} {% block page_title %}{% if video %}Edit Video
+Story{% else %}New Video Story{% endif %}{% endblock %} {% block page_subtitle
+%}{% if video %}Update video story information{% else %}Add a new success story
+video{% endif %}{% endblock %} {% block extra_css %}
+<style>
+  .form-container {
+    max-width: 900px;
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .form-group label {
+    display: block;
+    color: var(--purple-light);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px 20px;
+    background: var(--dark-accent);
+    border: 2px solid rgba(108, 92, 231, 0.3);
+    border-radius: 10px;
+    color: var(--text-light);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--purple-primary);
+    background: var(--dark-secondary);
+  }
+
+  .form-control::placeholder {
+    color: var(--text-muted);
+  }
+
+  textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-help {
+    display: block;
+    margin-top: 8px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .checkbox-group label {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .video-preview {
+    margin-top: 15px;
+    padding: 20px;
+    background: var(--dark-secondary);
+    border-radius: 10px;
+  }
+
+  .video-preview iframe {
+    width: 100%;
+    height: 400px;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .thumbnail-preview {
+    margin-top: 15px;
+    padding: 20px;
+    background: var(--dark-secondary);
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .thumbnail-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .youtube-info {
+    background: linear-gradient(
+      135deg,
+      var(--purple-primary) 0%,
+      var(--blue-accent) 100%
+    );
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .youtube-info h4 {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+  }
+
+  .youtube-info p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 5px 0;
+    font-size: 0.95rem;
+  }
+
+  .youtube-info code {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+
+  .btn-submit {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, var(--success) 0%, #00b894 100%);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 210, 211, 0.4);
+  }
+
+  .btn-cancel {
+    padding: 12px 30px;
+    background: var(--dark-accent);
+    border: 2px solid rgba(108, 92, 231, 0.3);
+    color: var(--text-light);
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-cancel:hover {
+    border-color: var(--purple-primary);
+    color: var(--purple-light);
+  }
+
+  @media (max-width: 768px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .video-preview iframe {
+      height: 250px;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="content-card">
+  <div class="form-container">
+    <div class="youtube-info">
+      <h4><i class="fab fa-youtube"></i> YouTube Video Instructions</h4>
+      <p><strong>Accepted URL formats:</strong></p>
+      <p>• Full URL: <code>https://www.youtube.com/watch?v=VIDEO_ID</code></p>
+      <p>• Short URL: <code>https://youtu.be/VIDEO_ID</code></p>
+      <p>• Embed URL: <code>https://www.youtube.com/embed/VIDEO_ID</code></p>
+      <p style="margin-top: 10px">
+        <i class="fas fa-info-circle"></i> The thumbnail will be automatically
+        generated from the video
+      </p>
+    </div>
+
+    <form method="POST">
+      <div class="form-group">
+        <label for="youtube_url">YouTube Video URL *</label>
+        <input
+          type="url"
+          id="youtube_url"
+          name="youtube_url"
+          class="form-control"
+          placeholder="https://www.youtube.com/watch?v=VIDEO_ID"
+          value="{{ video.youtube_url if video else '' }}"
+          required
+          oninput="updateVideoPreview()"
+        />
+        <small class="form-help">Paste the full YouTube video URL</small>
+
+        <div class="video-preview" id="videoPreview" style="display: none">
+          <iframe id="previewFrame" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="title">Video Title *</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"
+          placeholder="e.g., From Traditional to Smart Farming"
+          value="{{ video.title if video else '' }}"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Video Description *</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"
+          placeholder="Brief description of the video content..."
+          required
+        >
+{{ video.description if video else '' }}</textarea
+        >
+        <small class="form-help"
+          >Short description to appear below the video card</small
+        >
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="duration">Duration *</label>
+          <input
+            type="text"
+            id="duration"
+            name="duration"
+            class="form-control"
+            placeholder="e.g., 8:45"
+            value="{{ video.duration if video else '' }}"
+            required
+          />
+          <small class="form-help">Format: MM:SS (e.g., 8:45 or 12:30)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="views">View Count</label>
+          <input
+            type="text"
+            id="views"
+            name="views"
+            class="form-control"
+            placeholder="e.g., 125K, 1.2M"
+            value="{{ video.views if video else '0' }}"
+          />
+          <small class="form-help">Display view count (e.g., 125K, 1.2M)</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="order">Display Order *</label>
+        <input
+          type="number"
+          id="order"
+          name="order"
+          class="form-control"
+          min="1"
+          value="{{ video.order if video else 1 }}"
+          required
+        />
+        <small class="form-help">Lower numbers appear first (1, 2, 3...)</small>
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input
+            type="checkbox"
+            id="featured"
+            name="featured"
+            {%
+            if
+            video
+            and
+            video.featured
+            %}checked{%
+            endif
+            %}
+          />
+          <label for="featured">Mark as Featured Video</label>
+        </div>
+        <small class="form-help"
+          >Featured videos appear on the testimonials page</small
+        >
+      </div>
+
+      {% if video %}
+      <div class="form-group">
+        <label>Current Thumbnail</label>
+        <div class="thumbnail-preview">
+          <img src="{{ video.thumbnail }}" alt="{{ video.title }}" />
+        </div>
+        <small class="form-help"
+          >Thumbnail will be auto-updated when you change the YouTube URL</small
+        >
+      </div>
+      {% endif %}
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-save"></i> {% if video %}Update{% else %}Create{%
+          endif %} Video Story
+        </button>
+        <a href="{{ url_for('admin_testimonials') }}" class="btn-cancel">
+          <i class="fas fa-times"></i> Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script>
+  function updateVideoPreview() {
+    const urlInput = document.getElementById('youtube_url');
+    const preview = document.getElementById('videoPreview');
+    const iframe = document.getElementById('previewFrame');
+
+    if (urlInput.value.trim()) {
+      let videoId = '';
+      const url = urlInput.value;
+
+      // Extract video ID from various YouTube URL formats
+      if (url.includes('v=')) {
+        videoId = url.split('v=')[1].split('&')[0];
+      } else if (url.includes('youtu.be/')) {
+        videoId = url.split('youtu.be/')[1].split('?')[0];
+      } else if (url.includes('embed/')) {
+        videoId = url.split('embed/')[1].split('?')[0];
+      }
+
+      if (videoId) {
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        preview.style.display = 'block';
+      }
+    } else {
+      preview.style.display = 'none';
+    }
+  }
+
+  // Initialize preview if editing
+  {% if video %}
+  updateVideoPreview();
+  {% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,901 @@
+{% extends "base.html" %} {% block title %}{{ post.title }} - Shramic Networks
+Blog{% endblock %} {% block description %}{{ post.excerpt }}{% endblock %} {%
+block extra_css %}
+<style>
+  /* ===== BLOG HERO SECTION ===== */
+  .blog-hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+    padding: clamp(40px, 8vw, 80px) 0 clamp(30px, 6vw, 60px);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.1;
+  }
+
+  .blog-hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(15px, 4vw, 20px);
+    position: relative;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .blog-category-badge {
+    display: inline-block;
+    background: var(--secondary);
+    color: var(--white);
+    padding: clamp(0.4rem, 1vw, 0.5rem) clamp(1rem, 2vw, 1.4rem);
+    border-radius: 50px;
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    font-weight: 600;
+    margin-bottom: clamp(15px, 3vw, 25px);
+    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .blog-category-badge:hover {
+    transform: scale(1.05);
+  }
+
+  .blog-hero h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: clamp(20px, 4vw, 30px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .blog-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(15px, 3vw, 25px);
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    opacity: 0.95;
+  }
+
+  .blog-hero-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .blog-hero-meta i {
+    opacity: 0.8;
+  }
+
+  /* ===== FEATURED IMAGE ===== */
+  .blog-featured-image {
+    width: 100%;
+    max-width: 1200px;
+    margin: clamp(-30px, -4vw, -60px) auto clamp(40px, 6vw, 80px);
+    padding: 40px 20px;
+  }
+
+  .blog-featured-image-inner {
+    border-radius: clamp(10px, 2vw, 20px);
+    box-shadow: 0 20px 60px var(--shadow-lg);
+    overflow: hidden;
+    position: relative;
+    animation: scaleIn 0.6s ease-out 0.3s backwards;
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .blog-featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    max-height: clamp(300px, 50vw, 600px);
+  }
+
+  /* ===== BLOG CONTENT WRAPPER ===== */
+  .blog-content-wrapper {
+    padding: clamp(40px, 8vw, 80px) 0;
+    background: var(--white);
+  }
+
+  .blog-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(30px, 6vw, 60px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(15px, 3vw, 20px);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .blog-main-content {
+    animation: fadeIn 0.8s ease-out 0.4s backwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .blog-content {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.8;
+    color: var(--text-dark);
+  }
+
+  .blog-content h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    color: var(--primary);
+    margin: clamp(35px, 6vw, 50px) 0 clamp(15px, 3vw, 25px);
+    font-weight: 700;
+    line-height: 1.3;
+    position: relative;
+    padding-bottom: 15px;
+  }
+
+  .blog-content h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary), transparent);
+    border-radius: 2px;
+  }
+
+  .blog-content h3 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    color: var(--primary);
+    margin: clamp(30px, 5vw, 40px) 0 clamp(12px, 2.5vw, 20px);
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .blog-content p {
+    margin-bottom: clamp(18px, 3vw, 25px);
+    color: var(--text-light);
+    text-align: justify;
+  }
+
+  .blog-content ul,
+  .blog-content ol {
+    margin: clamp(20px, 4vw, 30px) 0;
+    padding-left: clamp(25px, 4vw, 40px);
+  }
+
+  .blog-content li {
+    margin-bottom: clamp(10px, 2vw, 15px);
+    color: var(--text-light);
+    line-height: 1.7;
+    padding-left: 10px;
+  }
+
+  .blog-content li::marker {
+    color: var(--secondary);
+    font-weight: 600;
+  }
+
+  .blog-content strong {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .blog-content blockquote {
+    background: var(--cream-dark);
+    border-left: 4px solid var(--secondary);
+    padding: clamp(20px, 4vw, 30px);
+    margin: clamp(25px, 5vw, 40px) 0;
+    font-style: italic;
+    color: var(--text-dark);
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .blog-content blockquote p:last-child {
+    margin-bottom: 0;
+  }
+
+  .blog-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: clamp(25px, 5vw, 40px) 0;
+    box-shadow: 0 8px 30px var(--shadow);
+  }
+
+  /* ===== AUTHOR INFO ===== */
+  .author-info {
+    background: var(--cream);
+    padding: clamp(25px, 4vw, 35px);
+    border-radius: clamp(12px, 2vw, 18px);
+    margin: clamp(40px, 6vw, 60px) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 5px 20px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .author-info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 35px var(--shadow-lg);
+  }
+
+  .author-avatar {
+    width: clamp(70px, 12vw, 90px);
+    height: clamp(70px, 12vw, 90px);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--secondary), #d35400);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+    border: 4px solid var(--white);
+  }
+
+  .author-details h4 {
+    font-family: "Playfair Display", serif;
+    color: var(--primary);
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .author-details p {
+    color: var(--text-light);
+    margin: 0;
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    line-height: 1.6;
+  }
+
+  /* ===== SHARE BUTTONS ===== */
+  .share-section {
+    margin-top: clamp(35px, 6vw, 50px);
+    padding-top: clamp(25px, 4vw, 35px);
+    border-top: 2px solid var(--cream-dark);
+  }
+
+  .share-section h4 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: clamp(8px, 2vw, 12px);
+    flex-wrap: wrap;
+  }
+
+  .share-btn {
+    padding: clamp(10px, 2vw, 12px) clamp(18px, 3vw, 24px);
+    border-radius: 50px;
+    text-decoration: none;
+    color: var(--white);
+    font-weight: 600;
+    font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+  }
+
+  .share-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+    color: var(--white);
+  }
+
+  .share-btn i {
+    font-size: 1.1em;
+  }
+
+  .share-btn.facebook {
+    background: linear-gradient(135deg, #1877f2, #0d5dc6);
+  }
+
+  .share-btn.twitter {
+    background: linear-gradient(135deg, #1da1f2, #0c85d0);
+  }
+
+  .share-btn.linkedin {
+    background: linear-gradient(135deg, #0a66c2, #004182);
+  }
+
+  .share-btn.whatsapp {
+    background: linear-gradient(135deg, #25d366, #1da851);
+  }
+
+  .share-btn-text {
+    display: inline;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .blog-sidebar {
+    animation: fadeIn 0.8s ease-out 0.6s backwards;
+  }
+
+  .sidebar-card {
+    background: var(--cream);
+    padding: clamp(25px, 4vw, 35px);
+    border-radius: clamp(12px, 2vw, 18px);
+    margin-bottom: clamp(25px, 4vw, 35px);
+    box-shadow: 0 5px 20px var(--shadow);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .sidebar-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    color: var(--primary);
+    margin-bottom: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 12px;
+  }
+
+  .sidebar-card h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--secondary);
+    border-radius: 2px;
+  }
+
+  /* ===== RECENT POSTS ===== */
+  .recent-post {
+    display: flex;
+    gap: clamp(12px, 2vw, 18px);
+    margin-bottom: clamp(18px, 3vw, 25px);
+    padding-bottom: clamp(18px, 3vw, 25px);
+    border-bottom: 2px solid var(--cream-dark);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .recent-post:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .recent-post:hover {
+    transform: translateX(8px);
+  }
+
+  .recent-post:hover .recent-post-img {
+    box-shadow: 0 8px 20px var(--shadow-lg);
+  }
+
+  .recent-post-img {
+    width: clamp(70px, 15vw, 90px);
+    height: clamp(70px, 15vw, 90px);
+    border-radius: clamp(8px, 1.5vw, 12px);
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+
+  .recent-post-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .recent-post-content h4 {
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: clamp(6px, 1.5vw, 10px);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .recent-post-date {
+    font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ===== NEWSLETTER SIGNUP ===== */
+  .newsletter-form input[type="email"] {
+    border: 2px solid var(--cream-dark);
+    border-radius: 50px;
+    padding: clamp(10px, 2vw, 14px) clamp(18px, 3vw, 24px);
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    width: 100%;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+  }
+
+  .newsletter-form input[type="email"]:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.1);
+  }
+
+  .newsletter-form button {
+    width: 100%;
+    padding: clamp(10px, 2vw, 14px);
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+  }
+
+  /* ===== RELATED POSTS ===== */
+  .related-posts {
+    padding: clamp(50px, 10vw, 100px) 0;
+    background: var(--cream);
+  }
+
+  .section-title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: clamp(35px, 6vw, 60px);
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--secondary);
+    border-radius: 2px;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(25px, 4vw, 35px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(15px, 3vw, 20px);
+  }
+
+  .related-card {
+    background: var(--white);
+    border-radius: clamp(12px, 2vw, 18px);
+    overflow: hidden;
+    box-shadow: 0 5px 20px var(--shadow);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .related-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 45px var(--shadow-lg);
+  }
+
+  .related-card-img {
+    width: 100%;
+    height: clamp(180px, 30vw, 220px);
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .related-card:hover .related-card-img {
+    transform: scale(1.08);
+  }
+
+  .related-card-content {
+    padding: clamp(20px, 4vw, 30px);
+  }
+
+  .related-card .blog-category {
+    font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+    margin-bottom: 12px;
+  }
+
+  .related-card-title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: clamp(10px, 2vw, 15px);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .related-card-excerpt {
+    color: var(--text-light);
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ===== RESPONSIVE BREAKPOINTS ===== */
+  @media (min-width: 640px) {
+    .author-info {
+      flex-direction: row;
+      text-align: left;
+    }
+
+    .share-btn-text {
+      display: inline;
+    }
+
+    .related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .blog-layout {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .related-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ===== MOBILE OPTIMIZATIONS ===== */
+  @media (max-width: 480px) {
+    .blog-hero-meta {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .share-btn-text {
+      display: none;
+    }
+
+    .share-btn {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      justify-content: center;
+    }
+  }
+
+  /* ===== ACCESSIBILITY ===== */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ===== PRINT STYLES ===== */
+  @media print {
+    .blog-hero,
+    .author-info,
+    .share-section,
+    .blog-sidebar,
+    .related-posts,
+    .cta-section,
+    nav,
+    footer {
+      display: none;
+    }
+
+    .blog-content {
+      font-size: 12pt;
+      line-height: 1.6;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<article itemscope itemtype="http://schema.org/BlogPosting">
+  <!-- Blog Hero -->
+  <header class="blog-hero">
+    <div class="container">
+      <div class="blog-hero-content">
+        <span class="blog-category-badge" itemprop="articleSection"
+          >{{ post.category }}</span
+        >
+        <h1 itemprop="headline">{{ post.title }}</h1>
+        <div class="blog-hero-meta">
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <i class="far fa-user"></i>
+            <span itemprop="name">{{ post.author }}</span>
+          </span>
+          <span>
+            <i class="far fa-calendar"></i>
+            <time datetime="{{ post.date }}" itemprop="datePublished"
+              >{{ post.date }}</time
+            >
+          </span>
+          <span>
+            <i class="far fa-clock"></i>
+            <span>{{ post.read_time }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Featured Image -->
+  <div class="container">
+    <div class="blog-featured-image">
+      <div class="blog-featured-image-inner">
+        <img
+          src="{{ post.image }}"
+          alt="{{ post.title }}"
+          itemprop="image"
+          loading="eager"
+          width="1200"
+          height="600"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog Content -->
+  <section class="blog-content-wrapper">
+    <div class="container">
+      <div class="blog-layout">
+        <!-- Main Content -->
+        <div class="blog-main-content">
+          <div class="blog-content" itemprop="articleBody">
+            {{ post.content|safe }}
+          </div>
+
+          <!-- Author Info -->
+          <div class="author-info">
+            <div class="author-avatar" aria-label="Author avatar">
+              {{ post.author[0] }}
+            </div>
+            <div class="author-details">
+              <h4>{{ post.author }}</h4>
+              <p>
+                Agricultural Technology Specialist & Content Writer at Shramic
+                Networks
+              </p>
+            </div>
+          </div>
+
+          <!-- Share Section -->
+          <div class="share-section">
+            <h4>Share this article</h4>
+            <div class="share-buttons">
+              <a
+                href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="share-btn facebook"
+                aria-label="Share on Facebook"
+              >
+                <i class="fab fa-facebook-f"></i>
+                <span class="share-btn-text">Share</span>
+              </a>
+              <a
+                href="https://twitter.com/intent/tweet?url={{ request.url }}&text={{ post.title }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="share-btn twitter"
+                aria-label="Share on Twitter"
+              >
+                <i class="fab fa-twitter"></i>
+                <span class="share-btn-text">Tweet</span>
+              </a>
+              <a
+                href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.url }}&title={{ post.title }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="share-btn linkedin"
+                aria-label="Share on LinkedIn"
+              >
+                <i class="fab fa-linkedin-in"></i>
+                <span class="share-btn-text">Share</span>
+              </a>
+              <a
+                href="https://wa.me/?text={{ post.title }} {{ request.url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="share-btn whatsapp"
+                aria-label="Share on WhatsApp"
+              >
+                <i class="fab fa-whatsapp"></i>
+                <span class="share-btn-text">Share</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar" role="complementary">
+          {% if recent_posts %}
+          <div class="sidebar-card">
+            <h3>Recent Posts</h3>
+            {% for recent in recent_posts %}
+            <a
+              href="{{ url_for('blog_detail', slug=recent.slug) }}"
+              class="recent-post"
+            >
+              <img
+                src="{{ recent.image }}"
+                alt="{{ recent.title }}"
+                class="recent-post-img"
+                loading="lazy"
+                width="90"
+                height="90"
+              />
+              <div class="recent-post-content">
+                <h4>{{ recent.title }}</h4>
+                <span class="recent-post-date">
+                  <i class="far fa-calendar-alt"></i>
+                  {{ recent.date }}
+                </span>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!-- Newsletter Signup -->
+          <div class="sidebar-card">
+            <h3>Stay Updated</h3>
+            <p
+              style="
+                color: var(--text-light);
+                margin-bottom: 20px;
+                font-size: clamp(0.9rem, 1.8vw, 1rem);
+              "
+            >
+              Subscribe to get the latest insights on agricultural innovation.
+            </p>
+            <form
+              action="{{ url_for('contact') }}"
+              method="get"
+              class="newsletter-form"
+            >
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                placeholder="Your email address"
+                required
+                aria-label="Email address"
+              />
+              <button type="submit" class="btn btn-primary">
+                Subscribe Now
+              </button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Posts -->
+  {% if related_posts %}
+  <section class="related-posts">
+    <div class="container">
+      <h2 class="section-title">Related Articles</h2>
+      <div class="related-grid">
+        {% for related in related_posts %}
+        <a
+          href="{{ url_for('blog_detail', slug=related.slug) }}"
+          class="related-card"
+        >
+          <img
+            src="{{ related.image }}"
+            alt="{{ related.title }}"
+            class="related-card-img"
+            loading="lazy"
+          />
+          <div class="related-card-content">
+            <span class="blog-category">{{ related.category }}</span>
+            <h3 class="related-card-title">{{ related.title }}</h3>
+            <p class="related-card-excerpt">{{ related.excerpt[:100] }}...</p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Transform Your Farming?</h2>
+      <p>Join thousands of farmers already using Shramic Networks</p>
+      <a href="{{ url_for('contact') }}" class="btn btn-light"
+        >Get Started Today</a
+      >
+    </div>
+  </section>
+</article>
+{% endblock %} {% block extra_js %}
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+
+  // Navbar scroll effect
+  window.addEventListener("scroll", () => {
+    const navbar = document.querySelector(".navbar");
+    if (window.scrollY > 50) {
+      navbar.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.15)";
+    } else {
+      navbar.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.08)";
+    }
+  });
+</script>
+{% endblock %}
