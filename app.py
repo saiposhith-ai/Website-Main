@@ -5,6 +5,8 @@ import hashlib
 from datetime import datetime
 import uuid
 import os
+from flask import Response
+from urllib.parse import urljoin
 
 app = Flask(__name__)
 # Generate a secret key: python -c "import os; print(os.urandom(24).hex())"
@@ -14,10 +16,9 @@ ADMIN_CREDENTIALS = {
     'username': 'Shramicadmin',
     'password_hash': '71873303a486338db55ba099625938a1267dba18b8ce68d76aba2a3354f8bba6'  # SHA-256 of 'Shramic123'
 }
-
+BASE_URL = "https://shramic.com" 
 # Store contact form submissions in memory (will reset on server restart)
 contact_submissions = []
-
 def hash_password(password):
     """Hash password using SHA-256"""
     return hashlib.sha256(password.encode()).hexdigest()
@@ -55,6 +56,51 @@ def faq():
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
+
+@app.route("/sitemap.xml", methods=["GET"])
+def sitemap():
+    pages = []
+
+    # Static pages
+    static_urls = [
+        ("home", "/", "1.0"),
+        ("about", "/about", "0.8"),
+        ("blog", "/blog", "0.7"),
+        ("testimonial", "/testimonial", "0.6"),
+        ("faq", "/faq", "0.6"),
+        ("terms", "/terms", "0.3"),
+        ("contact", "/contact", "0.7"),
+    ]
+
+    lastmod = datetime.utcnow().strftime("%Y-%m-%d")
+
+    for name, path, priority in static_urls:
+        pages.append(f"""
+        <url>
+            <loc>{urljoin(BASE_URL, path)}</loc>
+            <lastmod>{lastmod}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>{priority}</priority>
+        </url>
+        """.strip())
+
+    sitemap_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{chr(10).join(pages)}
+</urlset>
+"""
+    return Response(sitemap_xml, mimetype="application/xml")
+
+@app.route("/robots.txt")
+def robots_txt():
+    lines = [
+        "User-agent: *",
+        "Disallow: /admin",
+        "Disallow: /admin/",
+        "",
+        f"Sitemap: {BASE_URL}/sitemap.xml",
+    ]
+    return Response("\n".join(lines), mimetype="text/plain")
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -235,12 +281,5 @@ if __name__ == '__main__':
     if not os.path.exists('templates'):
         os.makedirs('templates')
         print("Created 'templates' directory")
-    
-    print("\n" + "="*50)
-    print("ADMIN LOGIN CREDENTIALS")
-    print("="*50)
-    print(f"Username: {ADMIN_CREDENTIALS['username']}")
-    print(f"Password: Shramic123")
-    print("="*50 + "\n")
     
     app.run(debug=True, host='0.0.0.0', port=5000)
