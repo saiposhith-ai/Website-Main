@@ -1,328 +1,788 @@
-{% extends "base.html" %} {% block title %}Blog - Shramic Networks |
-Agricultural Innovation Insights{% endblock %} {% block description %}Stay
-updated with the latest insights on agricultural technology, smart farming, and
-sustainable practices from Shramic Networks{% endblock %} {% block extra_css %}
-<style>
-  .blog-section {
-    padding: 80px 0;
-  }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Shramic Networks | Agricultural Innovation Insights</title>
+    <meta
+      name="description"
+      content="Stay updated with the latest insights on agricultural technology, smart farming, and sustainable practices"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://careers.shramic.com/static/img/logo.png"
+      type="image/png"
+    />
 
-  .blog-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 50px;
-  }
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  .filter-btn {
-    background: var(--white);
-    border: 2px solid var(--cream-dark);
-    color: var(--text-dark);
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
+    <link
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      />
+    </noscript>
 
-  .filter-btn:hover,
-  .filter-btn.active {
-    background: var(--secondary);
-    border-color: var(--secondary);
-    color: var(--white);
-    transform: translateY(-2px);
-  }
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      />
+    </noscript>
 
-  .blog-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
-  .blog-card {
-    background: var(--white);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px var(--shadow);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
+    <style>
+      :root {
+        --cream: #fff8f0;
+        --cream-dark: #f5ebe0;
+        --primary: #2c3e50;
+        --secondary: #e67e22;
+        --accent: #d4a574;
+        --text-dark: #2c3e50;
+        --text-light: #6c757d;
+        --success: #27ae60;
+        --white: #ffffff;
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-lg: rgba(0, 0, 0, 0.12);
+      }
 
-  .blog-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px var(--shadow-lg);
-  }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  .blog-card-img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--cream);
+        color: var(--text-dark);
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
 
-  .blog-card:hover .blog-card-img {
-    transform: scale(1.05);
-  }
+      .navbar {
+        background-color: var(--white);
+        box-shadow: 0 2px 10px var(--shadow);
+        padding: 0.75rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
 
-  .blog-card-content {
-    padding: 25px;
-  }
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--primary) !important;
+      }
 
-  .blog-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 15px;
-    font-size: 0.85rem;
-    color: var(--text-light);
-  }
+      .navbar-brand img {
+        height: 40px;
+        width: auto;
+      }
 
-  .blog-meta span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
+      .nav-link {
+        color: var(--text-dark) !important;
+        font-weight: 500;
+        padding: 0.7rem 1rem !important;
+        transition: all 0.3s ease;
+        position: relative;
+      }
 
-  .blog-category {
-    display: inline-block;
-    background: var(--cream-dark);
-    color: var(--secondary);
-    padding: 0.3rem 1rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: var(--secondary);
+        transition: width 0.3s ease;
+      }
 
-  .blog-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 15px;
-    line-height: 1.4;
-  }
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 70%;
+      }
 
-  .blog-excerpt {
-    color: var(--text-light);
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
+      .btn-primary {
+        background-color: var(--secondary);
+        border: 2px solid var(--secondary);
+        color: var(--white);
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+      }
 
-  .read-more {
-    color: var(--secondary);
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: gap 0.3s ease;
-  }
+      .btn-primary:hover {
+        background-color: transparent;
+        color: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+      }
 
-  .blog-card:hover .read-more {
-    gap: 12px;
-  }
+      .page-header {
+        background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+        padding: 100px 0 80px;
+        text-align: center;
+        color: var(--white);
+        position: relative;
+        overflow: hidden;
+      }
 
-  .featured-post {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
-    color: var(--white);
-  }
+      .page-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.1;
+      }
 
-  .featured-post .blog-card-img {
-    height: 350px;
-  }
+      .page-header h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        position: relative;
+      }
 
-  .featured-post .blog-card-content {
-    padding: 40px;
-  }
+      .page-header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+      }
 
-  .featured-post .blog-category {
-    background: var(--secondary);
-    color: var(--white);
-  }
+      .blog-section {
+        padding: 80px 0;
+      }
 
-  .featured-post .blog-title {
-    color: var(--white);
-    font-size: 2rem;
-  }
+      .blog-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 50px;
+      }
 
-  .featured-post .blog-excerpt {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-  }
+      .filter-btn {
+        background: var(--white);
+        border: 2px solid var(--cream-dark);
+        color: var(--text-dark);
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
 
-  .featured-post .blog-meta {
-    color: rgba(255, 255, 255, 0.8);
-  }
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: var(--secondary);
+        border-color: var(--secondary);
+        color: var(--white);
+        transform: translateY(-2px);
+      }
 
-  .featured-post .read-more {
-    color: var(--white);
-    background: var(--secondary);
-    padding: 0.7rem 1.5rem;
-    border-radius: 50px;
-  }
+      .blog-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
 
-  .no-posts {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-light);
-  }
+      .blog-card {
+        background: var(--white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px var(--shadow);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
 
-  .no-posts i {
-    font-size: 4rem;
-    color: var(--cream-dark);
-    margin-bottom: 20px;
-  }
+      .blog-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px var(--shadow-lg);
+      }
 
-  @media (min-width: 768px) {
-    .blog-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+      .blog-card-img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
 
-    .featured-post {
-      grid-template-columns: 1fr 1fr;
-    }
+      .blog-card:hover .blog-card-img {
+        transform: scale(1.05);
+      }
 
-    .featured-post .blog-card-img {
-      height: 100%;
-    }
-  }
+      .blog-card-content {
+        padding: 25px;
+      }
 
-  @media (min-width: 1024px) {
-    .blog-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-</style>
-{% endblock %} {% block content %}
-<header class="page-header">
-  <div class="container">
-    <h1>Knowledge Hub</h1>
-    <p>
-      Insights, guidance, and real stories from the Shramic Community<br />
-      Explore practical knowledge, field-level insights, and real experiences
-      from agriculture, construction, livestock, and rural business ecosystems —
-      designed to empower farmers, workers, and rural entrepreneurs across
-      India.
-    </p>
-  </div>
-</header>
+      .blog-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 15px;
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
 
-<section class="blog-section">
-  <div class="container">
-    <div class="blog-filters">
-      <button
-        class="filter-btn {% if filter_category == 'all' %}active{% endif %}"
-        onclick="window.location.href='{{ url_for('blog') }}'"
-      >
-        All Posts
-      </button>
-      <button
-        class="filter-btn {% if filter_category == 'shramic krushi' %}active{% endif %}"
-        onclick="window.location.href='{{ url_for('blog', category='Shramic Krushi') }}'"
-      >
-        Shramic Krushi
-      </button>
-      <button
-        class="filter-btn {% if filter_category == 'shramic build' %}active{% endif %}"
-        onclick="window.location.href='{{ url_for('blog', category='Shramic Build') }}'"
-      >
-        Shramic Build
-      </button>
-      <button
-        class="filter-btn {% if filter_category == 'pashusetu' %}active{% endif %}"
-        onclick="window.location.href='{{ url_for('blog', category='PashuSetu') }}'"
-      >
-        PashuSetu
-      </button>
-      <button
-        class="filter-btn {% if filter_category == 'market insights' %}active{% endif %}"
-        onclick="window.location.href='{{ url_for('blog', category='Market Insights') }}'"
-      >
-        Market Insights
-      </button>
-    </div>
+      .blog-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
 
-    {% if posts %}
-    <div class="blog-grid">
-      {% for post in posts %} {% if post.featured %}
-      <a
-        href="{{ url_for('blog_detail', slug=post.slug) }}"
-        class="blog-card featured-post"
-      >
-        <img
-          class="blog-card-img"
-          src="{{ post.image }}"
-          alt="{{ post.title }}"
-          loading="lazy"
-        />
-        <div class="blog-card-content">
-          <span class="blog-category">{{ post.category }}</span>
-          <h2 class="blog-title">{{ post.title }}</h2>
-          <div class="blog-meta">
-            <span><i class="far fa-calendar"></i> {{ post.date }}</span>
-            <span><i class="far fa-user"></i> {{ post.author }}</span>
-            <span><i class="far fa-clock"></i> {{ post.read_time }}</span>
-          </div>
-          <p class="blog-excerpt">{{ post.excerpt }}</p>
-          <span class="read-more">
-            Read Full Article <i class="fas fa-arrow-right"></i>
-          </span>
+      .blog-category {
+        display: inline-block;
+        background: var(--cream-dark);
+        color: var(--secondary);
+        padding: 0.3rem 1rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+
+      .blog-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 15px;
+        line-height: 1.4;
+      }
+
+      .blog-excerpt {
+        color: var(--text-light);
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .read-more {
+        color: var(--secondary);
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: gap 0.3s ease;
+      }
+
+      .read-more:hover {
+        gap: 12px;
+      }
+
+      .featured-post {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+        color: var(--white);
+      }
+
+      .featured-post .blog-card-img {
+        height: 350px;
+      }
+
+      .featured-post .blog-card-content {
+        padding: 40px;
+      }
+
+      .featured-post .blog-category {
+        background: var(--secondary);
+        color: var(--white);
+      }
+
+      .featured-post .blog-title {
+        color: var(--white);
+        font-size: 2rem;
+      }
+
+      .featured-post .blog-excerpt {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+      }
+
+      .featured-post .blog-meta {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .featured-post .read-more {
+        color: var(--white);
+        background: var(--secondary);
+        padding: 0.7rem 1.5rem;
+        border-radius: 50px;
+      }
+
+      footer {
+        background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+        color: var(--white);
+        padding: 3rem 0 1rem;
+      }
+
+      footer h5 {
+        color: var(--white);
+        font-size: 1.1rem;
+        margin-bottom: 1.2rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      footer h5::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--secondary);
+      }
+
+      footer a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      footer a:hover {
+        color: var(--secondary);
+        padding-left: 5px;
+      }
+
+      .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        margin-bottom: 0;
+      }
+
+      .social-links a:hover {
+        background-color: var(--secondary);
+        transform: translateY(-3px);
+        padding-left: 0;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.85rem;
+      }
+
+      .footer-bottom a {
+        display: inline;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      @media (min-width: 768px) {
+        .blog-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .featured-post {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .featured-post .blog-card-img {
+          height: 100%;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .blog-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .page-header h1 {
+          font-size: 3.5rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .page-header h1 {
+          font-size: 2rem;
+        }
+
+        .page-header p {
+          font-size: 1rem;
+        }
+
+        .blog-title {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img
+            src="https://careers.shramic.com/static/img/logo.png"
+            alt="Shramic Logo"
+            width="40"
+            height="40"
+          />
+          <span>Shramic Networks</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="/#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/#features">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/testimonial">Testimonials</a>
+            </li>
+            <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+              <a class="btn btn-primary btn-sm" href="/contact">Get in touch</a>
+            </li>
+          </ul>
         </div>
-      </a>
-      {% else %}
-      <a href="{{ url_for('blog_detail', slug=post.slug) }}" class="blog-card">
-        <img
-          class="blog-card-img"
-          src="{{ post.image }}"
-          alt="{{ post.title }}"
-          loading="lazy"
-        />
-        <div class="blog-card-content">
-          <span class="blog-category">{{ post.category }}</span>
-          <h3 class="blog-title">{{ post.title }}</h3>
-          <div class="blog-meta">
-            <span><i class="far fa-calendar"></i> {{ post.date }}</span>
-            <span><i class="far fa-user"></i> {{ post.author }}</span>
-            <span><i class="far fa-clock"></i> {{ post.read_time }}</span>
-          </div>
-          <p class="blog-excerpt">{{ post.excerpt }}</p>
-          <span class="read-more">
-            Read More <i class="fas fa-arrow-right"></i>
-          </span>
+      </div>
+    </nav>
+
+    <header class="page-header">
+      <div class="container">
+        <h1>Knowledge Hub</h1>
+        <p>
+          Insights, guidance, and real stories from the Shramic Community</br>
+          Explore practical knowledge, field-level insights, and real
+          experiences from agriculture, construction, livestock, and rural
+          business ecosystems — designed to empower farmers, workers, and rural
+          entrepreneurs across India.
+        </p>
+      </div>
+    </header>
+
+    <section class="blog-section">
+      <div class="container">
+        <div class="blog-filters">
+          <button class="filter-btn active" data-filter="all">All Posts</button>
+          <button class="filter-btn" data-filter="technology">
+            Shramic Krushi
+          </button>
+          <button class="filter-btn" data-filter="sustainability">
+            Shramic Build
+          </button>
+          <button class="filter-btn" data-filter="training">PashuSetu</button>
+          <button class="filter-btn" data-filter="market">
+            Shramic Experts
+          </button>
         </div>
-      </a>
-      {% endif %} {% endfor %}
-    </div>
-    {% else %}
-    <div class="no-posts">
-      <i class="fas fa-inbox"></i>
-      <h3>No posts found in this category</h3>
-      <p>Try selecting a different category or view all posts</p>
-      <a href="{{ url_for('blog') }}" class="btn btn-primary mt-3"
-        >View All Posts</a
-      >
-    </div>
-    {% endif %}
-  </div>
-</section>
-{% endblock %} {% block extra_js %}
-<script>
-  // Navbar scroll effect
-  window.addEventListener("scroll", () => {
-    const navbar = document.querySelector(".navbar");
-    if (window.scrollY > 50) {
-      navbar.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.15)";
-    } else {
-      navbar.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.08)";
-    }
-  });
-</script>
-{% endblock %}
+
+        <div class="blog-grid" id="blogGrid">
+          <article class="blog-card featured-post" data-category="technology">
+            <img
+              class="blog-card-img"
+              src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=500&fit=crop"
+              alt="IoT in Agriculture"
+            />
+            <div class="blog-card-content">
+              <span class="blog-category">Shramic Krushi</span>
+              <h2 class="blog-title">
+                How the Shramic Ecosystem is Transforming Rural Livelihoods.
+              </h2>
+              <div class="blog-meta">
+                <span><i class="far fa-calendar"></i> Dec 10, 2025</span>
+                <span><i class="far fa-clock"></i> 8 min read</span>
+              </div>
+              <p class="blog-excerpt">
+                Discover how Shramic Networks brings together farmers, workers, experts, and service providers onto a single digital platform — creating employment, trust, and sustainable income opportunities in rural India.
+              </p>
+              <a href="#" class="read-more"
+                >Read Full Article <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="sustainability">
+            <img
+              class="blog-card-img"
+              src="https://cdn.shopaccino.com/refresh/articles/farmbrand-story-01-7879244903647173_l.jpg?v=591"
+              alt="Sustainable Farming"
+            />
+            <div class="blog-card-content">
+              <span class="blog-category">Shramic Krushi</span>
+              <h3 class="blog-title">
+                Empowering Farmers Through Shramic Krushi
+              </h3>
+              <div class="blog-meta">
+                <span><i class="far fa-calendar"></i> Dec 8, 2025</span>
+                <span><i class="far fa-clock"></i> 6 min read</span>
+              </div>
+              <p class="blog-excerpt">
+                Learn how Shramic Krushi helps farmers connect with skilled workers, access expert advice, book agricultural services, and stay updated with market prices and government schemes.
+              </p>
+              <a href="#" class="read-more"
+                >Read More <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="market">
+            <img
+              class="blog-card-img"
+              src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/5practices.png?raw=true"
+              alt="Market Analysis"
+            />
+            <div class="blog-card-content">
+              <span class="blog-category">Shramic Build</span>
+              <h3 class="blog-title">
+                Understanding Rural Workforce Needs in Construction
+              </h3>
+              <div class="blog-meta">
+                <span><i class="far fa-calendar"></i> Dec 5, 2025</span>
+                <span><i class="far fa-clock"></i> 6 min read</span>
+              </div>
+              <p class="blog-excerpt">
+                An in-depth look at how Shramic Build organizes India’s construction workforce by connecting skilled laborers with verified contractors and structured job opportunities.
+              </p>
+              <a href="#" class="read-more"
+                >Read More <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="training">
+            <img
+              class="blog-card-img"
+              src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=300&fit=crop"
+              alt="Shramic Experts"
+            />
+            <div class="blog-card-content">
+              <span class="blog-category">Shramic Experts</span>
+              <h3 class="blog-title">
+                Knowledge as Power: Role of Experts in Rural Growth
+              </h3>
+              <div class="blog-meta">
+                <span><i class="far fa-calendar"></i> Dec 3, 2025</span>
+                <span><i class="far fa-clock"></i> 7 min read</span>
+              </div>
+              <p class="blog-excerpt">
+                How verified experts are guiding farmers, workers, and entrepreneurs through chat, voice, and video consultations — bridging the rural knowledge gap.
+              </p>
+              <a href="#" class="read-more"
+                >Read More <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="technology">
+            <img
+              class="blog-card-img"
+              src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&h=300&fit=crop"
+              alt="AI in Agriculture"
+            />
+            <div class="blog-card-content">
+              <span class="blog-category">PashuSetu</span>
+              <h3 class="blog-title">
+                Livestock as a Sustainable Income Source
+              </h3>
+              <div class="blog-meta">
+                <span><i class="far fa-calendar"></i> Dec 1, 2025</span>
+                <span><i class="far fa-clock"></i> 6 min read</span>
+              </div>
+              <p class="blog-excerpt">
+                Explore how PashuSetu supports livestock owners with access to veterinary guidance, manure commerce, and trusted rural trade — strengthening income beyond crops.
+              </p>
+              <a href="#" class="read-more"
+                >Read More <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="sustainability">
+            <img
+              class="blog-card-img"
+              src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=300&fit=crop"
+              alt="Water Conservation"
+            />
+            <div class="blog-card-content">
+              <span class="blog-category">Shramic Business</span>
+              <h3 class="blog-title">
+                Building Strong Rural Markets Through Shramic Business
+              </h3>
+              <div class="blog-meta">
+                <span><i class="far fa-calendar"></i> Nov 28, 2025</span>
+                <span><i class="far fa-clock"></i> 5 min read</span>
+              </div>
+              <p class="blog-excerpt">
+                Learn how Shramic Business enables nurseries, equipment owners, suppliers, and service providers to reach the right customers through a transparent B2B marketplace.
+              </p>
+              <a href="#" class="read-more"
+                >Read More <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="https://careers.shramic.com/static/img/logo.png"
+                alt="Shramic Networks Logo"
+                style="height: 50px; margin-right: 15px"
+                width="50"
+                height="50"
+              />
+              <h5 class="mb-0">Shramic Networks</h5>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Empowering Agriculture Through Innovation
+            </p>
+            <div class="social-links">
+              <a href="https://www.facebook.com/people/Shramic-Networks/61583443915078/#"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://chat.whatsapp.com/EIuWuB0kh0eI6bqdUTPeRw?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnsyF-NOx1mA8wVJDMUzORQQ5hU-11C3sMAfTqBvKe59bzScuQl2AF2Pzdr6g_aem_ZXUZj_VEN7QgTShI7PhAfw"><i class="fab fa-whatsapp"></i></a>
+              <a href="https://www.linkedin.com/in/shramic-networks-26331a38a"><i class="fab fa-linkedin-in"></i></a>
+              <a href="https://www.instagram.com/shramic.info"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h5>Company</h5>
+            <a href="/about">About Us</a>
+            <a href="/blog">Blog</a>
+            <a href="/testimonial">Testimonials</a>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Services</h5>
+            <a href="/#about">Smart Farming</a>
+            <a href="/#about">Training Programs</a>
+            <a href="/#about">Market Intelligence</a>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Contact Info</h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-envelope me-2"></i
+              ><a
+                href="mailto:shramicnetworks@gmail.com"
+                style="display: inline"
+                >shramicnetworks@gmail.com</a
+              >
+            </p>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-phone me-2"></i
+              ><a href="tel:+919876543210" style="display: inline"
+                >+91 98765 43210</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Shramic Networks. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+    <script>
+      // Filter functionality
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const blogCards = document.querySelectorAll(".blog-card");
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const filter = btn.dataset.filter;
+
+          filterBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          blogCards.forEach((card) => {
+            if (filter === "all" || card.dataset.category === filter) {
+              card.style.display = "block";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+
+      // Navbar scroll effect
+      window.addEventListener("scroll", () => {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          navbar.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.15)";
+        } else {
+          navbar.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.08)";
+        }
+      });
+    </script>
+  </body>
+</html>

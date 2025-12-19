@@ -1,511 +1,649 @@
-{% extends "base.html" %} {% block title %}Contact Us - Shramic Networks{%
-endblock %} {% block description %}Get in touch with Shramic Networks. We're
-here to help with your questions about our agricultural technology solutions.{%
-endblock %} {% block extra_css %}
-<style>
-  .hero {
-    background: linear-gradient(
-      135deg,
-      var(--cream) 0%,
-      var(--cream-dark) 100%
-    );
-    padding: 80px 0 40px;
-    text-align: center;
-  }
-
-  .hero-title {
-    font-family: "Playfair Display", serif;
-    font-size: 2.5rem;
-    color: var(--primary);
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  .hero-text {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
-
-  .contact-info {
-    padding: 60px 0;
-    background: var(--white);
-  }
-
-  .info-card {
-    background: var(--cream);
-    padding: 40px 30px;
-    border-radius: 15px;
-    text-align: center;
-    transition: all 0.3s ease;
-    height: 100%;
-    box-shadow: 0 5px 20px var(--shadow);
-  }
-
-  .info-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px var(--shadow-lg);
-  }
-
-  .info-icon {
-    font-size: 3rem;
-    color: var(--secondary);
-    margin-bottom: 1.5rem;
-  }
-
-  .info-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
-    color: var(--primary);
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  .info-text {
-    color: var(--text-light);
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-
-  .info-text a {
-    color: var(--secondary);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .info-text a:hover {
-    text-decoration: underline;
-  }
-
-  .contact-form-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
-  }
-
-  .form-container {
-    background: var(--white);
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  }
-
-  .section-title {
-    font-family: "Playfair Display", serif;
-    font-size: 2rem;
-    color: var(--primary);
-    margin-bottom: 2rem;
-    text-align: center;
-    font-weight: 700;
-  }
-
-  .form-label {
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-  }
-
-  .form-control {
-    padding: 12px 20px;
-    border: 2px solid var(--cream-dark);
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-
-  .form-control:focus {
-    border-color: var(--secondary);
-    box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
-    outline: none;
-  }
-
-  textarea.form-control {
-    resize: vertical;
-    min-height: 150px;
-  }
-
-  .btn-submit {
-    background-color: var(--secondary);
-    border: none;
-    color: var(--white);
-    padding: 15px 50px;
-    font-weight: 600;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    width: 100%;
-    cursor: pointer;
-  }
-
-  .btn-submit:hover {
-    background-color: #d35400;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(230, 126, 34, 0.4);
-  }
-
-  .btn-submit:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  .tracking-section {
-    background: var(--cream);
-    padding: 30px;
-    border-radius: 15px;
-    margin-top: 40px;
-    border-left: 5px solid var(--secondary);
-  }
-
-  .tracking-id {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--secondary);
-    letter-spacing: 2px;
-    font-family: monospace;
-  }
-
-  .reply-box {
-    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-    padding: 25px;
-    border-radius: 12px;
-    margin-top: 20px;
-    border-left: 4px solid var(--success);
-  }
-
-  .reply-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-
-  .reply-text {
-    color: var(--text-dark);
-    font-size: 1rem;
-    line-height: 1.8;
-  }
-
-  .submission-info {
-    background: var(--white);
-    padding: 25px;
-    border-radius: 12px;
-    margin-top: 20px;
-    border: 2px solid var(--cream-dark);
-  }
-
-  .submission-detail {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--cream-dark);
-  }
-
-  .submission-detail:last-child {
-    border-bottom: none;
-  }
-
-  .detail-label {
-    font-weight: 600;
-    color: var(--text-dark);
-  }
-
-  .detail-value {
-    color: var(--text-light);
-  }
-
-  .status-badge {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 600;
-  }
-
-  .status-pending {
-    background: #fff3cd;
-    color: #856404;
-  }
-
-  .status-replied {
-    background: #d4edda;
-    color: #155724;
-  }
-
-  @media (max-width: 768px) {
-    .form-container {
-      padding: 30px 20px;
-    }
-
-    .hero-title {
-      font-size: 2rem;
-    }
-
-    .section-title {
-      font-size: 1.7rem;
-    }
-
-    .tracking-id {
-      font-size: 1.4rem;
-    }
-  }
-</style>
-{% endblock %} {% block content %}
-<!-- HERO SECTION -->
-<section class="hero">
-  <div class="container">
-    <h1 class="hero-title">Get In Touch</h1>
-    <p class="hero-text">
-      Have questions? We'd love to hear from you. Send us a message and we'll
-      respond as soon as possible.
-    </p>
-  </div>
-</section>
-
-<!-- CONTACT INFO CARDS -->
-<section class="contact-info">
-  <div class="container">
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="info-card">
-          <div class="info-icon">
-            <i class="fas fa-phone-alt"></i>
-          </div>
-          <h3 class="info-title">Call Us</h3>
-          <p class="info-text">
-            <a href="tel:+911800123456">+91 1800-123-4567</a><br />
-            Mon-Sat: 9:00 AM - 6:00 PM IST
-          </p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="info-card">
-          <div class="info-icon">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <h3 class="info-title">Email Us</h3>
-          <p class="info-text">
-            <a href="mailto:shramicnetworks@gmail.com"
-              >shramicnetworks@gmail.com</a
-            ><br />
-            <a href="mailto:support@shramic.com">support@shramic.com</a>
-          </p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="info-card">
-          <div class="info-icon">
-            <i class="fas fa-map-marker-alt"></i>
-          </div>
-          <h3 class="info-title">Visit Us</h3>
-          <p class="info-text">
-            Shramic Technologies Pvt. Ltd.<br />
-            Bangalore, Karnataka, India
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT FORM -->
-<section class="contact-form-section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="form-container">
-          <h2 class="section-title">Send Us a Message</h2>
-
-          <!-- Show user's existing submission if they have one -->
-          {% if user_submission %}
-          <div class="submission-info">
-            <h4 style="color: var(--primary); margin-bottom: 20px">
-              <i class="fas fa-info-circle"></i> Your Previous Submission
-            </h4>
-            <div class="submission-detail">
-              <span class="detail-label">Tracking ID:</span>
-              <span class="detail-value tracking-id"
-                >{{ user_submission.tracking_id }}</span
-              >
-            </div>
-            <div class="submission-detail">
-              <span class="detail-label">Subject:</span>
-              <span class="detail-value">{{ user_submission.subject }}</span>
-            </div>
-            <div class="submission-detail">
-              <span class="detail-label">Submitted:</span>
-              <span class="detail-value">{{ user_submission.timestamp }}</span>
-            </div>
-            <div class="submission-detail">
-              <span class="detail-label">Status:</span>
-              <span class="status-badge status-{{ user_submission.status }}">
-                {{ user_submission.status|title }}
-              </span>
-            </div>
-
-            {% if user_submission.admin_reply %}
-            <div class="reply-box mt-3">
-              <div class="reply-header">
-                <h5 style="color: var(--success); margin: 0">
-                  <i class="fas fa-check-circle"></i> Admin Reply
-                </h5>
-              </div>
-              <p class="reply-text mb-2">
-                <strong>Your Message:</strong><br />
-                {{ user_submission.message }}
-              </p>
-              <p class="reply-text mb-2">
-                <strong>Admin Response:</strong><br />
-                {{ user_submission.admin_reply }}
-              </p>
-              <p class="text-muted mb-0">
-                <small
-                  ><i class="far fa-clock"></i> Replied on: {{
-                  user_submission.reply_timestamp }}</small
-                >
-              </p>
-            </div>
-            {% endif %}
-
-            <div class="text-center mt-3">
-              <a
-                href="{{ url_for('clear_session') }}"
-                class="btn btn-outline-secondary"
-              >
-                <i class="fas fa-plus-circle"></i> Submit New Inquiry
-              </a>
-            </div>
-          </div>
-          {% else %}
-          <!-- Contact Form -->
-          <form method="POST" action="{{ url_for('contact') }}">
-            <div class="mb-4">
-              <label for="name" class="form-label">Full Name *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-                required
-                placeholder="Enter your full name"
-              />
-            </div>
-            <div class="mb-4">
-              <label for="phone" class="form-label">Phone Number *</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="phone"
-                name="phone"
-                required
-                placeholder="Enter your phone number"
-                pattern="[0-9]{10}"
-              />
-            </div>
-            <div class="mb-4">
-              <label for="email" class="form-label">Email Address *</label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                name="email"
-                required
-                placeholder="Enter your email address"
-              />
-            </div>
-            <div class="mb-4">
-              <label for="subject" class="form-label">Subject *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="subject"
-                name="subject"
-                required
-                placeholder="What is this regarding?"
-              />
-            </div>
-            <div class="mb-4">
-              <label for="message" class="form-label">Your Message *</label>
-              <textarea
-                class="form-control"
-                id="message"
-                name="message"
-                required
-                placeholder="Tell us how we can help you..."
-              ></textarea>
-            </div>
-            <button type="submit" class="btn btn-submit">
-              <i class="fas fa-paper-plane me-2"></i> Send Message
-            </button>
-          </form>
-          {% endif %}
-
-          <!-- Check Reply Section -->
-          <div class="tracking-section mt-5">
-            <h4 class="mb-3">
-              <i class="fas fa-search"></i> Check Your Reply Status
-            </h4>
-            <p class="text-muted mb-3">
-              Enter your tracking ID to check if we've responded to your inquiry
-            </p>
-            <form
-              method="POST"
-              action="{{ url_for('check_reply') }}"
-              class="d-flex gap-2"
-            >
-              <input
-                type="text"
-                class="form-control"
-                name="tracking_id"
-                placeholder="Enter your tracking ID"
-                style="text-transform: uppercase"
-                required
-              />
-              <button
-                type="submit"
-                class="btn btn-secondary"
-                style="white-space: nowrap; padding: 12px 30px"
-              >
-                <i class="fas fa-search"></i> Check
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-{% endblock %} {% block extra_js %}
-<script>
-  // Form validation feedback
-  const form = document.querySelector(
-    'form[action="{{ url_for("contact") }}"]'
-  );
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      const submitBtn = form.querySelector(".btn-submit");
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML =
-          '<i class="fas fa-spinner fa-spin me-2"></i> Sending...';
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Shramic Networks</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cream: #fff8f0;
+        --cream-dark: #f5ebe0;
+        --primary: #2c3e50;
+        --secondary: #e67e22;
+        --accent: #d4a574;
+        --text-dark: #2c3e50;
+        --text-light: #6c757d;
+        --success: #27ae60;
+        --white: #ffffff;
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-lg: rgba(0, 0, 0, 0.12);
       }
-    });
-  }
 
-  // Auto-uppercase tracking ID input
-  const trackingInput = document.querySelector('input[name="tracking_id"]');
-  if (trackingInput) {
-    trackingInput.addEventListener("input", function (e) {
-      e.target.value = e.target.value.toUpperCase();
-    });
-  }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  // Phone number validation
-  const phoneInput = document.getElementById("phone");
-  if (phoneInput) {
-    phoneInput.addEventListener("input", function (e) {
-      e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 10);
-    });
-  }
-</script>
-{% endblock %}
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--cream);
+        color: var(--text-dark);
+        line-height: 1.7;
+      }
+
+      .navbar {
+        background-color: var(--white);
+        box-shadow: 0 2px 10px var(--shadow);
+        padding: 0.75rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--primary) !important;
+      }
+
+      .navbar-brand img {
+        height: 40px;
+        width: auto;
+      }
+
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--cream) 0%,
+          var(--cream-dark) 100%
+        );
+        padding: 80px 0 40px;
+        text-align: center;
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .hero-text {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .contact-info {
+        padding: 60px 0;
+        background: var(--white);
+      }
+
+      .info-card {
+        background: var(--cream);
+        padding: 40px 30px;
+        border-radius: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        height: 100%;
+        box-shadow: 0 5px 20px var(--shadow);
+      }
+
+      .info-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px var(--shadow-lg);
+      }
+
+      .info-icon {
+        font-size: 3rem;
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .info-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .info-text {
+        color: var(--text-light);
+        font-size: 1rem;
+      }
+
+      .contact-form-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+      }
+
+      .form-container {
+        background: var(--white);
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .form-label {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+      }
+
+      .form-control {
+        padding: 12px 20px;
+        border: 2px solid var(--cream-dark);
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+      }
+
+      textarea.form-control {
+        resize: vertical;
+        min-height: 150px;
+      }
+
+      .btn-submit {
+        background-color: var(--secondary);
+        border: none;
+        color: var(--white);
+        padding: 15px 50px;
+        font-weight: 600;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+      }
+
+      .btn-submit:hover {
+        background-color: #d35400;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(230, 126, 34, 0.4);
+      }
+
+      .alert {
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+      }
+
+      .tracking-section {
+        background: var(--cream);
+        padding: 30px;
+        border-radius: 15px;
+        margin-top: 40px;
+        border-left: 5px solid var(--secondary);
+      }
+
+      .tracking-id {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--secondary);
+        letter-spacing: 2px;
+      }
+
+      .reply-box {
+        background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        padding: 25px;
+        border-radius: 12px;
+        margin-top: 20px;
+        border-left: 4px solid var(--success);
+      }
+
+      .reply-text {
+        color: var(--text-dark);
+        font-size: 1rem;
+        line-height: 1.8;
+      }
+
+      footer {
+        background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+        color: var(--white);
+        padding: 3rem 0 1rem;
+      }
+
+      footer h5 {
+        color: var(--white);
+        margin-bottom: 1.2rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      footer h5::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--secondary);
+      }
+
+      footer a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      footer a:hover {
+        color: var(--secondary);
+      }
+
+      @media (max-width: 768px) {
+        .form-container {
+          padding: 30px 20px;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .section-title {
+          font-size: 1.7rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img
+            src="https://careers.shramic.com/static/img/logo.png"
+            alt="Shramic Logo"
+          />
+          <span>Shramic Networks</span>
+        </a>
+
+        <!-- Go Back to Home Button -->
+        <div class="ms-auto">
+          <a href="/" class="btn btn-outline-primary"> ← Go Back to Home </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">Get In Touch</h1>
+        <p class="hero-text">
+          Have questions? We'd love to hear from you. Send us a message and
+          we'll respond as soon as possible.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT INFO CARDS -->
+    <section class="contact-info">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <h3 class="info-title">Call Us</h3>
+              <p class="info-text">
+                +91 1800-123-4567<br />
+                Mon-Sat: 9:00 AM - 6:00 PM IST
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <h3 class="info-title">Email Us</h3>
+              <p class="info-text">
+                shramicnetworks@gmail.com<br />
+                support@shramic.com
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info-card">
+              <div class="info-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <h3 class="info-title">Visit Us</h3>
+              <p class="info-text">
+                Shramic Technologies Pvt. Ltd.<br />
+                Bangalore, Karnataka, India
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="contact-form-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="form-container">
+              <h2 class="section-title">Send Us a Message</h2>
+
+              <div id="alertContainer"></div>
+
+              <form id="contactForm">
+                <div class="mb-4">
+                  <label for="name" class="form-label">Full Name *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    required
+                    placeholder="Enter your full name"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="phone" class="form-label">Phone Number *</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    required
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="email" class="form-label">Email Address *</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder="Enter your email address"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="subject" class="form-label">Subject *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="subject"
+                    name="subject"
+                    required
+                    placeholder="What is this regarding?"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="message" class="form-label">Your Message *</label>
+                  <textarea
+                    class="form-control"
+                    id="message"
+                    name="message"
+                    required
+                    placeholder="Tell us how we can help you..."
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-submit">
+                  <i class="fas fa-paper-plane me-2"></i> Send Message
+                </button>
+              </form>
+
+              <!-- Check Reply Section -->
+              <div
+                class="tracking-section"
+                id="trackingSection"
+                style="display: none"
+              >
+                <h4 class="mb-3">Your Tracking ID</h4>
+                <div class="tracking-id mb-3" id="trackingDisplay"></div>
+                <p class="text-muted">
+                  Save this ID to check your reply status later.
+                </p>
+                <button
+                  class="btn btn-outline-secondary mt-2"
+                  onclick="clearTracking()"
+                >
+                  Submit New Inquiry
+                </button>
+              </div>
+
+              <div class="tracking-section mt-4">
+                <h4 class="mb-3">Check Your Reply Status</h4>
+                <form id="checkReplyForm" class="d-flex gap-2">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="checkTrackingId"
+                    placeholder="Enter your tracking ID"
+                    style="text-transform: uppercase"
+                  />
+                  <button
+                    type="submit"
+                    class="btn btn-secondary"
+                    style="white-space: nowrap"
+                  >
+                    Check Status
+                  </button>
+                </form>
+                <div id="replyContainer"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="https://careers.shramic.com/static/img/logo.png"
+                alt="Shramic Networks Logo"
+                style="height: 50px; margin-right: 15px"
+              />
+              <h5 class="mb-0">Shramic Networks</h5>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Empowering Agriculture Through Innovation
+            </p>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <h5>Quick Links</h5>
+            <a href="/" class="d-block mb-2">Home</a>
+            <a href="/about" class="d-block mb-2">About Us</a>
+            <a href="/contact" class="d-block mb-2">Contact</a>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <h5>Contact Info</h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-envelope me-2"></i>shramicnetworks@gmail.com
+            </p>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-phone me-2"></i>+91 1800-123-4567
+            </p>
+          </div>
+        </div>
+        <div
+          class="text-center mt-4 pt-3"
+          style="border-top: 1px solid rgba(255, 255, 255, 0.1)"
+        >
+          <p style="color: rgba(255, 255, 255, 0.7); margin: 0">
+            &copy; 2025 Shramic Networks. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Simulate submissions storage
+      let submissions = JSON.parse(
+        localStorage.getItem("shramic_submissions") || "[]"
+      );
+
+      function generateTrackingId() {
+        return "SN" + Math.random().toString(36).substr(2, 6).toUpperCase();
+      }
+
+      function showAlert(message, type) {
+        const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    <i class="fas fa-${
+                      type === "success"
+                        ? "check-circle"
+                        : type === "info"
+                        ? "info-circle"
+                        : "exclamation-triangle"
+                    } me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+        document.getElementById("alertContainer").innerHTML = alertHtml;
+        setTimeout(() => {
+          const alert = document.querySelector(".alert");
+          if (alert) alert.remove();
+        }, 5000);
+      }
+
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const trackingId = generateTrackingId();
+          const submission = {
+            id: Date.now(),
+            trackingId: trackingId,
+            name: document.getElementById("name").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
+            subject: document.getElementById("subject").value,
+            message: document.getElementById("message").value,
+            timestamp: new Date().toISOString(),
+            status: "pending",
+            reply: null,
+          };
+
+          submissions.push(submission);
+          localStorage.setItem(
+            "shramic_submissions",
+            JSON.stringify(submissions)
+          );
+
+          document.getElementById("trackingDisplay").textContent = trackingId;
+          document.getElementById("trackingSection").style.display = "block";
+          document.getElementById("contactForm").reset();
+
+          showAlert(
+            `Thank you! Your message has been sent. Your tracking ID is: <strong>${trackingId}</strong>`,
+            "success"
+          );
+
+          setTimeout(() => {
+            document
+              .getElementById("trackingSection")
+              .scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }, 500);
+        });
+
+      document
+        .getElementById("checkReplyForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const trackingId = document
+            .getElementById("checkTrackingId")
+            .value.trim()
+            .toUpperCase();
+          if (!trackingId) {
+            showAlert("Please enter a tracking ID", "warning");
+            return;
+          }
+
+          const submission = submissions.find(
+            (s) => s.trackingId === trackingId
+          );
+
+          if (submission) {
+            if (submission.reply) {
+              document.getElementById("replyContainer").innerHTML = `
+                        <div class="reply-box mt-3">
+                            <h5 style="color: var(--success); margin-bottom: 1rem;">
+                                <i class="fas fa-check-circle me-2"></i>Admin Reply
+                            </h5>
+                            <p class="reply-text"><strong>Your Message:</strong> ${
+                              submission.subject
+                            }</p>
+                            <p class="reply-text"><strong>Admin Response:</strong><br>${
+                              submission.reply
+                            }</p>
+                            <p class="text-muted mb-0"><small>Replied on: ${new Date(
+                              submission.replyTimestamp
+                            ).toLocaleString()}</small></p>
+                        </div>
+                    `;
+              showAlert("Reply found! Check below.", "success");
+            } else {
+              document.getElementById("replyContainer").innerHTML = `
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-clock me-2"></i>
+                            Your inquiry is being processed. Status: <strong>Pending</strong>
+                        </div>
+                    `;
+              showAlert(
+                "Your inquiry is being processed. No reply yet.",
+                "info"
+              );
+            }
+          } else {
+            document.getElementById("replyContainer").innerHTML = "";
+            showAlert(
+              "Invalid tracking ID. Please check and try again.",
+              "danger"
+            );
+          }
+        });
+
+      function clearTracking() {
+        document.getElementById("trackingSection").style.display = "none";
+        document.getElementById("replyContainer").innerHTML = "";
+        document.getElementById("checkTrackingId").value = "";
+      }
+    </script>
+  </body>
+</html>
