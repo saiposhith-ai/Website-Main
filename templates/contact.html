@@ -8,22 +8,24 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
       var(--cream) 0%,
       var(--cream-dark) 100%
     );
-    padding: 80px 0 40px;
+    padding: 60px 0 40px;
     text-align: center;
   }
 
   .hero-title {
     font-family: "Playfair Display", serif;
-    font-size: 2.5rem;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
     color: var(--primary);
     margin-bottom: 1rem;
+    line-height: 1.2;
   }
 
   .hero-text {
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 3vw, 1.1rem);
     color: var(--text-light);
     max-width: 600px;
     margin: 0 auto;
+    line-height: 1.6;
   }
 
   .contact-info {
@@ -33,91 +35,103 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
 
   .info-card {
     background: var(--cream);
-    padding: 40px 30px;
+    padding: clamp(25px, 5vw, 40px) clamp(20px, 4vw, 30px);
     border-radius: 15px;
     text-align: center;
     transition: all 0.3s ease;
     height: 100%;
     box-shadow: 0 5px 20px var(--shadow);
+    margin-bottom: 20px;
   }
 
   .info-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     box-shadow: 0 15px 40px var(--shadow-lg);
   }
 
   .info-icon {
-    font-size: 3rem;
+    font-size: clamp(2.2rem, 8vw, 3rem);
     color: var(--secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .info-title {
     font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
     color: var(--primary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
 
   .info-text {
     color: var(--text-light);
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    line-height: 1.6;
   }
 
   .contact-form-section {
-    padding: 80px 0;
+    padding: 60px 0;
     background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
   }
 
   .form-container {
     background: var(--white);
-    padding: 50px;
+    padding: clamp(25px, 6vw, 50px);
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
   }
 
   .section-title {
     font-family: "Playfair Display", serif;
-    font-size: 2rem;
+    font-size: clamp(1.6rem, 5vw, 2rem);
     color: var(--primary);
     margin-bottom: 2rem;
     text-align: center;
+    line-height: 1.2;
   }
 
   .form-label {
     font-weight: 600;
     color: var(--text-dark);
     margin-bottom: 0.5rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
   }
 
   .form-control {
-    padding: 12px 20px;
+    padding: clamp(12px, 4vw, 15px) 20px;
     border: 2px solid var(--cream-dark);
     border-radius: 10px;
-    font-size: 1rem;
+    font-size: clamp(0.95rem, 3vw, 1rem);
     transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 1rem;
   }
 
   .form-control:focus {
     border-color: var(--secondary);
     box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+    outline: none;
   }
 
   textarea.form-control {
     resize: vertical;
-    min-height: 150px;
+    min-height: clamp(120px, 25vw, 150px);
   }
 
   .btn-submit {
     background-color: var(--secondary);
     border: none;
     color: var(--white);
-    padding: 15px 50px;
+    padding: clamp(14px, 4vw, 15px) clamp(30px, 8vw, 50px);
     font-weight: 600;
     border-radius: 50px;
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 3vw, 1.1rem);
     transition: all 0.3s ease;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
 
   .btn-submit:hover {
@@ -128,22 +142,23 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
 
   .tracking-section {
     background: var(--cream);
-    padding: 30px;
+    padding: clamp(20px, 5vw, 30px);
     border-radius: 15px;
-    margin-top: 40px;
+    margin-top: clamp(20px, 5vw, 40px);
     border-left: 5px solid var(--secondary);
   }
 
   .tracking-id {
-    font-size: 1.8rem;
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
     font-weight: 700;
     color: var(--secondary);
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
+    word-break: break-all;
   }
 
   .reply-box {
     background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-    padding: 25px;
+    padding: clamp(20px, 4vw, 25px);
     border-radius: 12px;
     margin-top: 20px;
     border-left: 4px solid var(--success);
@@ -151,24 +166,117 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
 
   .reply-text {
     color: var(--text-dark);
-    font-size: 1rem;
-    line-height: 1.8;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    line-height: 1.7;
   }
 
-  @media (max-width: 768px) {
-    .form-container {
-      padding: 30px 20px;
+  /* Status Check Form */
+  .status-check-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  @media (min-width: 768px) {
+    .status-check-form {
+      flex-direction: row;
     }
-    .hero-title {
-      font-size: 2rem;
+
+    .status-check-form .form-control {
+      margin-bottom: 0;
+      flex: 1;
     }
-    .section-title {
-      font-size: 1.7rem;
+
+    .status-check-form .btn {
+      white-space: nowrap;
+      flex-shrink: 0;
+      width: auto;
     }
   }
-  .hero-title,
-  .hero-text {
-    color: #ffffffff;
+
+  .badge {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    padding: 6px 12px;
+  }
+
+  /* Button improvements */
+  .btn-outline-secondary {
+    border-radius: 25px;
+    padding: 10px 25px;
+    font-weight: 500;
+    border: 2px solid var(--text-light);
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline-secondary:hover {
+    background: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: var(--text-light);
+    border: none;
+    color: var(--white);
+    border-radius: 25px;
+    padding: clamp(10px, 3vw, 12px) clamp(20px, 6vw, 25px);
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
+  }
+
+  /* Mobile-specific optimizations */
+  @media (max-width: 576px) {
+    .contact-info {
+      padding: 40px 0;
+    }
+
+    .contact-form-section {
+      padding: 40px 0;
+    }
+
+    .form-container {
+      margin: 0 -15px;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .info-card {
+      margin-bottom: 15px;
+    }
+
+    .hero {
+      padding: 40px 0 30px;
+    }
+  }
+
+  /* Fix hero text color override */
+  .page-header .hero-title,
+  .page-header .hero-text {
+    color: var(--white) !important;
+  }
+
+  /* Smooth scrolling for better mobile experience */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Improve form input appearance on mobile */
+  input[type="tel"],
+  input[type="email"],
+  input[type="text"],
+  textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
 </style>
 {% endblock %} {% block content %}
@@ -187,36 +295,39 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
 <section class="contact-info">
   <div class="container">
     <div class="row g-4">
-      <div class="col-md-4">
+      <div class="col-md-4 col-12">
         <div class="info-card">
           <div class="info-icon">
             <i class="fas fa-phone-alt"></i>
           </div>
           <h3 class="info-title">Call Us</h3>
           <p class="info-text">
-            +91 9535455717<br />Mon-Sat: 9:00 AM - 6:00 PM IST
+            +91 9535455717<br />
+            <small>Mon-Sat: 9:00 AM - 6:00 PM IST</small>
           </p>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 col-12">
         <div class="info-card">
           <div class="info-icon">
             <i class="fas fa-envelope"></i>
           </div>
           <h3 class="info-title">Email Us</h3>
           <p class="info-text">
-            shramicnetworks@gmail.com<br />support@shramic.com
+            shramicnetworks@gmail.com<br />
+            <small>support@shramic.com</small>
           </p>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 col-12">
         <div class="info-card">
           <div class="info-icon">
             <i class="fas fa-map-marker-alt"></i>
           </div>
           <h3 class="info-title">Visit Us</h3>
           <p class="info-text">
-            Shramic Technologies Pvt. Ltd.<br />Bangalore, Karnataka, India
+            Shramic Technologies Pvt. Ltd.<br />
+            <small>Bangalore, Karnataka, India</small>
           </p>
         </div>
       </div>
@@ -227,12 +338,12 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
 <section class="contact-form-section">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-8">
+      <div class="col-lg-8 col-12">
         <div class="form-container">
           <h2 class="section-title">Send Us a Message</h2>
 
           <form method="POST" action="{{ url_for('contact') }}">
-            <div class="mb-4">
+            <div class="mb-3">
               <label for="name" class="form-label">Full Name *</label>
               <input
                 type="text"
@@ -243,7 +354,7 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
                 placeholder="Enter your full name"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-3">
               <label for="phone" class="form-label">Phone Number *</label>
               <input
                 type="tel"
@@ -254,7 +365,7 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
                 placeholder="Enter your phone number"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-3">
               <label for="email" class="form-label">Email Address *</label>
               <input
                 type="email"
@@ -265,7 +376,7 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
                 placeholder="Enter your email address"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-3">
               <label for="subject" class="form-label">Subject *</label>
               <input
                 type="text"
@@ -276,7 +387,7 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
                 placeholder="What is this regarding?"
               />
             </div>
-            <div class="mb-4">
+            <div class="mb-3">
               <label for="message" class="form-label">Your Message *</label>
               <textarea
                 class="form-control"
@@ -287,7 +398,8 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
               ></textarea>
             </div>
             <button type="submit" class="btn btn-submit">
-              <i class="fas fa-paper-plane me-2"></i> Send Message
+              <i class="fas fa-paper-plane"></i>
+              Send Message
             </button>
           </form>
 
@@ -304,8 +416,9 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
               <strong>Status:</strong>
               <span
                 class="badge bg-{{ 'success' if user_submission.status == 'replied' else 'warning' }}"
-                >{{ user_submission.status|title }}</span
               >
+                {{ user_submission.status|title }}
+              </span>
             </p>
 
             {% if user_submission.admin_reply %}
@@ -314,8 +427,8 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
                 <i class="fas fa-check-circle me-2"></i>Admin Reply
               </h5>
               <p class="reply-text">
-                <strong>Response:</strong><br />{{ user_submission.admin_reply
-                }}
+                <strong>Response:</strong><br />
+                {{ user_submission.admin_reply }}
               </p>
               <p class="text-muted mb-0">
                 <small>Replied on: {{ user_submission.reply_timestamp }}</small>
@@ -332,12 +445,12 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
           </div>
           {% endif %}
 
-          <div class="tracking-section mt-4">
+          <div class="tracking-section">
             <h4 class="mb-3">Check Your Reply Status</h4>
             <form
               method="POST"
               action="{{ url_for('check_reply') }}"
-              class="d-flex gap-2"
+              class="status-check-form"
             >
               <input
                 type="text"
@@ -347,11 +460,7 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
                 style="text-transform: uppercase"
                 required
               />
-              <button
-                type="submit"
-                class="btn btn-secondary"
-                style="white-space: nowrap"
-              >
+              <button type="submit" class="btn btn-secondary">
                 Check Status
               </button>
             </form>
