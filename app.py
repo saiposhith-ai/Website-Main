@@ -57,6 +57,26 @@ def faq():
 def terms():
     return render_template('terms.html')
 
+@app.route('/services')
+def services():
+    return render_template('service.html')
+
+@app.route('/services/agriculture-consulting')
+def agriculture_consulting():
+    return render_template('agriculture-consulting.html')
+
+@app.route('/services/Smart-Farming-Solutions')
+def smart_farming_solutions():
+    return render_template('Smart-Farming.html')
+
+@app.route('/services/Training-Programs')
+def training_programs():
+    return render_template('Training-Programs.html')
+
+@app.route('/services/Market-Intelligence')
+def market_intelligence():
+    return render_template('Market-Intelligence.html')
+
 @app.route("/sitemap.xml", methods=["GET"])
 def sitemap():
     pages = []
@@ -69,6 +89,7 @@ def sitemap():
         ("testimonial", "/testimonial", "0.6"),
         ("faq", "/faq", "0.6"),
         ("terms", "/terms", "0.3"),
+        ("services", "/services", "0.9"),
         ("contact", "/contact", "0.7"),
     ]
 

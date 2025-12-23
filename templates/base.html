@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
+
+    <!-- Primary SEO -->
+    <title>
+      {% block title %}Shramic Networks - Empowering Rural India Through
+      Technology{% endblock %}
+    </title>
+    <meta
+      name="title"
+      content="{% block meta_title %}Shramic Networks - Smart Farming, Farmer Training & Market Intelligence{% endblock %}"
+    />
+    <meta
+      name="description"
+      content="{% block meta_description %}Shramic Networks empowers Indian farmers with smart farming solutions, IoT-based crop monitoring, farmer training programs, and real-time market intelligence to increase yield and income.{% endblock %}"
+    />
+
+    <!-- Google Search Console verification -->
+    <meta
+      name="google-site-verification"
+      content="Exjw7OwuUBOSAi9iuQIOqTH3zsLnHwTBQwpgqrBMaRU"
+    />
+
+    <!-- Keywords -->
+    <meta
+      name="keywords"
+      content="{% block meta_keywords %}Shramic Networks, agriculture technology, agri startup India, smart farming solutions, precision agriculture, farmer training, market intelligence for farmers, IoT in farming, agri tech Bengaluru, sustainable farming India{% endblock %}"
+    />
+
+    <!-- Robots -->
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+
+    <!-- Canonical -->
+    <link
+      rel="canonical"
+      href="https://shramic.com{% block canonical_url %}/{% endblock %}"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shramic Networks" />
+    <meta
+      property="og:title"
+      content="{% block og_title %}Shramic Networks - Empowering Agriculture Through Innovation{% endblock %}"
+    />
+    <meta
+      property="og:description"
+      content="{% block og_description %}Transforming traditional farming with cutting-edge technology. Smart farming, farmer training, and market intelligence for Indian agriculture.{% endblock %}"
+    />
+    <meta
+      property="og:url"
+      content="https://shramic.com{% block og_url %}/{% endblock %}"
+    />
+    <meta
+      property="og:image"
+      content="https://careers.shramic.com/static/img/logo.png"
+    />
+    <meta property="og:image:alt" content="Shramic Networks logo" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="{% block twitter_title %}Shramic Networks - Empowering Agriculture Through Innovation{% endblock %}"
+    />
+    <meta
+      name="twitter:description"
+      content="{% block twitter_description %}Smart farming, farmer training, and market access to help Indian farmers grow sustainably.{% endblock %}"
+    />
+    <meta
+      name="twitter:image"
+      content="https://careers.shramic.com/static/img/logo.png"
+    />
+
+    <!-- Local / Business info -->
+    <meta name="geo.region" content="IN-KA" />
+    <meta name="geo.placename" content="Bengaluru" />
+    <meta name="geo.position" content="12.9716;77.5946" />
+    <meta name="ICBM" content="12.9716, 77.5946" />
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Shramic Networks",
+        "url": "https://shramic.com/",
+        "logo": "https://careers.shramic.com/static/img/logo.png",
+        "description": "Shramic Networks empowers farmers with smart farming technology, training, and market intelligence to improve productivity and income.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "",
+          "addressLocality": "Bengaluru",
+          "addressRegion": "Karnataka",
+          "postalCode": "560056",
+          "addressCountry": "IN"
+        },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+91-9535455717",
+            "contactType": "customer support",
+            "areaServed": "IN"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/people/Shramic-Networks/61583443915078/",
+          "https://www.linkedin.com/in/shramic-networks-26331a38a",
+          "https://www.instagram.com/shramic.info"
+        ]
+      }
+    </script>
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="https://careers.shramic.com/static/img/logo.png"
+      type="image/png"
+    />
+
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Load CSS asynchronously -->
+    <link
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    /></noscript>
+
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    /></noscript>
+
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    /></noscript>
+
+    <style>
+
+                /* Critical CSS - Inline for instant rendering */
+                :root {
+                  --cream: #fff8f0;
+                  --cream-dark: #f5ebe0;
+                  --primary: #2c3e50;
+                  --secondary: #e67e22;
+                  --accent: #d4a574;
+                  --text-dark: #2c3e50;
+                  --text-light: #6c757d;
+                  --success: #27ae60;
+                  --white: #ffffff;
+                  --shadow: rgba(0, 0, 0, 0.08);
+                  --shadow-lg: rgba(0, 0, 0, 0.12);
+                }
+
+                * {
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+                }
+
+                body {
+                  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                  background-color: var(--cream);
+                  color: var(--text-dark);
+                  line-height: 1.7;
+                  overflow-x: hidden;
+                  top: 0px !important;
+                }
+
+                /* Hide Google Translate Top Bar */
+                .goog-te-banner-frame.skiptranslate {
+                  display: none !important;
+                }
+
+                body {
+                  top: 0 !important;
+                }
+
+                .skiptranslate {
+                  display: none !important;
+                }
+
+                #google_translate_element {
+                  position: absolute;
+                  left: -9999px;
+                  visibility: hidden;
+                }
+
+                /* Navbar Styles */
+                .navbar {
+                  background-color: var(--white);
+                  box-shadow: 0 2px 10px var(--shadow);
+                  padding: 0.75rem 0;
+                  transition: all 0.3s ease;
+                  position: sticky;
+                  top: 0;
+                  z-index: 1000;
+                }
+
+                .navbar-brand {
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  font-family: "Playfair Display", serif;
+                  font-weight: 700;
+                  font-size: 1.3rem;
+                  color: var(--primary) !important;
+                }
+
+                .navbar-brand img {
+                  height: 40px;
+                  width: auto;
+                  transition: transform 0.3s ease;
+                }
+
+                .nav-link {
+                  color: var(--text-dark) !important;
+                  font-weight: 500;
+                  padding: 0.7rem 1rem !important;
+                  transition: all 0.3s ease;
+                  position: relative;
+                  font-size: 0.95rem;
+                }
+
+                .nav-link::after {
+                  content: "";
+                  position: absolute;
+                  bottom: 0;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  width: 0;
+                  height: 2px;
+                  background-color: var(--secondary);
+                  transition: width 0.3s ease;
+                }
+
+                .nav-link:hover::after,
+                .nav-link.active::after {
+                  width: 70%;
+                }
+
+                .btn-primary {
+                  background-color: var(--secondary);
+                  border: 2px solid var(--secondary);
+                  color: var(--white);
+                  padding: 0.6rem 1.5rem;
+                  font-weight: 600;
+                  border-radius: 50px;
+                  transition: all 0.3s ease;
+                  font-size: 0.9rem;
+                }
+
+                .btn-primary:hover {
+                  background-color: transparent;
+                  color: var(--secondary);
+                  transform: translateY(-2px);
+                  box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+                }
+
+                /* Language Selector Styles */
+                .language-selector {
+                  margin-top: 20px;
+                  padding-top: 20px;
+                  border-top: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .language-selector h6 {
+                  color: var(--white);
+                  font-size: 0.95rem;
+                  margin-bottom: 15px;
+                  font-weight: 600;
+                }
+
+                .language-buttons {
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 10px;
+                }
+
+                .language-btn {
+                  background-color: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  color: var(--white);
+                  padding: 8px 18px;
+                  border-radius: 25px;
+                  font-size: 0.85rem;
+                  transition: all 0.3s ease;
+                  cursor: pointer;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  text-decoration: none;
+                }
+
+                .language-btn:hover {
+                  background-color: var(--secondary);
+                  border-color: var(--secondary);
+                  transform: translateY(-2px);
+                  color: var(--white);
+                }
+
+                .language-btn.active {
+                  background-color: var(--secondary);
+                  border-color: var(--secondary);
+                }
+
+                .language-btn i {
+                  font-size: 1rem;
+                }
+
+                /* Footer Styles */
+                footer {
+                  background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+                  color: var(--white);
+                  padding: 3rem 0 1rem;
+                }
+
+                footer h5 {
+                  color: var(--white);
+                  font-size: 1.1rem;
+                  margin-bottom: 1.2rem;
+                  position: relative;
+                  padding-bottom: 0.5rem;
+                }
+
+                footer h5::after {
+                  content: "";
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 50px;
+                  height: 3px;
+                  background-color: var(--secondary);
+                }
+
+                footer a {
+                  color: rgba(255, 255, 255, 0.8);
+                  text-decoration: none;
+                  transition: all 0.3s ease;
+                  display: block;
+                  margin-bottom: 0.5rem;
+                  font-size: 0.9rem;
+                }
+
+                footer a:hover {
+                  color: var(--secondary);
+                  padding-left: 5px;
+                }
+
+                .social-links {
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 10px;
+                  margin-top: 15px;
+                }
+
+                .social-links a {
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 40px;
+                  height: 40px;
+                  background-color: rgba(255, 255, 255, 0.1);
+                  border-radius: 50%;
+                  transition: all 0.3s ease;
+                  margin-bottom: 0;
+                }
+
+                .social-links a:hover {
+                  background-color: var(--secondary);
+                  transform: translateY(-3px);
+                  padding-left: 0;
+                }
+
+                .footer-bottom {
+                  border-top: 1px solid rgba(255, 255, 255, 0.1);
+                  margin-top: 2rem;
+                  padding-top: 1.5rem;
+                  text-align: center;
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 0.85rem;
+                }
+
+                .footer-bottom a {
+                  display: inline;
+                  color: rgba(255, 255, 255, 0.7);
+                }
+
+                /* Page Loader */
+                .page-loader {
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background: var(--cream);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  z-index: 9999;
+                  transition: opacity 0.3s;
+                }
+
+                .page-loader.hidden {
+                  opacity: 0;
+                  pointer-events: none;
+                }
+
+                .spinner {
+                  width: 50px;
+                  height: 50px;
+                  border: 4px solid var(--cream-dark);
+                  border-top-color: var(--secondary);
+                  border-radius: 50%;
+                  animation: spin 1s linear infinite;
+                }
+
+                @keyframes spin {
+                  to { transform: rotate(360deg); }
+                }
+
+                /* Flash Messages */
+                .alert {
+                  border-radius: 10px;
+                  padding: 15px 20px;
+                  margin-bottom: 25px;
+                }
+
+                /* Page Header Styles */
+                .page-header {
+                  background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+                  padding: 100px 0 80px;
+                  text-align: center;
+                  color: var(--white);
+                  position: relative;
+                  overflow: hidden;
+                }
+
+                .page-header::before {
+                  content: "";
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+                  opacity: 0.1;
+                  z-index: 0;
+                }
+
+                .page-header h1 {
+                  font-family: "Playfair Display", serif;
+                  font-size: 3rem;
+                  font-weight: 700;
+                  margin-bottom: 1rem;
+                  position: relative;
+                  z-index: 1;
+                }
+
+                .page-header p {
+                  font-size: 1.2rem;
+                  opacity: 0.9;
+                  max-width: 700px;
+                  margin: 0 auto;
+                  position: relative;
+                  z-index: 1;
+                  line-height: 1.6;
+                }
+
+                .page-header .container {
+                  position: relative;
+                  z-index: 1;
+                }
+
+                /* Section Titles */
+                .section-title {
+                  font-family: "Playfair Display", serif;
+                  font-size: 2.5rem;
+                  text-align: center;
+                  color: var(--primary);
+                  margin-bottom: 1.5rem;
+                  font-weight: 700;
+                }
+
+                .section-text {
+                  text-align: center;
+                  color: var(--text-light);
+                  font-size: 1.1rem;
+                  line-height: 1.8;
+                  max-width: 800px;
+                  margin: 0 auto 3rem;
+                }
+
+                /* Responsive */
+                @media (max-width: 768px) {
+                  .page-header {
+                    padding: 80px 0 60px;
+                  }
+                  .page-header h1 {
+                    font-size: 2rem;
+                  }
+                  .page-header p {
+                    font-size: 1rem;
+                  }
+                  .section-title {
+                    font-size: 2rem;
+                  }
+                  .section-text {
+                    font-size: 1rem;
+                  }
+                }
+
+                @media (max-width: 576px) {
+                  .navbar-brand {
+                    font-size: 1.1rem;
+                  }
+                  .navbar-brand img {
+                    height: 35px;
+                  }
+                  .page-header {
+                    padding: 60px 0 40px;
+                  }
+                  .page-header h1 {
+                    font-size: 1.8rem;
+                  }
+                  .page-header p {
+                    font-size: 0.95rem;
+                  }
+                  .section-title {
+                    font-size: 1.7rem;
+                  }
+                }
+
+                @media (min-width: 1024px) {
+                  .page-header h1 {
+                    font-size: 3.5rem;
+                  }
+                }
+          ::selection {
+        background-color: var(--secondary);
+        color: var(--white);
+        text-shadow: none;
+      }
+
+      ::-moz-selection {
+        background-color: var(--secondary);
+        color: var(--white);
+        text-shadow: none;
+      }
+
+      /* Prevent Text Selection on Sensitive Areas */
+      body {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+      }
+
+      /* Allow selection only in specific areas like forms */
+      input,
+      textarea,
+      [contenteditable="true"] {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+      }
+
+      /* Prevent Image Dragging */
+      img {
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+        pointer-events: none;
+      }
+
+      /* Re-enable pointer events for clickable images */
+      a img,
+      .navbar-brand img {
+        pointer-events: auto;
+      }
+
+      /* Hide context menu overlay */
+      .no-context-menu {
+        position: relative;
+      }
+
+      .no-context-menu::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+      }
+
+      /* Prevent image saving via CSS */
+      img::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Disable developer tools message (optional) */
+      .dev-warning {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.95);
+        color: white;
+        z-index: 999999;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-family: monospace;
+        font-size: 20px;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .dev-warning.active {
+        display: flex;
+      }
+                {% block extra_css %}{% endblock %}
+    </style>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,hi,kn",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          "google_translate_element"
+        );
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+  </head>
+
+  <body>
+    <div class="page-loader" id="pageLoader">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('home') }}">
+          <img
+            src="https://careers.shramic.com/static/img/logo.png"
+            alt="Shramic Logo"
+            width="40"
+            height="40"
+            loading="eager"
+          />
+          <span>Shramic Networks</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint == 'home' %}active{% endif %}"
+                href="{{ url_for('home') }}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint == 'about' %}active{% endif %}"
+                href="{{ url_for('about') }}"
+                >About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint == 'services' %}active{% endif %}"
+                href="{{ url_for('services') }}"
+                >Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint == 'blog' %}active{% endif %}"
+                href="{{ url_for('blog') }}"
+                >Blog</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.endpoint == 'testimonial' %}active{% endif %}"
+                href="{{ url_for('testimonial') }}"
+                >Testimonials</a
+              >
+            </li>
+            <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+              <a class="btn btn-primary btn-sm" href="{{ url_for('contact') }}"
+                >Get in touch</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+      <div
+        class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show"
+        role="alert"
+      >
+        <i
+          class="fas fa-{{ 'check-circle' if category == 'success' else 'info-circle' if category == 'info' else 'exclamation-triangle' }} me-2"
+        ></i>
+        {{ message|safe }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+
+    <!-- Main Content -->
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="https://careers.shramic.com/static/img/logo.png"
+                alt="Shramic Networks Logo"
+                style="height: 50px; margin-right: 15px"
+                width="50"
+                height="50"
+                loading="lazy"
+              />
+              <h5 class="mb-0">Shramic Networks</h5>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Empowering Rural India Through Technology
+            </p>
+            <div class="social-links">
+              <a
+                href="https://www.facebook.com/people/Shramic-Networks/61583443915078/"
+                aria-label="Facebook"
+                target="_blank"
+                rel="noopener"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                href="https://chat.whatsapp.com/EIuWuB0kh0eI6bqdUTPeRw"
+                aria-label="WhatsApp"
+                target="_blank"
+                rel="noopener"
+                ><i class="fab fa-whatsapp"></i
+              ></a>
+              <a
+                href="https://www.linkedin.com/in/shramic-networks-26331a38a"
+                aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="https://www.instagram.com/shramic.info"
+                aria-label="Instagram"
+                target="_blank"
+                rel="noopener"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h5>Company</h5>
+            <a href="{{ url_for('about') }}">About Us</a>
+            <a href="{{ url_for('blog') }}">Blog</a>
+            <a href="{{ url_for('testimonial') }}">Testimonials</a>
+            <a href="{{ url_for('faq') }}">FAQ</a>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Services</h5>
+            <a href="{{ url_for('agriculture_consulting') }}"
+              >Agriculture Consulting</a
+            >
+            <a href="{{ url_for('smart_farming_solutions') }}">Smart Farming</a>
+            <a href="{{ url_for('training_programs') }}">Training Programs</a>
+            <a href="{{ url_for('market_intelligence') }}"
+              >Market Intelligence</a
+            >
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Contact Info</h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-envelope me-2"></i>
+              <a href="mailto:shramicnetworks@gmail.com" style="display: inline"
+                >shramicnetworks@gmail.com</a
+              >
+            </p>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-phone me-2"></i>
+              <a href="tel:+919535455717" style="display: inline"
+                >+91 9535455717</a
+              >
+            </p>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              <i class="fas fa-map-marker-alt me-2"></i>
+              Bengaluru, Karnataka, India
+            </p>
+          </div>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="row">
+          <div class="col-12">
+            <div class="language-selector">
+              <h6>
+                <i class="fas fa-language me-2"></i>Select Language / भाषा चुनें
+                / ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ
+              </h6>
+              <div class="language-buttons">
+                <button
+                  class="language-btn active"
+                  onclick="changeLanguage('en')"
+                  data-lang="en"
+                  id="lang-en"
+                >
+                  <i class="fas fa-globe"></i>
+                  <span>English</span>
+                </button>
+                <button
+                  class="language-btn"
+                  onclick="changeLanguage('hi')"
+                  data-lang="hi"
+                  id="lang-hi"
+                >
+                  <i class="fas fa-globe"></i>
+                  <span>हिंदी</span>
+                </button>
+                <button
+                  class="language-btn"
+                  onclick="changeLanguage('kn')"
+                  data-lang="kn"
+                  id="lang-kn"
+                >
+                  <i class="fas fa-globe"></i>
+                  <span>ಕನ್ನಡ</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Shramic Networks. All rights reserved. |
+            <a
+              href="{{ url_for('terms') }}"
+              style="display: inline; color: rgba(255, 255, 255, 0.7)"
+              >Terms & Conditions</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Ionicons -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <script>
+      /* Page Loader */
+      window.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+          const loader = document.getElementById("pageLoader");
+          if (loader) loader.classList.add("hidden");
+        }, 100);
+      });
+
+      /* Navbar Scroll Effect */
+      window.addEventListener("scroll", () => {
+        const navbar = document.querySelector(".navbar");
+        if (!navbar) return;
+        navbar.style.boxShadow =
+          window.scrollY > 50
+            ? "0 4px 20px rgba(0, 0, 0, 0.15)"
+            : "0 2px 10px rgba(0, 0, 0, 0.08)";
+      });
+
+      /* Smooth Scroll */
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (!target) return;
+          const navbarHeight =
+            document.querySelector(".navbar")?.offsetHeight || 0;
+          window.scrollTo({
+            top: target.offsetTop - navbarHeight,
+            behavior: "smooth",
+          });
+          const navbarCollapse = document.querySelector(".navbar-collapse");
+          if (navbarCollapse?.classList.contains("show")) {
+            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+            if (bsCollapse) bsCollapse.hide();
+          }
+        });
+      });
+
+      /* Cookie Helper Functions */
+      function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+          const date = new Date();
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+      }
+
+      function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === " ") c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0)
+            return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+      }
+
+      function deleteCookie(name) {
+        document.cookie =
+          name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      }
+
+      /* Language Change Function - FAST METHOD */
+      function changeLanguage(lang) {
+        // Update button states immediately
+        document.querySelectorAll(".language-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        document.getElementById("lang-" + lang)?.classList.add("active");
+
+        // Save preference
+        localStorage.setItem("preferredLanguage", lang);
+
+        if (lang === "en") {
+          // Clear all translation cookies and reload
+          deleteCookie("googtrans");
+          deleteCookie("googtrans", "/", ".shramic.com");
+
+          // Remove hash and reload
+          window.location.href =
+            window.location.pathname + window.location.search;
+        } else {
+          // Set cookie and reload for instant translation
+          setCookie("googtrans", "/en/" + lang, 1);
+          window.location.reload();
+        }
+      }
+
+      /* Auto-restore language on page load */
+      window.addEventListener("load", function () {
+        const savedLang = localStorage.getItem("preferredLanguage") || "en";
+        const currentCookie = getCookie("googtrans");
+
+        // Update button state based on current language
+        if (currentCookie && currentCookie !== "/en/en") {
+          const activeLang = currentCookie.split("/")[2];
+          document.querySelectorAll(".language-btn").forEach((btn) => {
+            btn.classList.toggle(
+              "active",
+              btn.getAttribute("data-lang") === activeLang
+            );
+          });
+        } else {
+          // Make sure English is active by default
+          document.getElementById("lang-en")?.classList.add("active");
+        }
+      });
+    </script>
+    <script>
+      (function () {
+        "use strict";
+
+        // Disable Right Click
+        document.addEventListener(
+          "contextmenu",
+          function (e) {
+            e.preventDefault();
+            return false;
+          },
+          false
+        );
+
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        document.addEventListener(
+          "keydown",
+          function (e) {
+            // F12
+            if (e.keyCode === 123) {
+              e.preventDefault();
+              return false;
+            }
+            // Ctrl+Shift+I (Inspect)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+              e.preventDefault();
+              return false;
+            }
+            // Ctrl+Shift+J (Console)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+              e.preventDefault();
+              return false;
+            }
+            // Ctrl+U (View Source)
+            if (e.ctrlKey && e.keyCode === 85) {
+              e.preventDefault();
+              return false;
+            }
+            // Ctrl+S (Save)
+            if (e.ctrlKey && e.keyCode === 83) {
+              e.preventDefault();
+              return false;
+            }
+            // Ctrl+Shift+C (Inspect Element)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+              e.preventDefault();
+              return false;
+            }
+          },
+          false
+        );
+
+        // Disable Ctrl+A (Select All)
+        document.addEventListener(
+          "keydown",
+          function (e) {
+            if (e.ctrlKey && e.keyCode === 65) {
+              e.preventDefault();
+              return false;
+            }
+          },
+          false
+        );
+
+        // Disable Ctrl+C (Copy)
+        document.addEventListener(
+          "keydown",
+          function (e) {
+            if (e.ctrlKey && e.keyCode === 67) {
+              e.preventDefault();
+              return false;
+            }
+          },
+          false
+        );
+
+        // Disable Copy event
+        document.addEventListener(
+          "copy",
+          function (e) {
+            e.preventDefault();
+            return false;
+          },
+          false
+        );
+
+        // Disable Cut event
+        document.addEventListener(
+          "cut",
+          function (e) {
+            e.preventDefault();
+            return false;
+          },
+          false
+        );
+
+        // Disable Image Dragging
+        document.addEventListener(
+          "dragstart",
+          function (e) {
+            if (e.target.tagName === "IMG") {
+              e.preventDefault();
+              return false;
+            }
+          },
+          false
+        );
+
+        // Disable Text Selection via Mouse
+        document.addEventListener(
+          "selectstart",
+          function (e) {
+            // Allow selection in input fields
+            if (
+              e.target.tagName === "INPUT" ||
+              e.target.tagName === "TEXTAREA" ||
+              e.target.isContentEditable
+            ) {
+              return true;
+            }
+            e.preventDefault();
+            return false;
+          },
+          false
+        );
+
+        // Clear selection on mouse up
+        document.addEventListener(
+          "mouseup",
+          function () {
+            if (window.getSelection) {
+              const selection = window.getSelection();
+              if (selection && !isEditableElement(selection.anchorNode)) {
+                selection.removeAllRanges();
+              }
+            }
+          },
+          false
+        );
+
+        // Helper function to check if element is editable
+        function isEditableElement(node) {
+          if (!node) return false;
+          const element = node.nodeType === 3 ? node.parentNode : node;
+          return (
+            element.tagName === "INPUT" ||
+            element.tagName === "TEXTAREA" ||
+            element.isContentEditable
+          );
+        }
+
+        // Disable print screen (limited effectiveness)
+        document.addEventListener("keyup", function (e) {
+          if (e.key === "PrintScreen") {
+            navigator.clipboard.writeText("");
+          }
+        });
+
+        // Detect DevTools (optional - can be removed if too aggressive)
+        const devtools = {
+          isOpen: false,
+          orientation: null,
+        };
+
+        const threshold = 160;
+
+        setInterval(function () {
+          if (
+            window.outerWidth - window.innerWidth > threshold ||
+            window.outerHeight - window.innerHeight > threshold
+          ) {
+            if (!devtools.isOpen) {
+              devtools.isOpen = true;
+              // Optionally show warning or take action
+              console.clear();
+            }
+          } else {
+            devtools.isOpen = false;
+          }
+        }, 500);
+
+        // Disable console logs in production
+        if (
+          window.location.hostname !== "localhost" &&
+          window.location.hostname !== "127.0.0.1"
+        ) {
+          console.log = function () {};
+          console.warn = function () {};
+          console.error = function () {};
+          console.info = function () {};
+          console.debug = function () {};
+        }
+
+        // Prevent iframe embedding (clickjacking protection)
+        if (window.top !== window.self) {
+          window.top.location = window.self.location;
+        }
+
+        // Additional image protection
+        const images = document.getElementsByTagName("img");
+        for (let i = 0; i < images.length; i++) {
+          images[i].addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            return false;
+          });
+        }
+
+        // Disable touch-hold context menu on mobile
+        document.addEventListener(
+          "touchstart",
+          function (e) {
+            if (e.target.tagName === "IMG") {
+              e.preventDefault();
+            }
+          },
+          { passive: false }
+        );
+
+        document.addEventListener(
+          "touchend",
+          function (e) {
+            if (e.target.tagName === "IMG") {
+              e.preventDefault();
+            }
+          },
+          { passive: false }
+        );
+
+        // Prevent long-press on mobile
+        let touchTimer;
+        document.addEventListener(
+          "touchstart",
+          function (e) {
+            touchTimer = setTimeout(function () {
+              e.preventDefault();
+            }, 500);
+          },
+          false
+        );
+
+        document.addEventListener(
+          "touchend",
+          function () {
+            clearTimeout(touchTimer);
+          },
+          false
+        );
+
+        document.addEventListener(
+          "touchmove",
+          function () {
+            clearTimeout(touchTimer);
+          },
+          false
+        );
+
+        // Obfuscate source code (limited effectiveness)
+        document.addEventListener("DOMContentLoaded", function () {
+          // Remove comments from HTML (already done by server)
+          // This is just additional client-side protection
+        });
+
+        // Disable certain mouse events on images
+        document.querySelectorAll("img").forEach(function (img) {
+          img.oncontextmenu = function () {
+            return false;
+          };
+          img.ondragstart = function () {
+            return false;
+          };
+          img.onselectstart = function () {
+            return false;
+          };
+          img.onmousedown = function () {
+            return false;
+          };
+        });
+      })();
+
+      // Custom alert for disabled features (optional)
+      function showSecurityAlert() {
+        // You can customize this to show a toast notification instead
+        // For now, it's silent
+        return false;
+      }
+
+      // Override default alerts (optional)
+      const originalAlert = window.alert;
+      window.alert = function (msg) {
+        if (msg.includes("DevTools") || msg.includes("console")) {
+          return false;
+        }
+        originalAlert(msg);
+      };
+    </script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

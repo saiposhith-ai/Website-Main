@@ -1,0 +1,563 @@
+{% extends "base.html" %} {% block title %}Agriculture Consulting Services -
+Expert Farm Advisory | Shramic Networks{% endblock %} {% block meta_title
+%}Professional Agriculture Consulting - Crop Advisory & Farm Management |
+Shramic{% endblock %} {% block meta_description %}Get personalized agriculture
+consulting from expert agronomists. Soil analysis, crop selection, pest
+management, and sustainable farming practices to maximize your farm's yield and
+profitability.{% endblock %} {% block meta_keywords %}agriculture consulting
+India, farm advisory services, agronomist consultation, soil testing services,
+crop selection guidance, sustainable farming practices, precision agriculture
+consultant{% endblock %} {% block canonical_url
+%}/services/agriculture-consulting{% endblock %} {% block extra_css %}
+<style>
+  .hero-section {
+    background: linear-gradient(
+        135deg,
+        rgba(44, 62, 80, 0.95),
+        rgba(26, 37, 47, 0.95)
+      ),
+      url("https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1200")
+        center/cover;
+    padding: 120px 0 80px;
+    color: var(--white);
+    position: relative;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-section h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .hero-section .lead {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    max-width: 700px;
+    line-height: 1.8;
+  }
+
+  .detail-section {
+    padding: 80px 0;
+    background-color: var(--cream);
+  }
+
+  .content-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 50px;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.1),
+      -2px -2px 10px rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .content-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(0, 0, 0, 0.02)
+    );
+    border-radius: 15px;
+    pointer-events: none;
+  }
+
+  .service-image {
+    border-radius: 15px;
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.15),
+      -3px -3px 12px rgba(255, 255, 255, 0.8);
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+  }
+
+  .content-card h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 2.3rem;
+    color: var(--primary);
+    margin-bottom: 25px;
+    font-weight: 700;
+  }
+
+  .content-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-top: 35px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .content-card p {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.9;
+    margin-bottom: 20px;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+  }
+
+  .feature-box {
+    background: var(--cream-dark);
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.08),
+      -2px -2px 10px rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+  }
+
+  .feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.12),
+      -3px -3px 12px rgba(255, 255, 255, 0.95);
+  }
+
+  .feature-box .icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--secondary), #f39c12);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 12px rgba(230, 126, 34, 0.3);
+  }
+
+  .feature-box .icon i {
+    font-size: 1.8rem;
+    color: var(--white);
+  }
+
+  .feature-box h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+
+  .feature-box p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 0;
+    line-height: 1.7;
+  }
+
+  .process-steps {
+    counter-reset: step;
+  }
+
+  .process-step {
+    position: relative;
+    padding-left: 80px;
+    margin-bottom: 35px;
+  }
+
+  .process-step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, var(--secondary), #f39c12);
+    color: var(--white);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 5px 5px 15px rgba(230, 126, 34, 0.3),
+      -2px -2px 8px rgba(255, 255, 255, 0.5);
+  }
+
+  .process-step h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+
+  .process-step p {
+    color: var(--text-light);
+    margin-bottom: 0;
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+  }
+
+  .benefits-list li {
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    background: var(--cream-dark);
+    border-radius: 10px;
+    display: flex;
+    align-items: start;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.06),
+      -2px -2px 8px rgba(255, 255, 255, 0.9);
+  }
+
+  .benefits-list li i {
+    color: var(--success);
+    font-size: 1.3rem;
+    margin-right: 15px;
+    margin-top: 3px;
+  }
+
+  .benefits-list li span {
+    color: var(--text-dark);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .cta-box {
+    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+    padding: 50px;
+    border-radius: 15px;
+    text-align: center;
+    color: var(--white);
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+    margin-top: 50px;
+  }
+
+  .cta-box h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--white);
+  }
+
+  .cta-box p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+    color: var(--white);
+  }
+
+  .btn-cta {
+    background-color: var(--secondary);
+    color: var(--white);
+    padding: 15px 40px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 6px 6px 20px rgba(230, 126, 34, 0.4);
+  }
+
+  .btn-cta:hover {
+    background-color: #d67118;
+    transform: translateY(-3px);
+    box-shadow: 8px 8px 25px rgba(230, 126, 34, 0.5);
+    color: var(--white);
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 80px 0 60px;
+    }
+
+    .hero-section h1 {
+      font-size: 2.3rem;
+    }
+
+    .hero-section .lead {
+      font-size: 1.1rem;
+    }
+
+    .content-card {
+      padding: 30px 20px;
+    }
+
+    .content-card h2 {
+      font-size: 1.9rem;
+    }
+
+    .content-card h3 {
+      font-size: 1.5rem;
+    }
+
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .process-step {
+      padding-left: 70px;
+    }
+
+    .cta-box {
+      padding: 35px 25px;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Hero Section -->
+<section class="page-header">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Agriculture Consulting</h1>
+      <p class="lead">
+        Expert guidance tailored to your farm's unique needs. Transform your
+        agricultural practices with personalized consulting from experienced
+        agronomists.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Detail Section -->
+<section class="detail-section">
+  <div class="container">
+    <div class="content-card" data-aos="fade-up">
+      <div class="row align-items-center mb-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <img
+            src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800"
+            alt="Agriculture Consulting - Farmer with Agronomist in Field"
+            class="service-image"
+            loading="lazy"
+          />
+        </div>
+        <div class="col-lg-6">
+          <h2>Personalized Farm Advisory</h2>
+          <p>
+            At Shramic Networks, we understand that every farm is unique. Our
+            agriculture consulting services provide comprehensive, data-driven
+            solutions tailored to your specific soil conditions, climate, crop
+            types, and business goals. With decades of combined experience, our
+            team of certified agronomists works closely with you to unlock your
+            farm's full potential.
+          </p>
+          <p>
+            We combine traditional agricultural wisdom with modern scientific
+            methods to deliver practical, actionable recommendations that drive
+            real results. Whether you're looking to increase yields, reduce
+            costs, improve sustainability, or transition to new crops, we're
+            here to guide you every step of the way.
+          </p>
+        </div>
+      </div>
+
+      <h3>Our Consulting Services</h3>
+      <div class="feature-grid">
+        <div class="feature-box">
+          <div class="icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <h4>Soil Testing & Analysis</h4>
+          <p>
+            Comprehensive soil health assessment including nutrient levels, pH
+            balance, organic matter content, and microbial activity analysis
+            with detailed recommendations.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h4>Crop Selection Advisory</h4>
+          <p>
+            Data-driven crop recommendations based on your soil type, climate
+            conditions, water availability, market demand, and profitability
+            analysis.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="icon">
+            <i class="fas fa-bug"></i>
+          </div>
+          <h4>Pest & Disease Management</h4>
+          <p>
+            Integrated pest management strategies using biological controls,
+            resistant varieties, and minimal chemical intervention for
+            sustainable farming.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="icon">
+            <i class="fas fa-recycle"></i>
+          </div>
+          <h4>Sustainable Practices</h4>
+          <p>
+            Implementation of eco-friendly farming methods including crop
+            rotation, composting, water conservation, and organic farming
+            techniques.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="icon">
+            <i class="fas fa-tint"></i>
+          </div>
+          <h4>Irrigation Planning</h4>
+          <p>
+            Efficient water management systems design including drip irrigation,
+            sprinkler systems, and rainwater harvesting solutions tailored to
+            your farm.
+          </p>
+        </div>
+
+        <div class="feature-box">
+          <div class="icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <h4>Yield Optimization</h4>
+          <p>
+            Strategic planning to maximize crop production through proper
+            spacing, fertilization schedules, harvest timing, and post-harvest
+            management.
+          </p>
+        </div>
+      </div>
+
+      <h3>Our Consultation Process</h3>
+      <div class="process-steps">
+        <div class="process-step">
+          <h4>Initial Assessment</h4>
+          <p>
+            We begin with a comprehensive evaluation of your farm including
+            on-site inspection, soil sampling, water testing, and understanding
+            your goals and challenges.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <h4>Data Analysis</h4>
+          <p>
+            Our experts analyze all collected data using advanced agricultural
+            science and technology to identify opportunities and potential
+            issues affecting your farm's performance.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <h4>Custom Strategy Development</h4>
+          <p>
+            We create a detailed action plan with specific recommendations,
+            timelines, and expected outcomes tailored to your farm's unique
+            conditions and objectives.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <h4>Implementation Support</h4>
+          <p>
+            We don't just provide recommendations—we support you through
+            implementation with hands-on guidance, training, and regular
+            monitoring to ensure success.
+          </p>
+        </div>
+
+        <div class="process-step">
+          <h4>Ongoing Monitoring</h4>
+          <p>
+            Continuous performance tracking with quarterly reviews, seasonal
+            adjustments, and long-term strategy refinement to keep your farm
+            thriving year after year.
+          </p>
+        </div>
+      </div>
+
+      <h3>Benefits You'll Experience</h3>
+      <ul class="benefits-list">
+        <li>
+          <i class="fas fa-check-circle"></i>
+          <span
+            ><strong>Increased Yield:</strong> Our clients typically see 25-40%
+            improvement in crop yields within the first year through optimized
+            farming practices and better resource management.</span
+          >
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i>
+          <span
+            ><strong>Cost Reduction:</strong> Smart fertilizer use, efficient
+            irrigation, and preventive pest management can reduce operational
+            costs by 20-35% while maintaining quality.</span
+          >
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i>
+          <span
+            ><strong>Soil Health Improvement:</strong> Long-term soil fertility
+            enhancement through sustainable practices ensures your land remains
+            productive for generations.</span
+          >
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i>
+          <span
+            ><strong>Risk Mitigation:</strong> Proactive disease management,
+            crop diversification strategies, and weather-adaptive planning
+            reduce farming risks significantly.</span
+          >
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i>
+          <span
+            ><strong>Market Competitiveness:</strong> Better quality produce,
+            consistent yields, and certification support help you command
+            premium prices in the market.</span
+          >
+        </li>
+        <li>
+          <i class="fas fa-check-circle"></i>
+          <span
+            ><strong>Knowledge Transfer:</strong> Learn best practices and
+            modern techniques that empower you to make informed decisions
+            independently over time.</span
+          >
+        </li>
+      </ul>
+
+      <div class="cta-box">
+        <h3>Ready to Transform Your Farm?</h3>
+        <p>
+          Schedule a free consultation with our agriculture experts today and
+          discover how we can help you achieve your farming goals.
+        </p>
+        <a href="{{ url_for('contact') }}" class="btn-cta">
+          Book Free Consultation <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block extra_js %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<script>
+  AOS.init({
+    duration: 800,
+    easing: "ease-in-out",
+    once: true,
+    offset: 100,
+  });
+</script>
+{% endblock %}

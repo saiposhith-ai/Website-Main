@@ -1,559 +1,491 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>Terms & Conditions - Shramic</title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta name="format-detection" content="telephone=no" />
-    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      .terms-content {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 40px 20px;
-      }
+{% extends "base.html" %} {% block title %}Terms & Conditions - Shramic
+Networks{% endblock %} {% block canonical_url %}/terms{% endblock %} {% block
+meta_description %}Read Shramic Networks' Terms and Conditions. Learn about our
+policies, user agreements, and legal information.{% endblock %} {% block
+extra_css %}
+<style>
+  .terms-section {
+    padding: 80px 0;
+    background: var(--white);
+  }
 
-      .terms-content h2 {
-        font-size: 28px;
-        color: #333;
-        margin-top: 40px;
-        margin-bottom: 20px;
-      }
+  .terms-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
 
-      .terms-content h3 {
-        font-size: 22px;
-        color: #444;
-        margin-top: 30px;
-        margin-bottom: 15px;
-      }
+  .last-updated {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 40px;
+    padding: 15px 20px;
+    background: var(--cream);
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary);
+  }
 
-      .terms-content p {
-        font-size: 16px;
-        line-height: 1.8;
-        color: #555;
-        margin-bottom: 15px;
-      }
+  .terms-content h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    color: var(--primary);
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--cream-dark);
+    font-weight: 700;
+  }
 
-      .terms-content ul {
-        margin-left: 30px;
-        margin-bottom: 20px;
-      }
+  .terms-content h2:first-of-type {
+    margin-top: 30px;
+  }
 
-      .terms-content ul li {
-        font-size: 16px;
-        line-height: 1.8;
-        color: #555;
-        margin-bottom: 10px;
-      }
+  .terms-content h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
 
-      .last-updated {
-        font-size: 14px;
-        color: #777;
-        font-style: italic;
-        margin-bottom: 30px;
-      }
-    </style>
-  </head>
+  .terms-content p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text-light);
+    margin-bottom: 20px;
+  }
 
-  <body id="top">
-    <header>
-      <div class="container">
-        <a href="/" class="logo">
-          <img src="./assets/images/logo.png" alt="Shramic logo" />
-          <span class="logo-text">Shramic Networks</span>
-        </a>
-        <div class="navbar-wrapper">
-          <button class="navbar-menu-btn" data-navbar-toggle-btn>
-            <ion-icon name="menu-outline"></ion-icon>
-          </button>
-          <nav class="navbar" data-navbar>
-            <ul class="navbar-list">
-              <li class="nav-item">
-                <a href="/" class="nav-link">Home</a>
-              </li>
-              <li class="nav-item">
-                <a href="/about" class="nav-link">AboutUs</a>
-              </li>
-              <li class="nav-item">
-                <a href="/blog" class="nav-link">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a href="/testimonial" class="nav-link">Testimonials</a>
-              </li>
-              <li class="nav-item">
-                <a href="/faq" class="nav-link">FAQ</a>
-              </li>
-              <li class="nav-item">
-                <a href="/contact" class="nav-link">Contact</a>
-              </li>
-            </ul>
-            <button
-              class="btn btn-primary"
-              onclick="window.location.href='/contact'"
-            >
-              Get in touch
-            </button>
-          </nav>
-        </div>
+  .terms-content ul {
+    margin-left: 30px;
+    margin-bottom: 25px;
+  }
+
+  .terms-content ul li {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 10px;
+  }
+
+  .terms-content ul li::marker {
+    color: var(--secondary);
+  }
+
+  .terms-content strong {
+    color: var(--text-dark);
+    font-weight: 600;
+  }
+
+  .intro-text {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: var(--text-dark);
+    padding: 25px;
+    background: var(--cream);
+    border-radius: 12px;
+    margin-bottom: 40px;
+    border-left: 4px solid var(--secondary);
+  }
+
+  .contact-box {
+    background: var(--cream);
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 50px;
+    border-left: 4px solid var(--secondary);
+  }
+
+  .contact-box p {
+    margin-bottom: 10px;
+  }
+
+  .final-note {
+    margin-top: 50px;
+    padding: 25px;
+    background: linear-gradient(
+      135deg,
+      var(--cream) 0%,
+      var(--cream-dark) 100%
+    );
+    border-radius: 12px;
+    font-style: italic;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    text-align: center;
+  }
+
+  .cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+    text-align: center;
+    color: var(--white);
+  }
+
+  .cta-card {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-title {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .cta-text {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    line-height: 1.7;
+  }
+
+  .btn-light {
+    background-color: var(--white);
+    border: 2px solid var(--white);
+    color: var(--primary);
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .btn-light:hover {
+    background-color: transparent;
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .terms-content {
+      padding: 0 15px;
+    }
+    .terms-content h2 {
+      font-size: 1.7rem;
+    }
+    .terms-content h3 {
+      font-size: 1.3rem;
+    }
+    .cta-title {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .terms-content h2 {
+      font-size: 1.5rem;
+    }
+    .terms-content h3 {
+      font-size: 1.2rem;
+    }
+    .terms-content p,
+    .terms-content ul li {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<header class="page-header">
+  <div class="container">
+    <h1>Terms & Conditions</h1>
+    <p>
+      Please read these terms and conditions carefully before using our
+      services.
+    </p>
+  </div>
+</header>
+
+<section class="terms-section">
+  <div class="container">
+    <div class="terms-content">
+      <div class="last-updated">
+        <strong>Last Updated:</strong> December 23, 2024
       </div>
-    </header>
 
-    <main>
-      <article>
-        <section class="hero" style="padding: 100px 0 40px">
-          <div class="container">
-            <div
-              class="hero-content"
-              style="max-width: 100%; text-align: center"
-            >
-              <h1 class="h1 hero-title">Terms & Conditions</h1>
-              <p class="hero-text">
-                Please read these terms and conditions carefully before using
-                our services.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section class="about">
-          <div class="container">
-            <div class="terms-content">
-              <p class="last-updated">Last Updated: December 1, 2024</p>
-
-              <p>
-                Welcome to Shramic. These Terms and Conditions govern your use
-                of our website, mobile application, and services. By accessing
-                or using Shramic's platform, you agree to be bound by these
-                terms. If you do not agree with any part of these terms, please
-                do not use our services.
-              </p>
-
-              <h2>1. Definitions</h2>
-              <p>In these Terms and Conditions:</p>
-              <ul>
-                <li>
-                  <strong>"Shramic," "we," "us," or "our"</strong> refers to
-                  Shramic Technologies Pvt. Ltd.
-                </li>
-                <li>
-                  <strong>"User," "you," or "your"</strong> refers to any
-                  individual or entity using our services.
-                </li>
-                <li>
-                  <strong>"Platform"</strong> refers to our website, mobile
-                  application, and all related services.
-                </li>
-                <li>
-                  <strong>"Services"</strong> includes all features, tools,
-                  content, and functionalities provided by Shramic.
-                </li>
-              </ul>
-
-              <h2>2. Acceptance of Terms</h2>
-              <p>
-                By registering for an account, accessing our platform, or using
-                any of our services, you acknowledge that you have read,
-                understood, and agree to be bound by these Terms and Conditions,
-                as well as our Privacy Policy. These terms constitute a legally
-                binding agreement between you and Shramic.
-              </p>
-
-              <h2>3. Eligibility</h2>
-              <p>To use our services, you must:</p>
-              <ul>
-                <li>
-                  Be at least 18 years of age or have parental/guardian consent
-                  if you are a minor.
-                </li>
-                <li>
-                  Have the legal capacity to enter into a binding contract.
-                </li>
-                <li>Provide accurate and complete registration information.</li>
-                <li>
-                  Not be prohibited from using our services under applicable
-                  laws.
-                </li>
-              </ul>
-
-              <h2>4. User Account</h2>
-              <h3>4.1 Registration</h3>
-              <p>
-                To access certain features of our platform, you must create an
-                account. You agree to provide accurate, current, and complete
-                information during registration and to update such information
-                to keep it accurate, current, and complete.
-              </p>
-              <h3>4.2 Account Security</h3>
-              <p>
-                You are responsible for maintaining the confidentiality of your
-                account credentials and for all activities that occur under your
-                account. You must immediately notify us of any unauthorized use
-                of your account or any other breach of security.
-              </p>
-              <h3>4.3 Account Termination</h3>
-              <p>
-                We reserve the right to suspend or terminate your account at any
-                time, with or without notice, for any reason, including but not
-                limited to violation of these terms, fraudulent activity, or
-                prolonged inactivity.
-              </p>
-
-              <h2>5. Services Description</h2>
-              <p>
-                Shramic provides agricultural technology solutions including but
-                not limited to:
-              </p>
-              <ul>
-                <li>Smart farming tools and IoT sensor integration</li>
-                <li>Weather forecasting and crop advisory services</li>
-                <li>Market intelligence and price information</li>
-                <li>Training and educational resources</li>
-                <li>Community features and expert consultations</li>
-              </ul>
-              <p>
-                We reserve the right to modify, suspend, or discontinue any
-                aspect of our services at any time without prior notice.
-              </p>
-
-              <h2>6. User Obligations</h2>
-              <p>As a user of our platform, you agree to:</p>
-              <ul>
-                <li>
-                  Use the services only for lawful purposes and in accordance
-                  with these terms.
-                </li>
-                <li>
-                  Not use the platform in any way that could damage, disable, or
-                  impair our services.
-                </li>
-                <li>
-                  Not attempt to gain unauthorized access to any portion of the
-                  platform or any other systems or networks.
-                </li>
-                <li>
-                  Not transmit any viruses, malware, or other malicious code.
-                </li>
-                <li>
-                  Not interfere with or disrupt the integrity or performance of
-                  the platform.
-                </li>
-                <li>
-                  Respect the intellectual property rights of Shramic and other
-                  users.
-                </li>
-                <li>
-                  Provide accurate information and not misrepresent your
-                  identity or affiliation.
-                </li>
-              </ul>
-
-              <h2>7. Payment Terms</h2>
-              <h3>7.1 Subscription Fees</h3>
-              <p>
-                Certain services require payment of subscription fees. All fees
-                are stated in Indian Rupees (INR) unless otherwise specified.
-                You agree to pay all applicable fees for the services you
-                select.
-              </p>
-              <h3>7.2 Billing</h3>
-              <p>
-                Subscription fees are billed in advance on a monthly or annual
-                basis, depending on your chosen plan. By subscribing, you
-                authorize us to charge your payment method on file.
-              </p>
-              <h3>7.3 Refunds</h3>
-              <p>
-                Refunds are provided on a case-by-case basis at our sole
-                discretion. Generally, subscription fees are non-refundable
-                except as required by law or as explicitly stated in our refund
-                policy.
-              </p>
-
-              <h2>8. Intellectual Property Rights</h2>
-              <p>
-                All content on the Shramic platform, including but not limited
-                to text, graphics, logos, images, software, and data
-                compilations, is the property of Shramic or its content
-                suppliers and is protected by Indian and international
-                copyright, trademark, and other intellectual property laws.
-              </p>
-              <p>
-                You may not reproduce, distribute, modify, create derivative
-                works of, publicly display, or exploit any content from our
-                platform without our prior written consent.
-              </p>
-
-              <h2>9. Disclaimer of Warranties</h2>
-              <p>
-                Our services are provided on an "as is" and "as available" basis
-                without any warranties of any kind, either express or implied.
-                We do not warrant that:
-              </p>
-              <ul>
-                <li>
-                  The services will be uninterrupted, timely, secure, or
-                  error-free.
-                </li>
-                <li>
-                  The results obtained from using the services will be accurate
-                  or reliable.
-                </li>
-                <li>Any defects in the services will be corrected.</li>
-              </ul>
-              <p>
-                Agricultural outcomes depend on many factors beyond our control.
-                While we strive to provide accurate information and
-                recommendations, we make no guarantees about crop yields,
-                weather predictions, or market outcomes.
-              </p>
-
-              <h2>10. Limitation of Liability</h2>
-              <p>
-                To the maximum extent permitted by law, Shramic shall not be
-                liable for any indirect, incidental, special, consequential, or
-                punitive damages, including but not limited to loss of profits,
-                data, or goodwill, arising from:
-              </p>
-              <ul>
-                <li>Your use or inability to use our services.</li>
-                <li>Any unauthorized access to or alteration of your data.</li>
-                <li>
-                  Any statements or conduct of third parties on the platform.
-                </li>
-                <li>
-                  Any crop failures, financial losses, or other damages related
-                  to agricultural activities.
-                </li>
-              </ul>
-
-              <h2>11. Indemnification</h2>
-              <p>
-                You agree to indemnify, defend, and hold harmless Shramic, its
-                officers, directors, employees, and agents from any claims,
-                liabilities, damages, losses, costs, or expenses (including
-                reasonable attorneys' fees) arising from your use of the
-                platform, violation of these terms, or infringement of any
-                third-party rights.
-              </p>
-
-              <h2>12. Privacy Policy</h2>
-              <p>
-                Your privacy is important to us. Our Privacy Policy explains how
-                we collect, use, and protect your personal information. By using
-                our services, you consent to our collection and use of
-                information as described in our Privacy Policy.
-              </p>
-
-              <h2>13. Modifications to Terms</h2>
-              <p>
-                We reserve the right to modify these Terms and Conditions at any
-                time. We will notify users of material changes via email or
-                through a prominent notice on our platform. Your continued use
-                of the services after such modifications constitutes your
-                acceptance of the updated terms.
-              </p>
-
-              <h2>14. Governing Law</h2>
-              <p>
-                These Terms and Conditions shall be governed by and construed in
-                accordance with the laws of India. Any disputes arising from
-                these terms shall be subject to the exclusive jurisdiction of
-                the courts in Bangalore, Karnataka, India.
-              </p>
-
-              <h2>15. Dispute Resolution</h2>
-              <p>
-                In the event of any dispute arising out of or relating to these
-                terms, the parties agree to first attempt to resolve the dispute
-                through good faith negotiations. If negotiations fail, the
-                dispute shall be resolved through binding arbitration in
-                accordance with the Arbitration and Conciliation Act, 1996.
-              </p>
-
-              <h2>16. Severability</h2>
-              <p>
-                If any provision of these Terms and Conditions is found to be
-                invalid or unenforceable by a court of competent jurisdiction,
-                the remaining provisions shall continue in full force and
-                effect.
-              </p>
-
-              <h2>17. Contact Information</h2>
-              <p>
-                If you have any questions about these Terms and Conditions,
-                please contact us at:
-              </p>
-              <p>
-                <strong>Shramic Technologies Pvt. Ltd.</strong><br />
-                Email: legal@shramic.com<br />
-                Phone: +91 1800-123-4567<br />
-                Address: Bangalore, Karnataka, India
-              </p>
-
-              <p style="margin-top: 40px; font-style: italic">
-                By using Shramic's services, you acknowledge that you have read
-                and understood these Terms and Conditions and agree to be bound
-                by them.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section class="cta">
-          <div class="container">
-            <div class="cta-card">
-              <h3 class="cta-title">Have Questions About Our Terms?</h3>
-              <p class="cta-text">
-                If you need clarification on any aspect of our Terms and
-                Conditions, our team is here to help.
-              </p>
-              <button
-                class="btn btn-secondary"
-                onclick="window.location.href='/contact'"
-                style="margin-top: 20px"
-              >
-                Contact Us
-              </button>
-            </div>
-          </div>
-        </section>
-      </article>
-    </main>
-
-    <footer>
-      <div class="footer-top">
-        <div class="container">
-          <div class="footer-brand">
-            <a href="/" class="logo">
-              <img src="./assets/images/logo.png" alt="Shramic logo" />
-            </a>
-            <p class="footer-text">Empowering Agriculture Through Innovation</p>
-            <p class="footer-text">Follow us on</p>
-            <ul class="social-list">
-              <li>
-                <a
-                  href="https://github.com/Amit-Ashok-Swain"
-                  class="social-link"
-                >
-                  <ion-icon name="logo-github"></ion-icon>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://instagram.com/_sanatani_hindutva_?igshid=OGQ5ZDc2ODk2ZA=="
-                  class="social-link"
-                >
-                  <ion-icon name="logo-instagram"></ion-icon>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="social-link">
-                  <ion-icon name="logo-youtube"></ion-icon>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="social-link">
-                  <ion-icon name="logo-facebook"></ion-icon>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="footer-link-box">
-            <ul class="footer-link-list">
-              <li>
-                <h3 class="h4 link-title">Company</h3>
-              </li>
-              <li>
-                <a href="/about" class="footer-link">About Us</a>
-              </li>
-              <li>
-                <a href="/blog" class="footer-link">Blog</a>
-              </li>
-              <li>
-                <a href="/testimonial" class="footer-link">Testimonials</a>
-              </li>
-            </ul>
-            <ul class="footer-link-list">
-              <li>
-                <h3 class="h4 link-title">Resources</h3>
-              </li>
-              <li>
-                <a href="/faq" class="footer-link">FAQ'S</a>
-              </li>
-              <li>
-                <a href="/contact" class="footer-link">Contact</a>
-              </li>
-              <li>
-                <a href="/terms" class="footer-link">Terms & Conditions</a>
-              </li>
-            </ul>
-            <ul class="footer-link-list">
-              <li>
-                <h3 class="h4 link-title">Services</h3>
-              </li>
-              <li>
-                <a href="/#about" class="footer-link">Smart Farming</a>
-              </li>
-              <li>
-                <a href="/#about" class="footer-link">Training Programs</a>
-              </li>
-              <li>
-                <a href="/about" class="footer-link">Market Intelligence</a>
-              </li>
-            </ul>
-            <ul class="footer-link-list">
-              <li>
-                <h3 class="h4 link-title">Support</h3>
-              </li>
-              <li>
-                <a href="/contact" class="footer-link">Help Center</a>
-              </li>
-              <li>
-                <a href="/faq" class="footer-link">FAQ</a>
-              </li>
-              <li>
-                <a href="/contact" class="footer-link">Get in Touch</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="intro-text">
+        Welcome to Shramic Networks. These Terms and Conditions govern your use
+        of our website, mobile application, and services. By accessing or using
+        Shramic's platform, you agree to be bound by these terms. If you do not
+        agree with any part of these terms, please do not use our services.
       </div>
-      <div class="footer-bottom">
-        <p class="copyright">
-          &copy; 2024 <a href="https://shramic.com">Shramic.com</a> All rights
-          reserved
-        </p>
+
+      <h2>1. Definitions</h2>
+      <p>In these Terms and Conditions:</p>
+      <ul>
+        <li>
+          <strong>"Shramic," "we," "us," or "our"</strong> refers to Shramic
+          Networks Private Limited.
+        </li>
+        <li>
+          <strong>"User," "you," or "your"</strong> refers to any individual or
+          entity using our services.
+        </li>
+        <li>
+          <strong>"Platform"</strong> refers to our website, mobile application,
+          and all related services.
+        </li>
+        <li>
+          <strong>"Services"</strong> includes all features, tools, content, and
+          functionalities provided by Shramic.
+        </li>
+      </ul>
+
+      <h2>2. Acceptance of Terms</h2>
+      <p>
+        By registering for an account, accessing our platform, or using any of
+        our services, you acknowledge that you have read, understood, and agree
+        to be bound by these Terms and Conditions, as well as our Privacy
+        Policy. These terms constitute a legally binding agreement between you
+        and Shramic.
+      </p>
+
+      <h2>3. Eligibility</h2>
+      <p>To use our services, you must:</p>
+      <ul>
+        <li>
+          Be at least 18 years of age or have parental/guardian consent if you
+          are a minor.
+        </li>
+        <li>Have the legal capacity to enter into a binding contract.</li>
+        <li>Provide accurate and complete registration information.</li>
+        <li>
+          Not be prohibited from using our services under applicable laws.
+        </li>
+      </ul>
+
+      <h2>4. User Account</h2>
+      <h3>4.1 Registration</h3>
+      <p>
+        To access certain features of our platform, you must create an account.
+        You agree to provide accurate, current, and complete information during
+        registration and to update such information to keep it accurate,
+        current, and complete.
+      </p>
+
+      <h3>4.2 Account Security</h3>
+      <p>
+        You are responsible for maintaining the confidentiality of your account
+        credentials and for all activities that occur under your account. You
+        must immediately notify us of any unauthorized use of your account or
+        any other breach of security.
+      </p>
+
+      <h3>4.3 Account Termination</h3>
+      <p>
+        We reserve the right to suspend or terminate your account at any time,
+        with or without notice, for any reason, including but not limited to
+        violation of these terms, fraudulent activity, or prolonged inactivity.
+      </p>
+
+      <h2>5. Services Description</h2>
+      <p>
+        Shramic provides agricultural technology solutions including but not
+        limited to:
+      </p>
+      <ul>
+        <li>Smart farming tools and IoT sensor integration</li>
+        <li>Weather forecasting and crop advisory services</li>
+        <li>Market intelligence and price information</li>
+        <li>Training and educational resources</li>
+        <li>Community features and expert consultations</li>
+      </ul>
+      <p>
+        We reserve the right to modify, suspend, or discontinue any aspect of
+        our services at any time without prior notice.
+      </p>
+
+      <h2>6. User Obligations</h2>
+      <p>As a user of our platform, you agree to:</p>
+      <ul>
+        <li>
+          Use the services only for lawful purposes and in accordance with these
+          terms.
+        </li>
+        <li>
+          Not use the platform in any way that could damage, disable, or impair
+          our services.
+        </li>
+        <li>
+          Not attempt to gain unauthorized access to any portion of the platform
+          or any other systems or networks.
+        </li>
+        <li>Not transmit any viruses, malware, or other malicious code.</li>
+        <li>
+          Not interfere with or disrupt the integrity or performance of the
+          platform.
+        </li>
+        <li>
+          Respect the intellectual property rights of Shramic and other users.
+        </li>
+        <li>
+          Provide accurate information and not misrepresent your identity or
+          affiliation.
+        </li>
+      </ul>
+
+      <h2>7. Payment Terms</h2>
+      <h3>7.1 Subscription Fees</h3>
+      <p>
+        Certain services require payment of subscription fees. All fees are
+        stated in Indian Rupees (INR) unless otherwise specified. You agree to
+        pay all applicable fees for the services you select.
+      </p>
+
+      <h3>7.2 Billing</h3>
+      <p>
+        Subscription fees are billed in advance on a monthly or annual basis,
+        depending on your chosen plan. By subscribing, you authorize us to
+        charge your payment method on file.
+      </p>
+
+      <h3>7.3 Refunds</h3>
+      <p>
+        Refunds are provided on a case-by-case basis at our sole discretion.
+        Generally, subscription fees are non-refundable except as required by
+        law or as explicitly stated in our refund policy.
+      </p>
+
+      <h2>8. Intellectual Property Rights</h2>
+      <p>
+        All content on the Shramic platform, including but not limited to text,
+        graphics, logos, images, software, and data compilations, is the
+        property of Shramic or its content suppliers and is protected by Indian
+        and international copyright, trademark, and other intellectual property
+        laws.
+      </p>
+      <p>
+        You may not reproduce, distribute, modify, create derivative works of,
+        publicly display, or exploit any content from our platform without our
+        prior written consent.
+      </p>
+
+      <h2>9. Disclaimer of Warranties</h2>
+      <p>
+        Our services are provided on an "as is" and "as available" basis without
+        any warranties of any kind, either express or implied. We do not warrant
+        that:
+      </p>
+      <ul>
+        <li>
+          The services will be uninterrupted, timely, secure, or error-free.
+        </li>
+        <li>
+          The results obtained from using the services will be accurate or
+          reliable.
+        </li>
+        <li>Any defects in the services will be corrected.</li>
+      </ul>
+      <p>
+        Agricultural outcomes depend on many factors beyond our control. While
+        we strive to provide accurate information and recommendations, we make
+        no guarantees about crop yields, weather predictions, or market
+        outcomes.
+      </p>
+
+      <h2>10. Limitation of Liability</h2>
+      <p>
+        To the maximum extent permitted by law, Shramic shall not be liable for
+        any indirect, incidental, special, consequential, or punitive damages,
+        including but not limited to loss of profits, data, or goodwill, arising
+        from:
+      </p>
+      <ul>
+        <li>Your use or inability to use our services.</li>
+        <li>Any unauthorized access to or alteration of your data.</li>
+        <li>Any statements or conduct of third parties on the platform.</li>
+        <li>
+          Any crop failures, financial losses, or other damages related to
+          agricultural activities.
+        </li>
+      </ul>
+
+      <h2>11. Indemnification</h2>
+      <p>
+        You agree to indemnify, defend, and hold harmless Shramic, its officers,
+        directors, employees, and agents from any claims, liabilities, damages,
+        losses, costs, or expenses (including reasonable attorneys' fees)
+        arising from your use of the platform, violation of these terms, or
+        infringement of any third-party rights.
+      </p>
+
+      <h2>12. Privacy Policy</h2>
+      <p>
+        Your privacy is important to us. Our Privacy Policy explains how we
+        collect, use, and protect your personal information. By using our
+        services, you consent to our collection and use of information as
+        described in our Privacy Policy.
+      </p>
+
+      <h2>13. Modifications to Terms</h2>
+      <p>
+        We reserve the right to modify these Terms and Conditions at any time.
+        We will notify users of material changes via email or through a
+        prominent notice on our platform. Your continued use of the services
+        after such modifications constitutes your acceptance of the updated
+        terms.
+      </p>
+
+      <h2>14. Governing Law</h2>
+      <p>
+        These Terms and Conditions shall be governed by and construed in
+        accordance with the laws of India. Any disputes arising from these terms
+        shall be subject to the exclusive jurisdiction of the courts in
+        Bangalore, Karnataka, India.
+      </p>
+
+      <h2>15. Dispute Resolution</h2>
+      <p>
+        In the event of any dispute arising out of or relating to these terms,
+        the parties agree to first attempt to resolve the dispute through good
+        faith negotiations. If negotiations fail, the dispute shall be resolved
+        through binding arbitration in accordance with the Arbitration and
+        Conciliation Act, 1996.
+      </p>
+
+      <h2>16. Severability</h2>
+      <p>
+        If any provision of these Terms and Conditions is found to be invalid or
+        unenforceable by a court of competent jurisdiction, the remaining
+        provisions shall continue in full force and effect.
+      </p>
+
+      <h2>17. Contact Information</h2>
+      <p>
+        If you have any questions about these Terms and Conditions, please
+        contact us at:
+      </p>
+      <div class="contact-box">
+        <p><strong>Shramic Networks Private Limited</strong></p>
+        <p><strong>Email:</strong> shramicnetworks@gmail.com</p>
+        <p><strong>Phone:</strong> +91 9535455717</p>
+        <p><strong>Address:</strong> Bengaluru, Karnataka, India</p>
       </div>
-    </footer>
 
-    <a href="#top" class="go-top active" data-go-top>
-      <ion-icon name="chevron-up-outline"></ion-icon>
-    </a>
+      <div class="final-note">
+        By using Shramic's services, you acknowledge that you have read and
+        understood these Terms and Conditions and agree to be bound by them.
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="./assets/js/script.js"></script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
-  </body>
-</html>
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h3 class="cta-title">Have Questions About Our Terms?</h3>
+      <p class="cta-text">
+        If you need further clarification or assistance regarding our Terms and
+        Conditions, feel free to reach out to our support team. We're here to
+        help!
+      </p>
+      <a href="/contact" class="btn-light">Contact Us</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
