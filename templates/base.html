@@ -3,11 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <!-- Viewport for responsiveness -->
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale:5.0, user-scalable:yes"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
     />
 
     <!-- Primary SEO -->
@@ -176,7 +174,6 @@
     </noscript>
 
     <style>
-      /* Critical CSS - Inline for instant rendering */
       :root {
         --cream: #fff8f0;
         --cream-dark: #f5ebe0;
@@ -207,23 +204,12 @@
         top: 0px !important;
       }
 
-      /* Hide Google Translate Top Bar */
+      /* Hide Google Translate Top Bar (kept harmless) */
       .goog-te-banner-frame.skiptranslate {
         display: none !important;
       }
-
-      body {
-        top: 0 !important;
-      }
-
       .skiptranslate {
         display: none !important;
-      }
-
-      #google_translate_element {
-        position: absolute;
-        left: -9999px;
-        visibility: hidden;
       }
 
       /* Navbar Styles */
@@ -295,57 +281,6 @@
         color: var(--secondary);
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
-      }
-
-      /* Language Selector Styles */
-      .language-selector {
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .language-selector h6 {
-        color: var(--white);
-        font-size: 0.95rem;
-        margin-bottom: 15px;
-        font-weight: 600;
-      }
-
-      .language-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      .language-btn {
-        background-color: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: var(--white);
-        padding: 8px 18px;
-        border-radius: 25px;
-        font-size: 0.85rem;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        text-decoration: none;
-      }
-
-      .language-btn:hover {
-        background-color: var(--secondary);
-        border-color: var(--secondary);
-        transform: translateY(-2px);
-        color: var(--white);
-      }
-
-      .language-btn.active {
-        background-color: var(--secondary);
-        border-color: var(--secondary);
-      }
-
-      .language-btn i {
-        font-size: 1rem;
       }
 
       /* Footer Styles */
@@ -434,15 +369,11 @@
         width: 100%;
         height: 100%;
         background: var(--cream);
-        display: none;
+        display: flex;
         align-items: center;
         justify-content: center;
         z-index: 9999;
         transition: opacity 0.3s;
-      }
-
-      .page-loader:not(.hidden) {
-        display: flex !important;
       }
 
       .page-loader.hidden {
@@ -472,7 +403,7 @@
         margin-bottom: 25px;
       }
 
-      /* Page Header Styles (optional for inner pages) */
+      /* Page Header Styles (optional) */
       .page-header {
         background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
         padding: 100px 0 80px;
@@ -513,12 +444,6 @@
         line-height: 1.6;
       }
 
-      .page-header .container {
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Section Titles */
       .section-title {
         font-family: "Playfair Display", serif;
         font-size: 2.5rem;
@@ -537,7 +462,6 @@
         margin: 0 auto 3rem;
       }
 
-      /* Responsive */
       @media (max-width: 768px) {
         .page-header {
           padding: 80px 0 60px;
@@ -595,7 +519,6 @@
         text-shadow: none;
       }
 
-      /* Prevent Text Selection on Sensitive Areas */
       body {
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -604,7 +527,6 @@
         -webkit-touch-callout: none;
       }
 
-      /* Allow selection only in specific areas like forms */
       input,
       textarea,
       [contenteditable="true"] {
@@ -614,7 +536,6 @@
         user-select: text;
       }
 
-      /* Prevent Image Dragging */
       img {
         -webkit-user-drag: none;
         -khtml-user-drag: none;
@@ -624,7 +545,6 @@
         pointer-events: none;
       }
 
-      /* Re-enable pointer events for clickable images */
       a img,
       .navbar-brand img {
         pointer-events: auto;
@@ -632,34 +552,12 @@
 
       {% block extra_css %}{% endblock %}
     </style>
-
-    <!-- Google Translate Script -->
-    <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: "en,hi,kn",
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-          },
-          "google_translate_element"
-        );
-      }
-    </script>
-    <script
-      type="text/javascript"
-      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-    ></script>
   </head>
 
   <body>
-    <!-- Page Loader -->
     <div class="page-loader" id="pageLoader">
       <div class="spinner"></div>
     </div>
-
-    <!-- Hidden Google Translate Element -->
-    <div id="google_translate_element"></div>
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -858,47 +756,6 @@
           </div>
         </div>
 
-        <!-- Language Selector -->
-        <div class="row">
-          <div class="col-12">
-            <div class="language-selector">
-              <h6>
-                <i class="fas fa-language me-2"></i>Select Language / भाषा चुनें
-                / ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ
-              </h6>
-              <div class="language-buttons">
-                <button
-                  class="language-btn active"
-                  onclick="changeLanguage('en')"
-                  data-lang="en"
-                  id="lang-en"
-                >
-                  <i class="fas fa-globe"></i>
-                  <span>English</span>
-                </button>
-                <button
-                  class="language-btn"
-                  onclick="changeLanguage('hi')"
-                  data-lang="hi"
-                  id="lang-hi"
-                >
-                  <i class="fas fa-globe"></i>
-                  <span>हिंदी</span>
-                </button>
-                <button
-                  class="language-btn"
-                  onclick="changeLanguage('kn')"
-                  data-lang="kn"
-                  id="lang-kn"
-                >
-                  <i class="fas fa-globe"></i>
-                  <span>ಕನ್ನಡ</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="footer-bottom">
           <p>
             &copy; 2025 Shramic Networks. All rights reserved. |
@@ -918,110 +775,33 @@
     <!-- Ionicons -->
     <script
       type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons.esm.js"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
     ></script>
     <script
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
 
-    <!-- Core JS: Loader + Language Switcher -->
     <script>
-      // Page Loader logic
-      document.addEventListener("DOMContentLoaded", function () {
+      // Page Loader
+      window.addEventListener("DOMContentLoaded", function () {
         const loader = document.getElementById("pageLoader");
         if (!loader) return;
-
-        loader.classList.remove("hidden");
-
-        window.addEventListener("load", function () {
-          setTimeout(function () {
-            loader.classList.add("hidden");
-          }, 250); // small delay for smoother UX
-        });
+        setTimeout(function () {
+          loader.classList.add("hidden");
+        }, 100);
       });
 
-      // Helper to set cookie for Google Translate
-      function setTranslateCookie(value) {
-        // Google Translate uses this cookie name / format
-        const cookieName = "googtrans";
-        const domain = window.location.hostname;
-        const path = "/";
-        // cookie value format: /source_lang/target_lang
-        const cookieValue = "/en/" + value;
-        document.cookie =
-          cookieName +
-          "=" +
-          cookieValue +
-          "; expires=Fri, 31 Dec 9999 23:59:59 GMT; domain=" +
-          domain +
-          "; path=" +
-          path +
-          ";";
-      }
-
-      // Language switcher
-      function changeLanguage(lang) {
-        // Update cookie for Google Translate
-        setTranslateCookie(lang);
-
-        // Trigger translation if widget is ready
-        const frame = document.querySelector("iframe.goog-te-menu-frame");
-        if (frame) {
-          // If the frame exists, click appropriate language
-          const innerDoc =
-            frame.contentDocument || frame.contentWindow.document;
-          if (!innerDoc) return;
-
-          const langElements = innerDoc.querySelectorAll(
-            ".goog-te-menu2-item span.text"
-          );
-          langElements.forEach(function (el) {
-            if (el.innerHTML.indexOf("English") > -1 && lang === "en") {
-              el.click();
-            } else if (el.innerHTML.indexOf("Hindi") > -1 && lang === "hi") {
-              el.click();
-            } else if (
-              (el.innerHTML.indexOf("Kannada") > -1 ||
-                el.innerHTML.indexOf("Kannada") > -1) &&
-              lang === "kn"
-            ) {
-              el.click();
-            }
-          });
+      // Navbar shadow on scroll (optional)
+      window.addEventListener("scroll", function () {
+        const navbar = document.querySelector(".navbar");
+        if (!navbar) return;
+        if (window.scrollY > 50) {
+          navbar.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.15)";
         } else {
-          // If frame not ready yet, reload so translate picks up cookie
-          window.location.reload();
+          navbar.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.08)";
         }
-
-        // Button active state
-        const buttons = document.querySelectorAll(".language-btn");
-        buttons.forEach(function (btn) {
-          if (btn.dataset.lang === lang) {
-            btn.classList.add("active");
-          } else {
-            btn.classList.remove("active");
-          }
-        });
-      }
-
-      // On first load, respect existing googtrans cookie
-      (function syncLanguageFromCookie() {
-        const match = document.cookie.match(/googtrans=([^;]+)/);
-        if (!match) return;
-        const value = decodeURIComponent(match[1]); // e.g. /en/hi
-        const parts = value.split("/");
-        const currentLang = parts[2] || "en";
-
-        const buttons = document.querySelectorAll(".language-btn");
-        buttons.forEach(function (btn) {
-          if (btn.dataset.lang === currentLang) {
-            btn.classList.add("active");
-          } else {
-            btn.classList.remove("active");
-          }
-        });
-      })();
+      });
     </script>
 
     {% block extra_js %}{% endblock %}
