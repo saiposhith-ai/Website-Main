@@ -7,38 +7,3 @@ flask_sqlalchemy
 psycopg2-binary
 werkzeug
 Pillow
-
-🌾 Farmer / Agriculture User (Shramic Krushi + Shramic Experts)
-
-> “Finding reliable workers and timely expert guidance was always difficult for us. With Shramic Krushi, I can easily hire skilled workers, and through Shramic Experts, I get proper advice for crop planning and disease issues. This platform truly understands farmers’ real problems.”
-— Small Farmer, Karnataka
-
-
-
-
----
-
-🏗 Construction Worker / Contractor (Shramic Build)
-
-> “Shramic Build helped me get regular work without middlemen. Contractors can see my skills and contact me directly. Payments and work records are clear, which gives me confidence and dignity in my work.”
-— Skilled Mason, Hubballi
-
-
-
-
----
-
-🐄 Livestock Owner / Rural Entrepreneur (PashuSetu)
-
-> “Earlier, buying livestock services and selling manure was unorganized. PashuSetu made it simple and transparent. I can now connect with genuine buyers and service providers through one trusted platform.”
-— Dairy Farmer, North Karnataka
-
-
-
-
----
-
-🏪 Service Provider / Business Partner (Shramic Business)
-
-> “Shramic Business gives visibility to small service providers like us. Whether it’s equipment rental, nursery services, or consultations, we are now connected to real customers across sectors. It feels like being part of a growing rural digital ecosystem.”
-— Agri Service Provider
