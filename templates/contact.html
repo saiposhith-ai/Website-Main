@@ -68,6 +68,18 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
     line-height: 1.6;
   }
 
+  .info-text a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .info-text a:hover {
+    color: var(--secondary);
+    transform: translateX(2px);
+  }
+
   .contact-form-section {
     padding: 60px 0;
     background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
@@ -170,7 +182,6 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
     line-height: 1.7;
   }
 
-  /* Status Check Form */
   .status-check-form {
     display: flex;
     flex-direction: column;
@@ -199,7 +210,6 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
     padding: 6px 12px;
   }
 
-  /* Button improvements */
   .btn-outline-secondary {
     border-radius: 25px;
     padding: 10px 25px;
@@ -232,7 +242,6 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
     box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
   }
 
-  /* Mobile-specific optimizations */
   @media (max-width: 576px) {
     .contact-info {
       padding: 40px 0;
@@ -258,18 +267,15 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
     }
   }
 
-  /* Fix hero text color override */
   .page-header .hero-title,
   .page-header .hero-text {
     color: var(--white) !important;
   }
 
-  /* Smooth scrolling for better mobile experience */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Improve form input appearance on mobile */
   input[type="tel"],
   input[type="email"],
   input[type="text"],
@@ -278,6 +284,7 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
     -moz-appearance: none;
     appearance: none;
   }
+
   .tracking-instructions {
     margin-top: clamp(20px, 5vw, 30px);
   }
@@ -285,7 +292,7 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
   .tracking-instructions .alert {
     border: none;
     border-left: 4px solid var(--secondary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 18px 11px 15px 4px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
   }
 
@@ -319,7 +326,6 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
     }
   }
 
-  /* Modal improvements */
   .modal-header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
@@ -336,6 +342,71 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
       border-radius: 0;
       border-left: none;
       border-top: 4px solid var(--secondary);
+    }
+  }
+  /* Copy Tracking Button Wrapper */
+  .copy-tracking-wrapper {
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  /* Copy Button */
+  .btn-copy-tracking {
+    background: transparent;
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+    border-radius: 50px;
+    padding: 8px 22px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+  }
+
+  /* Hover Effect */
+  .btn-copy-tracking:hover {
+    background: var(--secondary);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(230, 126, 34, 0.35);
+  }
+
+  /* Active Click */
+  .btn-copy-tracking:active {
+    transform: scale(0.96);
+  }
+
+  /* Copy Feedback */
+  #copy-feedback {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--success);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    animation: fadeSlideUp 0.4s ease;
+  }
+
+  /* Feedback Animation */
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Mobile Adjustments */
+  @media (max-width: 576px) {
+    .btn-copy-tracking {
+      width: 100%;
+      justify-content: center;
     }
   }
 </style>
@@ -362,7 +433,11 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
           </div>
           <h3 class="info-title">Call Us</h3>
           <p class="info-text">
-            +91 9535455717<br />
+            <a
+              href="tel:+919535455717"
+              style="color: inherit; text-decoration: none"
+              >+91 9535455717</a
+            ><br />
             <small>Mon-Sat: 9:00 AM - 6:00 PM IST</small>
           </p>
         </div>
@@ -374,8 +449,18 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
           </div>
           <h3 class="info-title">Email Us</h3>
           <p class="info-text">
-            shramicnetworks@gmail.com<br />
-            <small>support@shramic.com</small>
+            <a
+              href="mailto:shramicnetworks@gmail.com"
+              style="color: inherit; text-decoration: none"
+              >shramicnetworks@gmail.com</a
+            ><br />
+            <small
+              ><a
+                href="mailto:support@shramic.com"
+                style="color: inherit; text-decoration: none"
+                >support@shramic.com</a
+              ></small
+            >
           </p>
         </div>
       </div>
@@ -543,28 +628,29 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
                   </p>
                   <p class="mb-0 small text-muted">
                     Keep it safe for checking admin replies. We'll reply back
-                    here.To see paste the code in the above form.
+                    here. To see paste the code in the above form.
                   </p>
                 </div>
               </div>
 
-              <!-- Copy Button -->
               {% if user_submission %}
-              <div class="mt-3 text-center">
+              <div class="copy-tracking-wrapper">
                 <button
-                  class="btn btn-outline-primary btn-sm px-4"
+                  class="btn-copy-tracking"
                   onclick="copyTrackingID('{{ user_submission.tracking_id }}')"
+                  type="button"
                 >
-                  <i class="fas fa-copy me-1"></i>Copy Tracking ID
+                  <i class="fas fa-copy"></i> Copy Tracking ID
                 </button>
-                <div id="copy-feedback" class="mt-2 small text-success d-none">
-                  <i class="fas fa-check-circle me-1"></i>Copied to clipboard!
+
+                <div id="copy-feedback" class="d-none">
+                  <i class="fas fa-check-circle"></i> Copied to clipboard!
                 </div>
               </div>
+
               {% endif %}
             </div>
 
-            <!-- Enhanced Instructions Modal (Optional - shows on first visit) -->
             <div
               class="modal fade"
               id="trackingHelpModal"
@@ -631,4 +717,59 @@ endblock %} {% block canonical_url %}/contact{% endblock %} {% block extra_css
     </div>
   </div>
 </section>
+
+<script>
+  // Copy Tracking ID Function
+  function copyTrackingID(trackingId) {
+    // Create a temporary textarea element
+    const tempTextarea = document.createElement("textarea");
+    tempTextarea.value = trackingId;
+    tempTextarea.style.position = "fixed";
+    tempTextarea.style.left = "-9999px";
+    document.body.appendChild(tempTextarea);
+
+    // Select and copy
+    tempTextarea.select();
+    tempTextarea.setSelectionRange(0, 99999); // For mobile devices
+
+    try {
+      // Try modern clipboard API first
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard
+          .writeText(trackingId)
+          .then(function () {
+            showCopyFeedback();
+          })
+          .catch(function () {
+            // Fallback to execCommand
+            document.execCommand("copy");
+            showCopyFeedback();
+          });
+      } else {
+        // Fallback for older browsers
+        document.execCommand("copy");
+        showCopyFeedback();
+      }
+    } catch (err) {
+      console.error("Copy failed:", err);
+      alert("Failed to copy. Please copy manually: " + trackingId);
+    }
+
+    // Remove temporary element
+    document.body.removeChild(tempTextarea);
+  }
+
+  function showCopyFeedback() {
+    const feedback = document.getElementById("copy-feedback");
+    if (feedback) {
+      feedback.classList.remove("d-none");
+
+      // Hide after 3 seconds
+      setTimeout(function () {
+        feedback.classList.add("d-none");
+      }, 3000);
+    }
+  }
+</script>
+
 {% endblock %}

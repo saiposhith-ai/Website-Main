@@ -17,8 +17,10 @@ ADMIN_CREDENTIALS = {
     'password_hash': '71873303a486338db55ba099625938a1267dba18b8ce68d76aba2a3354f8bba6'  # SHA-256 of 'Shramic123'
 }
 BASE_URL = "https://shramic.com" 
+
 # Store contact form submissions in memory (will reset on server restart)
 contact_submissions = []
+
 def hash_password(password):
     """Hash password using SHA-256"""
     return hashlib.sha256(password.encode()).hexdigest()
@@ -211,12 +213,6 @@ def admin_login():
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '')
         
-        # Debug output (remove in production)
-        print(f"Login attempt - Username: {username}")
-        print(f"Expected username: {ADMIN_CREDENTIALS['username']}")
-        print(f"Password hash: {hash_password(password)}")
-        print(f"Expected hash: {ADMIN_CREDENTIALS['password_hash']}")
-        
         # Verify credentials
         if (username == ADMIN_CREDENTIALS['username'] and 
             hash_password(password) == ADMIN_CREDENTIALS['password_hash']):
@@ -274,12 +270,18 @@ def reply_submission(submission_id):
     
     return render_template('admin_reply.html', submission=submission)
 
-@app.route('/admin/submission/<int:submission_id>/delete')
+@app.route('/admin/submission/<int:submission_id>/delete', methods=['GET'])
 @login_required
 def delete_submission(submission_id):
     global contact_submissions
+    original_length = len(contact_submissions)
     contact_submissions = [s for s in contact_submissions if s['id'] != submission_id]
-    flash('Submission deleted successfully', 'success')
+    
+    if len(contact_submissions) < original_length:
+        flash('Submission deleted successfully', 'success')
+    else:
+        flash('Submission not found', 'error')
+    
     return redirect(url_for('admin_dashboard'))
 
 @app.route('/admin/logout')
