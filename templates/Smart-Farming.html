@@ -1,0 +1,86 @@
+{% extends "base.html" %} {% block title %}Smart Farming - Shramic Networks |
+IoT for Agriculture{% endblock %} {% block content %}
+<header
+  class="page-banner"
+  style="background: linear-gradient(135deg, #186f65, #0f3d3e)"
+>
+  <div class="container" data-aos="zoom-in">
+    <span class="sub-title text-white-50">Precision Agriculture</span>
+    <h1 class="display-3 fw-bold text-white">Smart Farming Solutions</h1>
+    <p class="mx-auto mt-4 col-lg-8 opacity-75">
+      Where Silicon Valley meets the soil. Our IoT ecosystem brings real-time
+      visibility to your farm operations.
+    </p>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container py-lg-5">
+    <div class="row align-items-center g-5 flex-lg-row-reverse">
+      <div class="col-lg-6" data-aos="fade-left">
+        <img
+          src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&fit=crop"
+          class="img-fluid rounded-4 shadow-float"
+          alt="IoT Farming"
+        />
+      </div>
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="sub-title">Connected Farm</span>
+        <h2 class="mb-4">Real-Time Field Intelligence</h2>
+        <p class="text-gray mb-4">
+          Monitor your farm from anywhere in the world. Our smart sensors track
+          moisture, temperature, and nutrient levels, sending alerts directly to
+          your smartphone.
+        </p>
+
+        <ul class="check-list mt-4">
+          <li>
+            <i class="fas fa-wifi text-accent me-2"></i> Solar Powered Wireless
+            Sensors
+          </li>
+          <li>
+            <i class="fas fa-tint text-accent me-2"></i> Automated Irrigation
+            Control
+          </li>
+          <li>
+            <i class="fas fa-cloud-sun text-accent me-2"></i> Predictive Weather
+            Analytics
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tech Specs -->
+<section class="py-5 bg-white">
+  <div class="container py-5">
+    <div class="row g-4">
+      <div class="col-md-6" data-aos="fade-up">
+        <div class="glass-card p-4 d-flex gap-4 align-items-start h-100">
+          <div class="fs-1 text-primary"><i class="fas fa-microchip"></i></div>
+          <div>
+            <h4>Edge Computing</h4>
+            <p class="text-muted small">
+              Our devices process data locally on the field to provide instant
+              irrigation triggers even without high-speed internet.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass-card p-4 d-flex gap-4 align-items-start h-100">
+          <div class="fs-1 text-primary"><i class="fas fa-mobile-alt"></i></div>
+          <div>
+            <h4>The Shramic App</h4>
+            <p class="text-muted small">
+              A simple, icon-driven interface designed for rural users to
+              monitor soil health in their regional language.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,318 +1,260 @@
 {% extends "base.html" %} {% block title %}About Us - Shramic Networks | Our
-Story & Mission{% endblock %} {% block canonical_url %}/about{% endblock %} {%
-block extra_css %}
+Story & Vision{% endblock %} {% block extra_css %}
 <style>
+  /* 
+    ========================================
+    1. STORY SECTION STYLING
+    ========================================
+    */
   .story-section {
-    padding: 80px 0;
-    background: var(--white);
+    padding: 120px 0;
+    background: transparent;
   }
 
-  .story-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 50px;
-    align-items: center;
-  }
-
-  .story-image {
-    width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 15px 40px var(--shadow-lg);
-  }
-
-  .story-text h2 {
-    font-family: "Playfair Display", serif;
-    font-size: 2.5rem;
-    color: var(--primary);
-    margin-bottom: 25px;
-    font-weight: 700;
-  }
-
-  .story-text p {
-    color: var(--text-light);
-    font-size: 1.05rem;
-    line-height: 1.8;
-    margin-bottom: 20px;
-  }
-
-  .highlight-text {
-    background: var(--cream-dark);
-    border-left: 4px solid var(--secondary);
+  .img-composition {
+    position: relative;
     padding: 20px;
-    margin: 30px 0;
-    border-radius: 5px;
-    font-style: italic;
-    color: var(--text-dark);
   }
 
-  .mission-vision {
-    padding: 80px 0;
-    background: var(--cream);
+  .img-composition img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-float);
+    z-index: 2;
+    position: relative;
   }
 
-  .mv-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-top: 50px;
+  .img-composition::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100px;
+    height: 100px;
+    background: var(--accent);
+    border-radius: var(--radius-md);
+    z-index: 1;
+    opacity: 0.2;
   }
 
-  .mv-card {
-    background: var(--white);
+  .highlight-box {
+    border-left: 6px solid var(--accent);
     padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px var(--shadow);
-    transition: transform 0.3s ease;
+    background: white;
+    box-shadow: var(--shadow-md);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 40px 0;
   }
 
-  .mv-card:hover {
-    transform: translateY(-5px);
+  .highlight-box p {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--primary);
+    margin: 0;
   }
 
-  .mv-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--secondary) 0%, #d35400 100%);
+  /* 
+    ========================================
+    2. MISSION & VISION TILES
+    ========================================
+    */
+  .mv-container {
+    padding-bottom: 100px;
+  }
+
+  .mv-tile {
+    background: var(--bg-surface);
+    padding: 60px 45px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    height: 100%;
+    transition: 0.4s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+  }
+
+  .mv-tile:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
+  }
+
+  .icon-circle {
+    width: 70px;
+    height: 70px;
+    background: var(--primary-dark);
+    color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white);
-    font-size: 35px;
-    margin-bottom: 25px;
-  }
-
-  .mv-card h3 {
-    font-family: "Playfair Display", serif;
     font-size: 1.8rem;
-    color: var(--primary);
-    margin-bottom: 20px;
-    font-weight: 700;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 20px rgba(15, 61, 62, 0.2);
   }
 
-  .mv-card p {
-    color: var(--text-light);
-    font-size: 1.05rem;
-    line-height: 1.8;
-  }
-
-  .values-section {
-    padding: 80px 0;
-    background: var(--white);
-  }
-
+  /* 
+    ========================================
+    3. CORE VALUES GRID
+    ========================================
+    */
   .values-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
+    padding: 100px 0;
+    background: var(--primary-dark);
+    border-radius: var(--radius-lg);
+    margin-bottom: 100px;
   }
 
   .value-card {
-    background: var(--cream);
-    padding: 30px;
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px 30px;
+    border-radius: var(--radius-md);
+    height: 100%;
     text-align: center;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
+    transition: 0.3s;
   }
 
   .value-card:hover {
-    border-color: var(--secondary);
+    background: rgba(255, 255, 255, 0.08);
     transform: translateY(-5px);
-    background: var(--white);
+    border-color: var(--accent);
   }
 
-  .value-icon {
-    font-size: 50px;
-    color: var(--secondary);
-    margin-bottom: 20px;
+  .value-card i {
+    font-size: 2.5rem;
+    color: var(--accent);
+    margin-bottom: 25px;
+    display: block;
   }
 
   .value-card h4 {
-    font-family: "Playfair Display", serif;
+    color: white;
     font-size: 1.4rem;
-    color: var(--primary);
     margin-bottom: 15px;
-    font-weight: 700;
   }
 
   .value-card p {
-    color: var(--text-light);
-    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
   }
 
-  .team-section {
-    padding: 80px 0;
-    background: var(--cream);
+  /* 
+    ========================================
+    4. LEADERSHIP BOARD
+    ========================================
+    */
+  .leader-card {
+    background: white;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: 0.4s;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.02);
   }
 
-  .team-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 50px;
+  .leader-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-float);
   }
 
-  .team-member {
-    text-align: center;
-  }
-
-  .member-image {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+  .leader-img {
+    width: 100%;
+    height: 320px;
     object-fit: cover;
-    margin: 0 auto 25px;
-    border: 5px solid var(--white);
-    box-shadow: 0 10px 30px var(--shadow);
-    transition: transform 0.3s ease;
+    transition: 0.5s;
+    filter: grayscale(20%);
   }
 
-  .member-avatar {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 25px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #2c3e50 0%, #4a6fa5 100%);
-    color: #ffffff;
+  .leader-card:hover .leader-img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+  }
+
+  .avatar-placeholder {
+    width: 100%;
+    height: 320px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Playfair Display", serif;
-    font-size: 64px;
+    font-family: var(--font-serif);
+    font-size: 5rem;
+    color: white;
     font-weight: 700;
-    letter-spacing: 2px;
-    border: 5px solid var(--white);
-    box-shadow: 0 10px 30px var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    user-select: none;
   }
 
-  .team-member:hover .member-image,
-  .team-member:hover .member-avatar {
-    transform: scale(1.05);
-    box-shadow: 0 15px 40px var(--shadow-lg);
+  .leader-info {
+    padding: 30px 25px;
+    text-align: center;
   }
 
-  .member-name {
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
-    color: var(--primary);
+  .leader-role {
+    color: var(--accent);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    display: block;
     margin-bottom: 10px;
-    font-weight: 700;
   }
 
-  .member-role {
-    color: var(--secondary);
-    font-weight: 600;
+  .leader-name {
+    font-size: 1.4rem;
     margin-bottom: 15px;
   }
 
-  .member-bio {
-    color: var(--text-light);
-    line-height: 1.7;
-    max-width: 500px;
-    margin: 0 auto;
+  .leader-bio {
+    font-size: 0.95rem;
+    color: var(--text-gray);
+    line-height: 1.6;
   }
 
-  .cta-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
-    text-align: center;
-    color: var(--white);
-  }
-
-  .cta-section h2 {
-    font-family: "Playfair Display", serif;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    font-weight: 700;
-  }
-
-  .cta-section p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    opacity: 0.95;
-  }
-
-  .btn-light {
-    background-color: var(--white);
-    border: 2px solid var(--white);
-    color: var(--primary);
-    padding: 0.8rem 2rem;
-    font-weight: 600;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    display: inline-block;
-    text-decoration: none;
-  }
-
-  .btn-light:hover {
-    background-color: transparent;
-    color: var(--white);
-    transform: translateY(-2px);
-  }
-
-  @media (min-width: 768px) {
-    .values-grid {
-      grid-template-columns: repeat(2, 1fr);
+  /* Responsive Fixes */
+  @media (max-width: 991px) {
+    .leader-img,
+    .avatar-placeholder {
+      height: 280px;
     }
-    .team-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .story-content {
-      grid-template-columns: 1fr 1fr;
-    }
-    .mv-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .values-grid {
-      grid-template-columns: repeat(5, 1fr);
-    }
-    .team-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  @media (max-width: 576px) {
-    .story-text h2 {
-      font-size: 2rem;
-    }
-    .cta-section h2 {
-      font-size: 2rem;
+    .story-section {
+      padding: 80px 0;
     }
   }
 </style>
 {% endblock %} {% block content %}
-<header class="page-header">
-  <div class="container">
-    <h1>About Shramic Networks</h1>
-    <p>
-      We are building more than a company — we are building hope, dignity, and
-      opportunity for rural India.<br />
-      <strong>Shramic Networks Private Limited</strong> is a rural-first
-      technology organization dedicated to empowering farmers, workers, and
-      entrepreneurs by connecting them with meaningful work, trusted experts,
-      and essential services — all through simple, accessible digital platforms.
-    </p>
-    <p>
-      Our journey is rooted in one belief:<br />
-      no one should be left behind because of where they live.
+
+<!-- Dynamic Header -->
+<header class="page-banner">
+  <div class="container" data-aos="fade-up">
+    <span class="sub-title text-white-50">Our Identity</span>
+    <h1 class="text-white">Building Hope and Dignity</h1>
+    <p class="mx-auto mt-4 col-lg-8 text-white opacity-75">
+      Shramic Networks is a rural-first technology organization dedicated to
+      empowering farmers, workers, and entrepreneurs through meaningful digital
+      inclusion.
     </p>
   </div>
 </header>
 
+<!-- Story Section -->
 <section class="story-section">
   <div class="container">
-    <div class="story-content">
-      <div class="story-text">
-        <h2>Our Story</h2>
+    <div class="row align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="img-composition">
+          <img
+            src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=1000&fit=crop"
+            alt="Shramic Story"
+          />
+        </div>
+      </div>
+      <div class="col-lg-6 ps-lg-5" data-aos="fade-left">
+        <span class="sub-title">The Genesis</span>
+        <h2 class="mb-4">Our Story</h2>
         <p>
           Shramic Networks was born from listening to farmers searching for
-          reliable workers, to skilled laborers waiting months for work, to
+          reliable workers, to skilled laborers waiting months for work, and to
           rural youth full of talent but limited by access.
         </p>
         <p>
@@ -321,260 +263,302 @@ block extra_css %}
           rapidly, rural communities were often forced to adapt instead of being
           truly included.
         </p>
-        <p>
-          In September, Shramic Networks began with a single purpose to bridge
-          this gap.
-        </p>
-        <p>
-          What started as an agriculture-focused idea soon grew into a larger
-          mission. We realized that employment, knowledge, livestock,
-          construction, and rural businesses are deeply connected. To create
-          real change, we had to build an ecosystem, not just an app.
-        </p>
-        <p>
-          Today, Shramic Networks stands as a growing Shramic Community a
-          connected digital space where farmers, workers, experts, and service
-          providers come together to support one another, grow together, and
-          move forward with confidence.
-        </p>
-        <div class="highlight-text">
-          "Technology should serve people not the other way around."
-        </div>
-      </div>
-      <div>
-        <img
-          class="story-image"
-          src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=700&fit=crop"
-          alt="Shramic team with farmers"
-        />
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="mission-vision">
-  <div class="container">
-    <div class="mv-grid">
-      <div class="mv-card">
-        <div class="mv-icon">
-          <i class="fas fa-bullseye"></i>
+        <div class="highlight-box">
+          <p>
+            "Technology should serve people, not the other way around. No one
+            should be left behind because of where they live."
+          </p>
         </div>
-        <h3>Our Mission</h3>
+
         <p>
-          To empower rural communities by creating a trusted digital ecosystem
-          that connects people to employment, expert guidance, and essential
-          services — enabling sustainable income, skill growth, and dignity of
-          work.
-        </p>
-      </div>
-      <div class="mv-card">
-        <div class="mv-icon">
-          <i class="fas fa-eye"></i>
-        </div>
-        <h3>Our Vision</h3>
-        <p>
-          We envision a future where rural India is not dependent, but digitally
-          empowered, skilled, and self-reliant — where agriculture,
-          construction, and livestock sectors thrive through collaboration,
-          innovation, and community trust.
+          In September, Shramic Networks began with a single purpose: to bridge
+          this gap. Today, we stand as the Shramic Community—a space where
+          farmers, workers, and experts grow together with confidence.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="values-section">
+<!-- Mission & Vision -->
+<section class="mv-container">
   <div class="container">
-    <h2 class="section-title">Our Core Values</h2>
-    <div class="values-grid">
-      <div class="value-card">
-        <div class="value-icon">
-          <i class="fas fa-users"></i>
+    <div class="row g-5">
+      <div class="col-md-6" data-aos="fade-up">
+        <div class="mv-tile">
+          <div class="icon-circle"><i class="fas fa-bullseye"></i></div>
+          <h3>Our Mission</h3>
+          <p class="text-gray">
+            To empower rural communities by creating a trusted digital ecosystem
+            that connects people to employment, expert guidance, and essential
+            services — enabling sustainable income and dignity of work.
+          </p>
         </div>
-        <h4>Farmer-First</h4>
-        <p>
-          Every decision we make begins with understanding the real lives,
-          struggles, and aspirations of rural people.
-        </p>
       </div>
-      <div class="value-card">
-        <div class="value-icon">
-          <i class="fas fa-lightbulb"></i>
+      <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="mv-tile">
+          <div class="icon-circle" style="background: var(--accent)">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3>Our Vision</h3>
+          <p class="text-gray">
+            We envision a future where rural India is digitally empowered and
+            self-reliant — where agriculture, construction, and livestock
+            sectors thrive through collaboration and community trust.
+          </p>
         </div>
-        <h4>Purpose-Driven Innovation</h4>
-        <p>
-          We innovate not for complexity, but for impact, simplicity, and
-          usability.
-        </p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">
-          <i class="fas fa-shield-alt"></i>
-        </div>
-        <h4>Trust & Transparency</h4>
-        <p>
-          We believe trust is built through fairness, verification, and
-          accountability — especially where livelihoods are involved.
-        </p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">
-          <i class="fas fa-leaf"></i>
-        </div>
-        <h4>Sustainability</h4>
-        <p>
-          True growth protects both people and the land for generations to come.
-        </p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">
-          <i class="fas fa-handshake"></i>
-        </div>
-        <h4>Community Before Company</h4>
-        <p>Shramic Networks grows only when the Shramic Community grows.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="team-section">
-  <div class="container">
-    <h2 class="section-title">Meet Our Leadership</h2>
-    <div class="team-grid">
-      <div class="team-member">
-        <img
-          class="member-image"
-          src="https://shramicerp.pythonanywhere.com/static/uploads/20251017_124622_WhatsApp_Image_2025-10-17_at_18.14.08_da189bbf.jpg"
-          alt="Mutturaj Goudra"
-        />
-        <h3 class="member-name">Mutturaj Goudra</h3>
-        <div class="member-role">Founder, CEO & Managing Director</div>
-        <p class="member-bio">
-          Driven by a deep commitment to rural empowerment, Mutturaj leads
-          Shramic Networks with a vision to transform employment and opportunity
-          at the grassroots level.
-        </p>
+<!-- Core Values (Dark Section) -->
+<section class="container">
+  <div class="values-grid">
+    <div class="container px-5">
+      <div class="section-header text-white mb-5" data-aos="fade-up">
+        <span class="sub-title text-white-50">Our Principles</span>
+        <h2 class="text-white">The Shramic Core Values</h2>
       </div>
-      <div class="team-member">
-        <img
-          class="member-image"
-          src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/va.jpg?raw=true"
-          alt="Vaishnavi"
-        />
-        <h3 class="member-name">Vaishnavi</h3>
-        <div class="member-role">Cofounder and HR admin</div>
-        <p class="member-bio">
-          Focuses on people, culture, and nurturing strong connections within
-          the Shramic Community.
-        </p>
-      </div>
-      <div class="team-member">
-        <div class="member-avatar">SP</div>
-        <h3 class="member-name">Sai Poshith</h3>
-        <div class="member-role">Chief Technology Officer (CTO)</div>
-        <p class="member-bio">
-          Architect of Shramic's digital platforms, ensuring technology remains
-          scalable, secure, and inclusive.
-        </p>
-      </div>
-      <div class="team-member">
-        <img
-          class="member-image"
-          src="https://shramicerp.pythonanywhere.com/static/uploads/20251016_152714_IMG-20250929-WA0105.jpg"
-          alt="Ashvija"
-        />
-        <h3 class="member-name">Ashvija</h3>
-        <div class="member-role">Chief Operating Officer (COO)</div>
-        <p class="member-bio">
-          Responsible for execution, daily operations, and turning vision into
-          real-world impact.
-        </p>
-      </div>
-      <div class="team-member">
-        <div class="member-avatar">PB</div>
-        <h3 class="member-name">Prajwal A B</h3>
-        <div class="member-role">Chief Information Officer (CIO)</div>
-        <p class="member-bio">
-          Responsible for managing Shramic's data infrastructure and ensuring
-          seamless integration of technology across all operations.
-        </p>
-      </div>
-      <div class="team-member">
-        <img
-          class="member-image"
-          src="https://shramicerp.pythonanywhere.com/static/uploads/20251026_115058_my.jpg"
-          alt="Karthik"
-        />
-        <h3 class="member-name">Karthik</h3>
-        <div class="member-role">UI & Software Lead</div>
-        <p class="member-bio">
-          Ensures every Shramic product is intuitive, accessible, and designed
-          for real rural users.
-        </p>
-      </div>
-
-      <div class="team-member">
-        <img
-          class="member-image"
-          src="https://shramicerp.pythonanywhere.com/static/uploads/20251019_144702_WhatsApp_Image_2025-10-19_at_20.15.10_f5d956aa.jpg"
-          alt="Divyashree S"
-        />
-        <h3 class="member-name">Divyashree S</h3>
-        <div class="member-role">Chief Market Research & Analytics Lead</div>
-        <p class="member-bio">
-          Leads market research initiatives and analytics to drive data-informed
-          decisions.
-        </p>
-      </div>
-      <div class="team-member">
-        <img
-          class="member-image"
-          src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/furqan.jpg?raw=true"
-          alt="Furqan Bellary"
-        />
-        <h3 class="member-name">Furqan Bellary</h3>
-        <div class="member-role">Social media manager</div>
-        <p class="member-bio">
-          Leads market research initiatives and analytics to drive data-informed
-          decisions.
-        </p>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+          <div class="value-card">
+            <i class="fas fa-user-check"></i>
+            <h4>Farmer-First</h4>
+            <p>
+              Every decision starts with understanding the real lives and
+              aspirations of rural people.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+          <div class="value-card">
+            <i class="fas fa-lightbulb"></i>
+            <h4>Purposeful Innovation</h4>
+            <p>
+              We innovate not for complexity, but for impact, simplicity, and
+              usability.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+          <div class="value-card">
+            <i class="fas fa-shield-alt"></i>
+            <h4>Trust & Fairness</h4>
+            <p>
+              Trust is built through fairness, verification, and accountability
+              in every job.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+          <div class="value-card">
+            <i class="fas fa-leaf"></i>
+            <h4>Sustainability</h4>
+            <p>
+              True growth protects both our hard-working people and the land for
+              generations.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12" data-aos="zoom-in" data-aos-delay="400">
+          <div class="value-card">
+            <i class="fas fa-heart"></i>
+            <h4>Community First</h4>
+            <p>
+              Shramic Networks grows only when the Shramic Community grows and
+              succeeds.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta-section">
+<!-- Executive Leadership -->
+<section class="py-5">
   <div class="container">
-    <h2>Ready to Transform Your Farm?</h2>
-    <p>
-      Join thousands of farmers who are already experiencing the benefits of
-      smart agriculture
-    </p>
-    <a href="{{ url_for('contact') }}" class="btn-light">Get Started Today</a>
+    <div class="section-header" data-aos="fade-up">
+      <span class="sub-title">The Board</span>
+      <h2>Meet Our Leadership</h2>
+      <p class="mx-auto" style="max-width: 600px">
+        The visionaries and architects turning rural digital empowerment into a
+        reality.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Mutturaj -->
+      <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up">
+        <div class="leader-card">
+          <img
+            src="https://shramicerp.pythonanywhere.com/static/uploads/profiles/SHR-INT-0002_bd44cb2ed2304303ac18bb86bddad04c.png"
+            class="leader-img"
+            alt="Mutturaj Goudra"
+          />
+          <div class="leader-info">
+            <span class="leader-role">Founder, CEO & MD</span>
+            <h4 class="leader-name">Mutturaj Goudra</h4>
+            <p class="leader-bio">
+              Leading Shramic with a deep commitment to transforming rural
+              employment at the grassroots level.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vaishnavi -->
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <div class="leader-card">
+          <img
+            src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/va.jpg?raw=true"
+            class="leader-img"
+            alt="Vaishnavi"
+          />
+          <div class="leader-info">
+            <span class="leader-role">Co-Founder & HR Admin</span>
+            <h4 class="leader-name">Vaishnavi</h4>
+            <p class="leader-bio">
+              Focuses on nurturing culture and building strong human connections
+              within our community.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ashvija -->
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-aos="fade-up"
+        data-aos-delay="300"
+      >
+        <div class="leader-card">
+          <img
+            src="https://shramicerp.pythonanywhere.com/static/uploads/20251016_152714_IMG-20250929-WA0105.jpg"
+            class="leader-img"
+            alt="Ashvija"
+          />
+          <div class="leader-info">
+            <span class="leader-role">Chief Operating Officer</span>
+            <h4 class="leader-name">Ashvija</h4>
+            <p class="leader-bio">
+              Responsible for execution and turning long-term vision into daily
+              real-world impact.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prajwal -->
+      <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up">
+        <div class="leader-card">
+          <div class="avatar-placeholder">PB</div>
+          <div class="leader-info">
+            <span class="leader-role">Chief Information Officer</span>
+            <h4 class="leader-name">Prajwal A B</h4>
+            <p class="leader-bio">
+              Managing data infrastructure and ensuring seamless tech
+              integration across all operations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Karthik -->
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <div class="leader-card">
+          <img
+            src="https://shramicerp.pythonanywhere.com/static/uploads/20251026_115058_my.jpg"
+            class="leader-img"
+            alt="Karthik"
+          />
+          <div class="leader-info">
+            <span class="leader-role">UI & Software Lead</span>
+            <h4 class="leader-name">Karthik</h4>
+            <p class="leader-bio">
+              Ensuring every Shramic product is intuitive, accessible, and built
+              for real rural users.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divyashree -->
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <div class="leader-card">
+          <img
+            src="https://shramicerp.pythonanywhere.com/static/uploads/20251019_144702_WhatsApp_Image_2025-10-19_at_20.15.10_f5d956aa.jpg"
+            class="leader-img"
+            alt="Divyashree S"
+          />
+          <div class="leader-info">
+            <span class="leader-role">Market Research Lead</span>
+            <h4 class="leader-name">Divyashree S</h4>
+            <p class="leader-bio">
+              Leads market research initiatives to drive data-informed decisions
+              for rural markets.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Furqan -->
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-aos="fade-up"
+        data-aos-delay="300"
+      >
+        <div class="leader-card">
+          <img
+            src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/furqan.jpg?raw=true"
+            class="leader-img"
+            alt="Furqan Bellary"
+          />
+          <div class="leader-info">
+            <span class="leader-role">Social Media Manager</span>
+            <h4 class="leader-name">Furqan Bellary</h4>
+            <p class="leader-bio">
+              Connecting our story with the digital world and amplifying rural
+              voices.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
-{% endblock %} {% block extra_js %}
-<script>
-  // Smooth scroll animation for sections
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-  };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-      }
-    });
-  }, observerOptions);
+<!-- Final CTA -->
+<section class="py-5 mt-5">
+  <div class="container py-5">
+    <div
+      class="glass-card p-5 text-center shadow-lg"
+      style="border-radius: var(--radius-lg)"
+    >
+      <h2 class="mb-4">Witness the Transformation</h2>
+      <p class="mb-5 text-muted mx-auto" style="max-width: 700px">
+        Be a part of a movement that is redefining rural livelihoods through the
+        power of inclusion and technology.
+      </p>
+      <a href="{{ url_for('contact') }}" class="btn btn-shramic btn-lg"
+        >Join the Community</a
+      >
+    </div>
+  </div>
+</section>
 
-  document.querySelectorAll("section").forEach((section) => {
-    section.style.opacity = "0";
-    section.style.transform = "translateY(20px)";
-    section.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-    observer.observe(section);
-  });
-</script>
 {% endblock %}

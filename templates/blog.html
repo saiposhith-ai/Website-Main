@@ -1,398 +1,958 @@
-{% extends "base.html" %} {% block title %}Blog - Shramic Networks |
-Agricultural Innovation Insights{% endblock %} {% block canonical_url %}/blog{%
-endblock %} {% block meta_description %}Stay updated with the latest insights on
-agricultural technology, smart farming, and sustainable practices{% endblock %}
-{% block extra_css %}
+{% extends "base.html" %} {% block title %}Knowledge Hub - Shramic Networks |
+Insights for Rural India{% endblock %} {% block extra_css %}
 <style>
-  .blog-section {
+  /* 
+    ========================================
+    1. BLOG GRID & LAYOUT
+    ========================================
+    */
+  .blog-hub {
     padding: 80px 0;
+    background: transparent;
   }
 
-  .blog-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 50px;
-    margin-top: 20px;
+  .filter-wrapper {
+    margin-bottom: 60px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .filter-wrapper::-webkit-scrollbar {
+    display: none;
   }
 
-  .filter-btn {
-    background: var(--white);
-    border: 2px solid var(--cream-dark);
-    color: var(--text-dark);
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: pointer;
+  .blog-filter-btn {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--text-gray);
+    padding: 10px 25px;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    margin-right: 12px;
+    transition: 0.3s;
+    box-shadow: var(--shadow-xs);
   }
-
-  .filter-btn:hover,
-  .filter-btn.active {
-    background: var(--secondary);
-    border-color: var(--secondary);
-    color: var(--white);
+  .blog-filter-btn:hover,
+  .blog-filter-btn.active {
+    background: var(--primary-dark);
+    color: white;
+    border-color: var(--primary-dark);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
   }
 
-  .blog-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .blog-card {
-    background: var(--white);
-    border-radius: 15px;
+  /* 
+    ========================================
+    2. PREMIUM CARDS
+    ========================================
+    */
+  .blog-card-premium {
+    background: white;
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: 0 5px 20px var(--shadow);
-    transition: all 0.3s ease;
-    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: var(--shadow-md);
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
-  .blog-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px var(--shadow-lg);
+  .blog-card-premium:hover {
+    transform: translateY(-15px);
+    box-shadow: var(--shadow-float);
+    border-color: var(--accent);
   }
 
-  .blog-card-img {
+  .card-img-wrap {
     width: 100%;
-    height: 250px;
+    height: 260px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-img-wrap img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: 0.8s ease;
+  }
+  .blog-card-premium:hover .card-img-wrap img {
+    transform: scale(1.1);
   }
 
-  .blog-card:hover .blog-card-img {
-    transform: scale(1.05);
-  }
-
-  .blog-card-content {
-    padding: 25px;
-  }
-
-  .blog-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 15px;
-    font-size: 0.85rem;
-    color: var(--text-light);
-  }
-
-  .blog-meta span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .blog-category {
-    display: inline-block;
-    background: var(--cream-dark);
-    color: var(--secondary);
-    padding: 0.3rem 1rem;
+  .category-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--accent);
+    color: white;
+    padding: 5px 15px;
     border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
-
-  .blog-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2;
+  }
+
+  .card-body-content {
+    padding: 35px 30px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .card-meta {
+    font-size: 0.85rem;
+    color: var(--text-gray);
     margin-bottom: 15px;
-    line-height: 1.4;
+    font-weight: 500;
+  }
+  .card-meta span {
+    margin-right: 15px;
+  }
+  .card-meta i {
+    color: var(--accent);
+    margin-right: 5px;
   }
 
-  .blog-excerpt {
-    color: var(--text-light);
-    margin-bottom: 20px;
+  .card-title-link {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    display: block;
+    color: var(--primary-dark);
+    transition: 0.3s;
+  }
+  .card-title-link:hover {
+    color: var(--accent);
+  }
+
+  .card-excerpt {
+    color: var(--text-gray);
     line-height: 1.6;
+    margin-bottom: 25px;
+    font-size: 0.98rem;
   }
 
-  .read-more {
-    color: var(--secondary);
-    font-weight: 600;
-    text-decoration: none;
+  .read-more-btn {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--primary-dark);
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    transition: gap 0.3s ease;
+    gap: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .read-more-btn:hover {
+    color: var(--accent);
+    gap: 15px;
   }
 
-  .read-more:hover {
-    gap: 12px;
+  /* 
+    ========================================
+    3. PREMIUM ARTICLE READER (OVERLAY)
+    ========================================
+    */
+  .article-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 43, 34, 0.4);
+    backdrop-filter: blur(12px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: 0.4s;
   }
 
-  .featured-post {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
-    color: var(--white);
+  .article-overlay.active {
+    display: flex;
+    animation: fadeIn 0.4s ease;
   }
 
-  .featured-post .blog-card-img {
+  .reader-container {
+    background: white;
+    width: 100%;
+    max-width: 900px;
+    height: 90vh;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+
+  .reader-header {
     height: 350px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .reader-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
-  .featured-post .blog-card-content {
-    padding: 40px;
+  .reader-close {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 45px;
+    height: 45px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: var(--shadow-md);
+    transition: 0.3s;
+  }
+  .reader-close:hover {
+    background: var(--accent);
+    color: white;
+    transform: rotate(90deg);
   }
 
-  .featured-post .blog-category {
-    background: var(--secondary);
-    color: var(--white);
+  .reader-body {
+    padding: 60px 80px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+  .reader-body h2 {
+    font-size: 2.8rem;
+    margin-bottom: 25px;
+  }
+  .reader-content p {
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    margin-bottom: 25px;
+    line-height: 1.8;
   }
 
-  .featured-post .blog-title {
-    color: var(--white);
-    font-size: 2rem;
+  .reader-content h3 {
+    margin-top: 45px;
+    margin-bottom: 20px;
+    color: var(--primary);
   }
-
-  .featured-post .blog-excerpt {
-    color: rgba(255, 255, 255, 0.9);
+  .reader-content ul {
+    padding-left: 20px;
+    margin-bottom: 30px;
+  }
+  .reader-content li {
+    margin-bottom: 15px;
     font-size: 1.1rem;
   }
 
-  .featured-post .blog-meta {
-    color: rgba(255, 255, 255, 0.8);
+  /* Custom Scrollbar for Reader */
+  .reader-body::-webkit-scrollbar {
+    width: 6px;
+  }
+  .reader-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  .reader-body::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
   }
 
-  .featured-post .read-more {
-    color: var(--white);
-    background: var(--secondary);
-    padding: 0.7rem 1.5rem;
-    border-radius: 50px;
-  }
-
-  @media (min-width: 768px) {
-    .blog-grid {
-      grid-template-columns: repeat(2, 1fr);
+  /* 
+    ========================================
+    4. MOBILE RESPONSIVENESS
+    ========================================
+    */
+  @media (max-width: 991px) {
+    .reader-body {
+      padding: 40px 25px;
     }
-    .featured-post {
-      grid-template-columns: 1fr 1fr;
+    .reader-header {
+      height: 250px;
     }
-    .featured-post .blog-card-img {
-      height: 100%;
+    .reader-body h2 {
+      font-size: 1.8rem;
     }
   }
 
-  @media (min-width: 1024px) {
-    .blog-grid {
-      grid-template-columns: repeat(3, 1fr);
-      margin-bottom: 20px;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slideUp {
+    from {
+      transform: translateY(100px) scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0) scale(1);
+      opacity: 1;
     }
   }
 </style>
 {% endblock %} {% block content %}
-<header class="page-header">
-  <div class="container">
-    <h1>Knowledge Hub</h1>
-    <p>
-      Insights, guidance, and real stories from the Shramic Community<br />
-      Explore practical knowledge, field-level insights, and real experiences
-      from agriculture, construction, livestock, and rural business ecosystems —
-      designed to empower farmers, workers, and rural entrepreneurs across
-      India.
+
+<!-- Header -->
+<header class="page-banner">
+  <div class="container" data-aos="fade-up">
+    <span class="sub-title text-white-50">Insights & Knowledge</span>
+    <h1 class="display-3 fw-bold text-white">The Knowledge Hub</h1>
+    <p class="mx-auto mt-4 col-lg-8 text-white opacity-75">
+      Practical field-level insights from agriculture, construction, and
+      livestock ecosystems designed to empower the modern rural community.
     </p>
   </div>
 </header>
 
-<section class="blog-section">
+<section class="blog-hub">
   <div class="container">
-    <div class="blog-filters">
-      <button class="filter-btn active" data-filter="all">All Posts</button>
-      <button class="filter-btn" data-filter="technology">
+    <!-- Premium Filters -->
+    <div
+      class="filter-wrapper d-flex justify-content-lg-center"
+      data-aos="fade-up"
+    >
+      <button class="blog-filter-btn active" data-filter="all">
+        All Insights
+      </button>
+      <button class="blog-filter-btn" data-filter="krushi">
         Shramic Krushi
       </button>
-      <button class="filter-btn" data-filter="sustainability">
-        Shramic Build
+      <button class="blog-filter-btn" data-filter="build">Shramic Build</button>
+      <button class="blog-filter-btn" data-filter="pashu">PashuSetu</button>
+      <button class="blog-filter-btn" data-filter="experts">
+        Shramic Experts
       </button>
-      <button class="filter-btn" data-filter="training">PashuSetu</button>
-      <button class="filter-btn" data-filter="market">Shramic Experts</button>
+      <button class="blog-filter-btn" data-filter="business">B2B Rural</button>
     </div>
 
-    <div class="blog-grid" id="blogGrid">
-      <article class="blog-card featured-post" data-category="technology">
-        <img
-          class="blog-card-img"
-          src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=500&fit=crop"
-          alt="IoT in Agriculture"
-        />
-        <div class="blog-card-content">
-          <span class="blog-category">Shramic Krushi</span>
-          <h2 class="blog-title">
-            How the Shramic Ecosystem is Transforming Rural Livelihoods.
-          </h2>
-          <div class="blog-meta">
-            <span><i class="far fa-calendar"></i> Dec 10, 2025</span>
-            <span><i class="far fa-clock"></i> 8 min read</span>
+    <div class="row g-5 mt-2" id="blogGrid">
+      <!-- Article 1: Ecosystem Overview -->
+      <div
+        class="col-lg-6 col-xl-4 blog-post-card"
+        data-category="experts"
+        data-aos="fade-up"
+      >
+        <article class="blog-card-premium">
+          <div class="card-img-wrap">
+            <span class="category-badge">Future Tech</span>
+            <img
+              src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800"
+              alt="Ecosystem"
+            />
           </div>
-          <p class="blog-excerpt">
-            Discover how Shramic Networks brings together farmers, workers,
-            experts, and service providers onto a single digital platform —
-            creating employment, trust, and sustainable income opportunities in
-            rural India.
-          </p>
-          <a href="#" class="read-more"
-            >Read Full Article <i class="fas fa-arrow-right"></i
-          ></a>
-        </div>
-      </article>
+          <div class="card-body-content">
+            <div class="card-meta">
+              <span><i class="far fa-calendar"></i> Dec 10, 2025</span>
+              <span><i class="far fa-clock"></i> 8 min read</span>
+            </div>
+            <a
+              href="javascript:void(0)"
+              class="card-title-link"
+              onclick="openArticle('ecosystem-article')"
+              >Transforming Rural Livelihoods: The Shramic Vision</a
+            >
+            <p class="card-excerpt">
+              Discover how Shramic Networks is interconnecting five key digital
+              platforms to create a seamless income loop for India's
+              heartland...
+            </p>
+            <div
+              class="read-more-btn"
+              onclick="openArticle('ecosystem-article')"
+            >
+              Learn More <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </article>
+      </div>
 
-      <article class="blog-card" data-category="sustainability">
-        <img
-          class="blog-card-img"
-          src="https://cdn.shopaccino.com/refresh/articles/farmbrand-story-01-7879244903647173_l.jpg?v=591"
-          alt="Sustainable Farming"
-        />
-        <div class="blog-card-content">
-          <span class="blog-category">Shramic Krushi</span>
-          <h3 class="blog-title">Empowering Farmers Through Shramic Krushi</h3>
-          <div class="blog-meta">
-            <span><i class="far fa-calendar"></i> Dec 8, 2025</span>
-            <span><i class="far fa-clock"></i> 6 min read</span>
+      <!-- Article 2: Krushi Detail -->
+      <!-- Article 2: Krushi Detail -->
+      <div
+        class="col-lg-6 col-xl-4 blog-post-card"
+        data-category="krushi"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <article class="blog-card-premium">
+          <div class="card-img-wrap">
+            <span class="category-badge">Agriculture</span>
+            <!-- UPDATED IMAGE BELOW -->
+            <img
+              src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&q=80"
+              alt="Shramic Krushi - Smart Farming"
+            />
           </div>
-          <p class="blog-excerpt">
-            Learn how Shramic Krushi helps farmers connect with skilled workers,
-            access expert advice, book agricultural services, and stay updated
-            with market prices and government schemes.
-          </p>
-          <a href="#" class="read-more"
-            >Read More <i class="fas fa-arrow-right"></i
-          ></a>
-        </div>
-      </article>
+          <div class="card-body-content">
+            <div class="card-meta">
+              <span><i class="far fa-calendar"></i> Dec 08, 2025</span>
+              <span><i class="far fa-clock"></i> 6 min read</span>
+            </div>
+            <a
+              href="javascript:void(0)"
+              class="card-title-link"
+              onclick="openArticle('krushi-article')"
+              >Precision Farming: Why It's Possible for Small Farmers</a
+            >
+            <p class="card-excerpt">
+              Breaking the myth that smart tech is only for big farms. We
+              explore how micro-IoT sensors are changing the yield for marginal
+              farmers...
+            </p>
+            <div class="read-more-btn" onclick="openArticle('krushi-article')">
+              Learn More <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </article>
+      </div>
 
-      <article class="blog-card" data-category="market">
-        <img
-          class="blog-card-img"
-          src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/5practices.png?raw=true"
-          alt="Market Analysis"
-        />
-        <div class="blog-card-content">
-          <span class="blog-category">Shramic Build</span>
-          <h3 class="blog-title">
-            Understanding Rural Workforce Needs in Construction
-          </h3>
-          <div class="blog-meta">
-            <span><i class="far fa-calendar"></i> Dec 5, 2025</span>
-            <span><i class="far fa-clock"></i> 6 min read</span>
+      <!-- Article 3: Build Detail -->
+      <div
+        class="col-lg-6 col-xl-4 blog-post-card"
+        data-category="build"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <article class="blog-card-premium">
+          <div class="card-img-wrap">
+            <span class="category-badge">Construction</span>
+            <img
+              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800"
+              alt="Build"
+            />
           </div>
-          <p class="blog-excerpt">
-            An in-depth look at how Shramic Build organizes India's construction
-            workforce by connecting skilled laborers with verified contractors
-            and structured job opportunities.
-          </p>
-          <a href="#" class="read-more"
-            >Read More <i class="fas fa-arrow-right"></i
-          ></a>
-        </div>
-      </article>
+          <div class="card-body-content">
+            <div class="card-meta">
+              <span><i class="far fa-calendar"></i> Dec 05, 2025</span>
+              <span><i class="far fa-clock"></i> 7 min read</span>
+            </div>
+            <a
+              href="javascript:void(0)"
+              class="card-title-link"
+              onclick="openArticle('build-article')"
+              >Organizing the Construction Workforce in Tier-2 Cities</a
+            >
+            <p class="card-excerpt">
+              Tier-2 cities are booming, but skilled labor is fragmented. See
+              how Shramic Build connects contractors with verified local
+              talent...
+            </p>
+            <div class="read-more-btn" onclick="openArticle('build-article')">
+              Learn More <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </article>
+      </div>
 
-      <article class="blog-card" data-category="training">
-        <img
-          class="blog-card-img"
-          src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&h=300&fit=crop"
-          alt="Shramic Experts"
-        />
-        <div class="blog-card-content">
-          <span class="blog-category">Shramic Experts</span>
-          <h3 class="blog-title">
-            Knowledge as Power: Role of Experts in Rural Growth
-          </h3>
-          <div class="blog-meta">
-            <span><i class="far fa-calendar"></i> Dec 3, 2025</span>
-            <span><i class="far fa-clock"></i> 7 min read</span>
+      <!-- Article 4: PashuSetu -->
+      <div
+        class="col-lg-6 col-xl-4 blog-post-card"
+        data-category="pashu"
+        data-aos="fade-up"
+      >
+        <article class="blog-card-premium">
+          <div class="card-img-wrap">
+            <span class="category-badge">Livestock</span>
+            <img
+              src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=800"
+              alt="Livestock"
+            />
           </div>
-          <p class="blog-excerpt">
-            How verified experts are guiding farmers, workers, and entrepreneurs
-            through chat, voice, and video consultations — bridging the rural
-            knowledge gap.
-          </p>
-          <a href="#" class="read-more"
-            >Read More <i class="fas fa-arrow-right"></i
-          ></a>
-        </div>
-      </article>
+          <div class="card-body-content">
+            <div class="card-meta">
+              <span><i class="far fa-calendar"></i> Dec 01, 2025</span>
+              <span><i class="far fa-clock"></i> 5 min read</span>
+            </div>
+            <a
+              href="javascript:void(0)"
+              class="card-title-link"
+              onclick="openArticle('pashu-article')"
+              >Beyond the Farm: Livestock as Primary Income</a
+            >
+            <p class="card-excerpt">
+              Livestock isn't just a side-business anymore. How PashuSetu helps
+              owners maximize milk yields and ethical trade for better
+              revenue...
+            </p>
+            <div class="read-more-btn" onclick="openArticle('pashu-article')">
+              Learn More <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </article>
+      </div>
 
-      <article class="blog-card" data-category="technology">
-        <img
-          class="blog-card-img"
-          src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&h=300&fit=crop"
-          alt="AI in Agriculture"
-        />
-        <div class="blog-card-content">
-          <span class="blog-category">PashuSetu</span>
-          <h3 class="blog-title">Livestock as a Sustainable Income Source</h3>
-          <div class="blog-meta">
-            <span><i class="far fa-calendar"></i> Dec 1, 2025</span>
-            <span><i class="far fa-clock"></i> 6 min read</span>
+      <!-- Article 5: Experts -->
+      <div
+        class="col-lg-6 col-xl-4 blog-post-card"
+        data-category="experts"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <article class="blog-card-premium">
+          <div class="card-img-wrap">
+            <span class="category-badge">Education</span>
+            <img
+              src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800"
+              alt="Experts"
+            />
           </div>
-          <p class="blog-excerpt">
-            Explore how PashuSetu supports livestock owners with access to
-            veterinary guidance, manure commerce, and trusted rural trade —
-            strengthening income beyond crops.
-          </p>
-          <a href="#" class="read-more"
-            >Read More <i class="fas fa-arrow-right"></i
-          ></a>
-        </div>
-      </article>
+          <div class="card-body-content">
+            <div class="card-meta">
+              <span><i class="far fa-calendar"></i> Nov 28, 2025</span>
+              <span><i class="far fa-clock"></i> 9 min read</span>
+            </div>
+            <a
+              href="javascript:void(0)"
+              class="card-title-link"
+              onclick="openArticle('expert-article')"
+              >Bridging the Knowledge Gap with Verified Specialists</a
+            >
+            <p class="card-excerpt">
+              Access to high-level agronomists and veterinary doctors used to be
+              expensive. Shramic Experts is democratizing this knowledge...
+            </p>
+            <div class="read-more-btn" onclick="openArticle('expert-article')">
+              Learn More <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </article>
+      </div>
 
-      <article class="blog-card" data-category="sustainability">
-        <img
-          class="blog-card-img"
-          src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&h=300&fit=crop"
-          alt="Water Conservation"
-        />
-        <div class="blog-card-content">
-          <span class="blog-category">Shramic Business</span>
-          <h3 class="blog-title">
-            Building Strong Rural Markets Through Shramic Business
-          </h3>
-          <div class="blog-meta">
-            <span><i class="far fa-calendar"></i> Nov 28, 2025</span>
-            <span><i class="far fa-clock"></i> 5 min read</span>
+      <!-- Article 6: Business -->
+      <div
+        class="col-lg-6 col-xl-4 blog-post-card"
+        data-category="business"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <article class="blog-card-premium">
+          <div class="card-img-wrap">
+            <span class="category-badge">B2B Marketplace</span>
+            <img
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800"
+              alt="Business"
+            />
           </div>
-          <p class="blog-excerpt">
-            Learn how Shramic Business enables nurseries, equipment owners,
-            suppliers, and service providers to reach the right customers
-            through a transparent B2B marketplace.
-          </p>
-          <a href="#" class="read-more"
-            >Read More <i class="fas fa-arrow-right"></i
-          ></a>
-        </div>
-      </article>
+          <div class="card-body-content">
+            <div class="card-meta">
+              <span><i class="far fa-calendar"></i> Nov 25, 2025</span>
+              <span><i class="far fa-clock"></i> 6 min read</span>
+            </div>
+            <a
+              href="javascript:void(0)"
+              class="card-title-link"
+              onclick="openArticle('business-article')"
+              >Rural Commerce: Eliminating the Middleman in 2026</a
+            >
+            <p class="card-excerpt">
+              Direct connections between nurseries, equipment owners, and
+              farmers are boosting the rural economy by over 25%. Learn how...
+            </p>
+            <div
+              class="read-more-btn"
+              onclick="openArticle('business-article')"
+            >
+              Learn More <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- 
+========================================
+ARTICLE READER OVERLAY (HIDDEN)
+========================================
+-->
+<div class="article-overlay" id="articleOverlay">
+  <div class="reader-container">
+    <div class="reader-close" onclick="closeArticle()">
+      <i class="fas fa-times"></i>
+    </div>
+    <div class="reader-header">
+      <img id="readerImage" src="" alt="Header" />
+    </div>
+    <div class="reader-body">
+      <h2 id="readerTitle"></h2>
+      <div class="reader-content" id="readerContent">
+        <!-- Content will be injected here via JS -->
+      </div>
+
+      <div class="mt-5 pt-5 border-top text-center">
+        <h4 class="mb-4">Want to learn more about our solutions?</h4>
+        <a href="{{ url_for('contact') }}" class="btn btn-shramic"
+          >Contact Our Experts</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 
+========================================
+HIDDEN DATA STORAGE (MODAL CONTENT)
+========================================
+-->
+<div id="articleData" style="display: none">
+  <!-- Article 1 Content -->
+  <div id="ecosystem-article">
+    <img
+      src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200"
+      class="meta-img"
+    />
+    <h2 class="meta-title">The Shramic Vision: A Unified Rural Future</h2>
+    <div class="meta-body">
+      <p>
+        India’s heartland has always been the backbone of the nation, yet it has
+        faced systemic fragmentation for decades. A farmer in rural Karnataka
+        might have the best soil but no access to skilled harvesters. A
+        construction worker in a growing town might have the skills but no way
+        to verify them to a large contractor. Shramic Networks was built to
+        solve exactly these "missing links."
+      </p>
+      <h3>Connecting the Dots</h3>
+      <p>
+        Our vision is simple yet profound: creating a digital ecosystem where
+        agriculture, construction, and livestock sectors don’t exist in
+        isolation, but support each other. Through our five specialized
+        platforms—Krushi, Build, PashuSetu, Experts, and Business—we have
+        created a loop of economic empowerment.
+      </p>
+      <ul>
+        <li>
+          <strong>Skilled Livelihoods:</strong> We ensure that a worker's
+          reputation follows them digitally, ensuring better pay and consistent
+          work.
+        </li>
+        <li>
+          <strong>Expert Democratization:</strong> No farmer is too small to
+          receive advice from a world-class agronomist.
+        </li>
+        <li>
+          <strong>Transparent Commerce:</strong> By removing the middleman, we
+          put the profit back into the hands of the producer.
+        </li>
+      </ul>
+      <p>
+        As we move into 2026, the Shramic Community is expanding. We are not
+        just building apps; we are building dignity for the millions of
+        unorganized workers and farmers across India. Technology, when applied
+        with local context, becomes a superpower.
+      </p>
+    </div>
+  </div>
+
+  <!-- Article 2 Content -->
+  <div id="krushi-article">
+    <img
+      src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&q=80"
+      class="meta-img"
+    />
+    <h2 class="meta-title">Precision Farming for the Marginal Farmer</h2>
+    <div class="meta-body">
+      <p>
+        The term "Precision Agriculture" often conjures images of giant
+        self-driving tractors and million-dollar satellite arrays. For a typical
+        Indian farmer with 2 acres of land, this feels like science fiction.
+        However, Shramic Krushi is proving that precision farming is more about
+        data than it is about expensive hardware.
+      </p>
+      <h3>The IoT Revolution in Your Pocket</h3>
+      <p>
+        We have introduced low-cost, solar-powered IoT sensors that monitor the
+        three most critical parameters: Soil Moisture, N-P-K levels, and
+        micro-climate temperature. This data is sent directly to the Shramic App
+        in the farmer's regional language.
+      </p>
+      <p><strong>The Impact is Immediate:</strong></p>
+      <ul>
+        <li>
+          <strong>Water Conservation:</strong> Farmers reduce water usage by 30%
+          by only irrigating when the soil actually needs it.
+        </li>
+        <li>
+          <strong>Fertilizer Efficiency:</strong> Instead of broad-spectrum
+          application, farmers apply exactly what the soil lacks, reducing
+          costs.
+        </li>
+        <li>
+          <strong>Early Warning:</strong> Pest outbreaks often leave digital
+          footprints in temperature changes. Our AI alerts the farmer before the
+          first leaf turns yellow.
+        </li>
+      </ul>
+      <p>
+        By democratizing this technology, we are ensuring that the small farmer
+        isn't left behind in the global ag-tech race. Our goal is to double the
+        income of 1 million farmers by 2027 through these small but powerful
+        tech interventions.
+      </p>
+    </div>
+  </div>
+
+  <!-- Article 3 Content -->
+  <div id="build-article">
+    <img
+      src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200"
+      class="meta-img"
+    />
+    <h2 class="meta-title">Organizing Rural Construction Workforce</h2>
+    <div class="meta-body">
+      <p>
+        Urbanization is no longer just a "Big City" phenomenon. Tier-2 and
+        Tier-3 cities in India are currently seeing the highest growth in
+        residential and infrastructure construction. Yet, the labor market
+        remains 90% unorganized. Skilled masons, electricians, and carpenters
+        still have to wait at "labor chowks" every morning for a day's work.
+      </p>
+      <h3>The Shramic Build Solution</h3>
+      <p>
+        Shramic Build acts as a digital verification and discovery engine. We
+        give every worker a "Digital Career Card" that records their skills,
+        certifications, and work history verified by previous employers.
+      </p>
+      <ul>
+        <li>
+          <strong>Trust for Contractors:</strong> Builders can hire teams with
+          proven track records, reducing project delays.
+        </li>
+        <li>
+          <strong>Dignity for Workers:</strong> No more waiting on street
+          corners. Workers receive job notifications on their phones based on
+          their location and skill set.
+        </li>
+        <li>
+          <strong>Insurance and Safety:</strong> By organizing the workforce, we
+          have been able to provide group insurance and safety training to
+          thousands of workers who previously had no social safety net.
+        </li>
+      </ul>
+      <p>
+        When a worker is verified and organized, their value in the market
+        increases. Shramic Build is turning daily wage labor into a respected
+        professional career path.
+      </p>
+    </div>
+  </div>
+
+  <!-- Article 4 Content -->
+  <div id="pashu-article">
+    <img
+      src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=1200"
+      class="meta-img"
+    />
+    <h2 class="meta-title">Livestock Digitization with PashuSetu</h2>
+    <div class="meta-body">
+      <p>
+        Livestock is the hidden wealth of rural India. It is a 365-day source of
+        income that provides a safety net when crops fail. However, the
+        livestock market is plagued by opaque pricing, lack of veterinary
+        history, and unscientific breeding practices.
+      </p>
+      <h3>Enter PashuSetu</h3>
+      <p>
+        PashuSetu is a comprehensive management and commerce platform for
+        livestock owners. It’s not just a marketplace; it’s a lifecycle support
+        system.
+      </p>
+      <p><strong>Key Pillars of PashuSetu:</strong></p>
+      <ul>
+        <li>
+          <strong>Medical Records:</strong> Digital tracking of vaccinations and
+          health history, making the animal more valuable in the trade market.
+        </li>
+        <li>
+          <strong>Marketplace:</strong> A transparent buy-sell platform where
+          price is determined by the animal's productivity and health records,
+          not just appearance.
+        </li>
+        <li>
+          <strong>Fodder & Feed:</strong> Connecting owners with certified feed
+          suppliers to ensure optimal milk and meat yields.
+        </li>
+      </ul>
+      <p>
+        By treating livestock as a serious asset class, we are helping rural
+        families build long-term wealth that isn't solely dependent on the
+        monsoon.
+      </p>
+    </div>
+  </div>
+
+  <!-- Article 5 Content -->
+  <div id="expert-article">
+    <img
+      src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200"
+      class="meta-img"
+    />
+    <h2 class="meta-title">The Expert Economy in Rural Growth</h2>
+    <div class="meta-body">
+      <p>
+        One of the biggest hurdles in rural development is the "Expert Access
+        Gap." A farmer in a remote village shouldn't have to travel 100km to
+        talk to an agronomist about a rare crop disease. Similarly, a dairy
+        owner should have instant access to a veterinary consultant.
+      </p>
+      <h3>Shramic Experts: Consultation at a Click</h3>
+      <p>
+        We have onboarded over 500 verified specialists—from retired
+        agricultural scientists to modern veterinary experts and financial
+        consultants. Our platform allows for seamless video and voice
+        consultations in regional dialects.
+      </p>
+      <p><strong>Real-World Impact:</strong></p>
+      <ul>
+        <li>
+          <strong>Language No Bar:</strong> Our experts are filtered by the
+          languages they speak, ensuring clear communication.
+        </li>
+        <li>
+          <strong>Voice-First:</strong> Many of our users prefer voice notes
+          over text. Our system handles asynchronous voice chat with ease.
+        </li>
+        <li>
+          <strong>Affordability:</strong> By aggregating demand, we have reduced
+          the cost of an expert consultation by 60%, making high-level advice
+          accessible to everyone.
+        </li>
+      </ul>
+      <p>
+        Knowledge is power, but only if it reaches the person at the right time.
+        Shramic Experts ensures that the right advice is always just a phone
+        call away.
+      </p>
+    </div>
+  </div>
+
+  <!-- Article 6 Content -->
+  <div id="business-article">
+    <img
+      src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200"
+      class="meta-img"
+    />
+    <h2 class="meta-title">Rural B2B: Building Strong Markets</h2>
+    <div class="meta-body">
+      <p>
+        For a rural economy to thrive, it needs a healthy business ecosystem.
+        Shramic Business is our answer to the fragmented rural supply chain.
+        Whether it's a seed nursery, an equipment rental shop, or a poultry
+        supplier, they all need a way to reach the right customers efficiently.
+      </p>
+      <h3>The Marketplace Advantage</h3>
+      <p>
+        Shramic Business provides a transparent platform for B2B transactions.
+        We connect bulk suppliers with groups of farmers (FPOs) and construction
+        suppliers with small-scale contractors.
+      </p>
+      <ul>
+        <li>
+          <strong>Bulk Purchase Savings:</strong> Groups of farmers can leverage
+          the platform to buy seeds and fertilizers at wholesale rates.
+        </li>
+        <li>
+          <strong>Equipment Monetization:</strong> If a farmer owns a smart
+          tractor, they can list it on Shramic Business to rent it out during
+          downtime, creating extra income.
+        </li>
+        <li>
+          <strong>Inventory Tracking:</strong> We help small rural businesses
+          manage their digital presence and inventory for the first time.
+        </li>
+      </ul>
+      <p>
+        When rural businesses grow, they create local jobs. Shramic Business is
+        the engine that keeps the rural economy spinning independently.
+      </p>
+    </div>
+  </div>
+</div>
+
 {% endblock %} {% block extra_js %}
 <script>
-  // Filter functionality
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  const blogCards = document.querySelectorAll(".blog-card");
+  /* 
+    ========================================
+    1. FILTER LOGIC
+    ========================================
+    */
+  const filterBtns = document.querySelectorAll(".blog-filter-btn");
+  const blogPosts = document.querySelectorAll(".blog-post-card");
 
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const filter = btn.dataset.filter;
-
+      // UI Update
       filterBtns.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
 
-      blogCards.forEach((card) => {
-        if (filter === "all" || card.dataset.category === filter) {
-          card.style.display = "block";
+      // Filtering
+      const filterValue = btn.getAttribute("data-filter");
+      blogPosts.forEach((post) => {
+        if (
+          filterValue === "all" ||
+          post.getAttribute("data-category") === filterValue
+        ) {
+          post.style.display = "block";
+          post.style.animation = "fadeIn 0.5s ease forwards";
         } else {
-          card.style.display = "none";
+          post.style.display = "none";
         }
       });
     });
+  });
+
+  /* 
+    ========================================
+    2. ARTICLE READER LOGIC
+    ========================================
+    */
+  const overlay = document.getElementById("articleOverlay");
+  const readerTitle = document.getElementById("readerTitle");
+  const readerImage = document.getElementById("readerImage");
+  const readerContent = document.getElementById("readerContent");
+
+  function openArticle(articleId) {
+    // Get data from hidden div
+    const source = document.getElementById(articleId);
+    if (!source) return;
+
+    const title = source.querySelector(".meta-title").innerText;
+    const img = source.querySelector(".meta-img").src;
+    const content = source.querySelector(".meta-body").innerHTML;
+
+    // Inject into Reader
+    readerTitle.innerText = title;
+    readerImage.src = img;
+    readerContent.innerHTML = content;
+
+    // Open Overlay
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden"; // Lock Scroll
+  }
+
+  function closeArticle() {
+    overlay.classList.remove("active");
+    document.body.style.overflow = "auto"; // Unlock Scroll
+  }
+
+  // Close on Click Outside
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeArticle();
+  });
+
+  // Close on ESC Key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeArticle();
   });
 </script>
 {% endblock %}

@@ -7,3 +7,90 @@ flask_sqlalchemy
 psycopg2-binary
 werkzeug
 Pillow
+
+ <!-- Google Search Console verification -->
+    <meta
+      name="google-site-verification"
+      content="Exjw7OwuUBOSAi9iuQIOqTH3zsLnHwTBQwpgqrBMaRU"
+    />
+
+<meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shramic Networks" />
+    <meta
+      property="og:title"
+      content="{% block og_title %}Shramic Networks - Empowering Agriculture Through Innovation{% endblock %}"
+    />
+    <meta
+      property="og:description"
+      content="{% block og_description %}Transforming traditional farming with cutting-edge technology. Smart farming, farmer training, and market intelligence for Indian agriculture.{% endblock %}"
+    />
+    <meta
+      property="og:url"
+      content="https://shramic.com{% block og_url %}/{% endblock %}"
+    />
+    <meta
+      property="og:image"
+      content="https://careers.shramic.com/static/img/logo.png"
+    />
+    <meta property="og:image:alt" content="Shramic Networks logo" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="{% block twitter_title %}Shramic Networks - Empowering Agriculture Through Innovation{% endblock %}"
+    />
+    <meta
+      name="twitter:description"
+      content="{% block twitter_description %}Smart farming, farmer training, and market access to help Indian farmers grow sustainably.{% endblock %}"
+    />
+    <meta
+      name="twitter:image"
+      content="https://careers.shramic.com/static/img/logo.png"
+    />
+
+    <!-- Local / Business info -->
+    <meta name="geo.region" content="IN-KA" />
+    <meta name="geo.placename" content="Bengaluru" />
+    <meta name="geo.position" content="12.9716;77.5946" />
+    <meta name="ICBM" content="12.9716, 77.5946" />
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Shramic Networks",
+        "url": "https://shramic.com/",
+        "logo": "https://careers.shramic.com/static/img/logo.png",
+        "description": "Shramic Networks empowers farmers with smart farming technology, training, and market intelligence to improve productivity and income.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "",
+          "addressLocality": "Bengaluru",
+          "addressRegion": "Karnataka",
+          "postalCode": "560056",
+          "addressCountry": "IN"
+        },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+91-9535455717",
+            "contactType": "customer support",
+            "areaServed": "IN"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/people/Shramic-Networks/61583443915078/",
+          "https://www.linkedin.com/in/shramic-networks-26331a38a",
+          "https://www.instagram.com/shramic.info"
+        ]
+      }
+    </script>
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="https://careers.shramic.com/static/img/logo.png"
+      type="image/png"
+    />

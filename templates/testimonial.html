@@ -1,522 +1,396 @@
-{% extends "base.html" %} {% block title %}Testimonials - Shramic Networks |
-Success Stories{% endblock %} {% block canonical_url %}/testimonial{% endblock
-%} {% block meta_description %}Read success stories from farmers who have
-transformed their farming operations with Shramic Networks' smart farming
-solutions.{% endblock %} {% block extra_css %}
+{% extends "base.html" %} {% block title %}Success Stories - Shramic Networks |
+Real Impact, Real Farmers{% endblock %} {% block extra_css %}
 <style>
-  .testimonial-section {
-    padding: 80px 0;
-    background: var(--white);
+  /* 
+    ========================================
+    1. TESTIMONIAL CARDS (Premium Glass)
+    ========================================
+    */
+  .testimonials-hub {
+    padding: 100px 0;
+    background: transparent;
   }
 
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 60px;
-  }
-
-  .testimonial-card {
-    background: var(--cream);
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px var(--shadow);
-    transition: all 0.3s ease;
+  .quote-card-premium {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 50px 40px;
+    height: 100%;
     position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: var(--shadow-md);
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
   }
 
-  .testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px var(--shadow-lg);
+  .quote-card-premium:hover {
+    transform: translateY(-15px);
+    box-shadow: var(--shadow-float);
+    border-color: var(--accent);
   }
 
-  .quote-icon {
+  .floating-quote-icon {
     position: absolute;
     top: 30px;
     right: 30px;
-    font-size: 60px;
-    color: var(--secondary);
-    opacity: 0.2;
+    font-size: 3.5rem;
+    color: var(--accent);
+    opacity: 0.1;
   }
 
-  .testimonial-content {
-    position: relative;
-    z-index: 1;
+  .rating-stars {
+    color: #f1c40f;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
   }
 
-  .testimonial-text {
-    font-size: 1.1rem;
-    line-height: 1.9;
-    color: var(--text-light);
-    margin-bottom: 30px;
+  .testimonial-quote {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-dark);
     font-style: italic;
+    margin-bottom: 30px;
+    flex-grow: 1;
   }
 
-  .testimonial-author {
+  .author-profile {
     display: flex;
     align-items: center;
     gap: 20px;
     padding-top: 25px;
-    border-top: 2px solid var(--cream-dark);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
   }
 
-  .author-image {
-    width: 70px;
-    height: 70px;
+  .author-img {
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--white);
-    box-shadow: 0 5px 15px var(--shadow);
+    border: 3px solid var(--bg-body);
+    box-shadow: var(--shadow-sm);
   }
 
-  .author-details h4 {
-    font-family: "Playfair Display", serif;
-    font-size: 1.3rem;
-    color: var(--primary);
-    margin-bottom: 5px;
-    font-weight: 700;
-  }
-
-  .author-details p {
-    color: var(--text-light);
-    font-size: 0.95rem;
+  .author-info h5 {
+    font-size: 1.1rem;
     margin: 0;
+    color: var(--primary-dark);
+  }
+  .author-info p {
+    font-size: 0.85rem;
+    margin: 0;
+    color: var(--accent);
+    font-weight: 600;
   }
 
-  .rating {
-    color: var(--secondary);
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+  /* 
+    ========================================
+    2. IMPACT SECTION (Gradient)
+    ========================================
+    */
+  .impact-belt {
+    background: var(--primary-dark);
+    padding: 100px 0;
+    margin: 80px 0;
+    border-radius: 60px;
+    color: white;
   }
 
-  .stats-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+  .stat-box-premium {
     text-align: center;
-    color: var(--white);
   }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 50px;
-  }
-
-  .stat-card {
-    padding: 30px;
-  }
-
-  .stat-number {
-    font-family: "Playfair Display", serif;
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--secondary);
+  .stat-val {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
     margin-bottom: 10px;
   }
-
   .stat-label {
     font-size: 1.1rem;
-    opacity: 0.9;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
 
-  .video-section {
-    padding: 80px 0;
-    background: var(--cream);
-  }
-
-  .video-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-top: 50px;
-  }
-
-  .video-card {
-    background: var(--white);
-    border-radius: 15px;
+  /* 
+    ========================================
+    3. CINEMA VIDEO GALLERY
+    ========================================
+    */
+  .video-card-premium {
+    background: white;
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: 0 5px 20px var(--shadow);
-    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    transition: 0.4s;
+    height: 100%;
     cursor: pointer;
   }
 
-  .video-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px var(--shadow-lg);
+  .video-card-premium:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-lg);
   }
 
-  .video-thumbnail {
+  .thumb-wrapper {
     position: relative;
     width: 100%;
-    padding-top: 56.25%;
-    background: var(--cream-dark);
+    height: 250px;
     overflow: hidden;
   }
 
-  .video-thumbnail img {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .thumb-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: 0.6s;
+  }
+  .video-card-premium:hover .thumb-wrapper img {
+    transform: scale(1.1);
+    filter: brightness(0.7);
   }
 
-  .play-button {
+  .play-trigger {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 70px;
     height: 70px;
-    background: var(--secondary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .play-button:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-    background: #d35400;
-  }
-
-  .play-button i {
-    color: var(--white);
-    font-size: 24px;
-    margin-left: 5px;
-  }
-
-  .video-info {
-    padding: 25px;
-  }
-
-  .video-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.3rem;
-    color: var(--primary);
-    margin-bottom: 10px;
-    font-weight: 700;
-  }
-
-  .video-description {
-    color: var(--text-light);
-    line-height: 1.7;
-  }
-
-  /* Video Popup Styles */
-  .video-popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    animation: fadeIn 0.3s ease;
-  }
-
-  .video-popup-overlay.active {
-    display: flex;
-  }
-
-  .video-popup-container {
-    position: relative;
-    width: 100%;
-    max-width: 900px;
-    background: #000;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
-    animation: slideUp 0.4s ease;
-  }
-
-  .video-popup-close {
-    position: absolute;
-    top: -45px;
-    right: 0;
-    background: var(--secondary);
+    background: var(--accent);
     color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
     border-radius: 50%;
-    font-size: 24px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 10000;
+    font-size: 1.5rem;
+    box-shadow: 0 0 0 0 rgba(226, 94, 62, 0.5);
+    animation: pulse-play 2s infinite;
+    transition: 0.3s;
   }
 
-  .video-popup-close:hover {
-    background: #d35400;
+  @keyframes pulse-play {
+    0% {
+      box-shadow: 0 0 0 0 rgba(226, 94, 62, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 20px rgba(226, 94, 62, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(226, 94, 62, 0);
+    }
+  }
+
+  .video-text-content {
+    padding: 30px;
+  }
+  .video-text-content h4 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+
+  /* 
+    ========================================
+    4. VIDEO POPUP SYSTEM
+    ========================================
+    */
+  .video-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 43, 34, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .video-modal-overlay.active {
+    display: flex;
+  }
+
+  .video-modal-container {
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  .video-modal-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .video-modal-close:hover {
+    color: var(--accent);
     transform: rotate(90deg);
   }
 
-  .video-popup-wrapper {
-    position: relative;
-    padding-top: 56.25%;
-    width: 100%;
-  }
-
-  .video-popup-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
+  /* 
+    ========================================
+    5. MOBILE OPTIMIZATION
+    ========================================
+    */
+  @media (max-width: 768px) {
+    .quote-card-premium {
+      padding: 35px 25px;
     }
-    to {
-      opacity: 1;
+    .impact-belt {
+      border-radius: 30px;
+      padding: 60px 0;
     }
-  }
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(50px);
-      opacity: 0;
+    .stat-val {
+      font-size: 2.8rem;
     }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  .cta-section {
-    padding: 80px 0;
-    background: var(--white);
-    text-align: center;
-  }
-
-  .cta-card {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 50px 30px;
-    background: linear-gradient(
-      135deg,
-      var(--cream) 0%,
-      var(--cream-dark) 100%
-    );
-    border-radius: 20px;
-  }
-
-  .cta-title {
-    font-family: "Playfair Display", serif;
-    font-size: 2.5rem;
-    color: var(--primary);
-    margin-bottom: 20px;
-    font-weight: 700;
-  }
-
-  .cta-text {
-    font-size: 1.2rem;
-    color: var(--text-light);
-    margin-bottom: 30px;
-    line-height: 1.7;
-  }
-
-  @media (min-width: 768px) {
-    .testimonials-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .stats-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .video-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .stats-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  @media (max-width: 576px) {
-    .testimonial-card {
-      padding: 30px 25px;
-    }
-    .testimonial-text {
-      font-size: 1rem;
-    }
-    .stat-number {
-      font-size: 2.5rem;
-    }
-    .cta-title {
-      font-size: 2rem;
-    }
-    .video-popup-close {
-      top: -50px;
-      width: 45px;
-      height: 45px;
-    }
-    .video-popup-container {
-      max-width: 100%;
-    }
-  }
-
-  .testimonial-section {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .section-title1 {
-    color: #fff;
   }
 </style>
 {% endblock %} {% block content %}
-<header class="page-header">
-  <div class="container">
-    <h1>Success Stories</h1>
-    <p>
-      Real farmers, real results. Discover how Shramic Networks is transforming
-      agricultural practices across India through innovative technology and
-      dedicated support.
+
+<!-- Header -->
+<header class="page-banner">
+  <div class="container" data-aos="zoom-in">
+    <span class="sub-title text-white-50">Impact Stories</span>
+    <h1 class="display-3 fw-bold text-white">
+      Voices of the Shramic Community
+    </h1>
+    <p class="mx-auto mt-4 col-lg-8 text-white opacity-75">
+      Real stories from the heart of India. Discover how technology is restoring
+      dignity and creating prosperity for farmers and workers.
     </p>
   </div>
 </header>
 
-<section class="testimonial-section">
+<!-- Main Testimonials Grid -->
+<section class="testimonials-hub">
   <div class="container">
-    <h2 class="section-title">What Farmers Say About Us</h2>
-    <p class="section-text">
-      Hear directly from farmers who have experienced the transformative power
-      of smart farming with Shramic Networks.
-    </p>
+    <div class="section-header" data-aos="fade-up">
+      <span class="sub-title">Testimonials</span>
+      <h2>What Farmers Say About Us</h2>
+    </div>
 
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <i class="fas fa-quote-right quote-icon"></i>
-        <div class="testimonial-content">
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+    <div class="row g-4">
+      <!-- Card 1 -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="quote-card-premium">
+          <i class="fas fa-quote-right floating-quote-icon"></i>
+          <div class="rating-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i
+            ><i class="fas fa-star"></i><i class="fas fa-star"></i
+            ><i class="fas fa-star"></i>
           </div>
-          <p class="testimonial-text">
+          <p class="testimonial-quote">
             “Finding reliable workers and timely expert guidance was always
             difficult for us. With Shramic Krushi, I can easily hire skilled
             workers, and through Shramic Experts, I get proper advice for crop
             planning and disease issues. This platform truly understands
             farmers’ real problems.”
           </p>
-          <div class="testimonial-author">
+          <div class="author-profile">
             <img
               src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/munjunathpic.jpg?raw=true"
-              alt="Manjunath G S"
-              class="author-image"
+              alt="Manjunath"
+              class="author-img"
             />
-            <div class="author-details">
-              <h4>Manjunath G S</h4>
-              <p>Doddabbigere Davangere (district)</p>
+            <div class="author-info">
+              <h5>Manjunath G S</h5>
+              <p>Doddabbigere, Davangere</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="testimonial-card">
-        <i class="fas fa-quote-right quote-icon"></i>
-        <div class="testimonial-content">
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+      <!-- Card 2 -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="quote-card-premium">
+          <i class="fas fa-quote-right floating-quote-icon"></i>
+          <div class="rating-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i
+            ><i class="fas fa-star"></i><i class="fas fa-star"></i
+            ><i class="fas fa-star"></i>
           </div>
-          <p class="testimonial-text">
+          <p class="testimonial-quote">
             “Shramic Build helped me get regular work without middlemen.
             Contractors can see my skills and contact me directly. Payments and
             work records are clear, which gives me confidence and dignity in my
             work.”
           </p>
-          <div class="testimonial-author">
+          <div class="author-profile">
             <img
               src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/yashwanthpic.jpg?raw=true"
-              alt="Yashwanth Gowda"
-              class="author-image"
+              alt="Yashwanth"
+              class="author-img"
             />
-            <div class="author-details">
-              <h4>Yashwanth Gowda</h4>
-              <p>Doddabbigere Davangere (district)</p>
+            <div class="author-info">
+              <h5>Yashwanth Gowda</h5>
+              <p>Doddabbigere, Davangere</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="testimonial-card">
-        <i class="fas fa-quote-right quote-icon"></i>
-        <div class="testimonial-content">
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+      <!-- Card 3 -->
+      <div class="col-lg-6" data-aos="fade-up">
+        <div class="quote-card-premium">
+          <i class="fas fa-quote-right floating-quote-icon"></i>
+          <div class="rating-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i
+            ><i class="fas fa-star"></i><i class="fas fa-star"></i
+            ><i class="fas fa-star"></i>
           </div>
-          <p class="testimonial-text">
+          <p class="testimonial-quote">
             “Earlier, buying livestock services and selling manure was
             unorganized. PashuSetu made it simple and transparent. I can now
             connect with genuine buyers and service providers through one
             trusted platform.”
           </p>
-          <div class="testimonial-author">
+          <div class="author-profile">
             <img
               src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/canbasappa.jpg?raw=true"
-              alt="Cehnnabasappa"
-              class="author-image"
+              alt="Chennabasappa"
+              class="author-img"
             />
-            <div class="author-details">
-              <h4>Cehnnabasappa</h4>
+            <div class="author-info">
+              <h5>Chennabasappa</h5>
               <p>Belagavi, Karnataka</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="testimonial-card">
-        <i class="fas fa-quote-right quote-icon"></i>
-        <div class="testimonial-content">
-          <div class="rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+      <!-- Card 4 -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="quote-card-premium">
+          <i class="fas fa-quote-right floating-quote-icon"></i>
+          <div class="rating-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i
+            ><i class="fas fa-star"></i><i class="fas fa-star"></i
+            ><i class="fas fa-star"></i>
           </div>
-          <p class="testimonial-text">
+          <p class="testimonial-quote">
             “Shramic Business gives visibility to small service providers like
             us. Whether it’s equipment rental, nursery services, or
             consultations, we are now connected to real customers across
-            sectors. It feels like being part of a growing rural digital
-            ecosystem.”
+            sectors.”
           </p>
-          <div class="testimonial-author">
+          <div class="author-profile">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoFZ6-Z8oIGQ994tLaNT5mL8qSEk8GwE2XxQ&s"
-              alt="Venkatesh Reddy"
-              class="author-image"
+              alt="Venkatesh"
+              class="author-img"
             />
-            <div class="author-details">
-              <h4>Venkatesh Reddy</h4>
+            <div class="author-info">
+              <h5>Venkatesh Reddy</h5>
               <p>Cotton Farmer, Telangana</p>
             </div>
           </div>
@@ -526,160 +400,168 @@ solutions.{% endblock %} {% block extra_css %}
   </div>
 </section>
 
-<section class="stats-section">
-  <div class="container">
-    <h2 class="section-title1">Our Impact in Numbers</h2>
-    <p class="section-text">
-      Measurable results that demonstrate our commitment to transforming Indian
-      agriculture.
-    </p>
+<!-- Impact Counters -->
+<div class="container">
+  <section class="impact-belt">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-3 col-md-6">
+        <div class="stat-box-premium" data-aos="zoom-in">
+          <div class="stat-val">10k+</div>
+          <div class="stat-label">Active Farmers</div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="stat-box-premium" data-aos="zoom-in" data-aos-delay="100">
+          <div class="stat-val">35%</div>
+          <div class="stat-label">Yield Increase</div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="stat-box-premium" data-aos="zoom-in" data-aos-delay="200">
+          <div class="stat-val">50+</div>
+          <div class="stat-label">Districts Covered</div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="stat-box-premium" data-aos="zoom-in" data-aos-delay="300">
+          <div class="stat-val">98%</div>
+          <div class="stat-label">Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">10,000+</div>
-        <div class="stat-label">Active Farmers</div>
+<!-- Video Section -->
+<section class="py-5 mb-5">
+  <div class="container py-4">
+    <div class="section-header" data-aos="fade-up">
+      <span class="sub-title">Watch Success</span>
+      <h2>Video Stories</h2>
+    </div>
+
+    <div class="row g-5">
+      <!-- Video 1 -->
+      <div class="col-lg-6" data-aos="fade-right">
+        <div
+          class="video-card-premium"
+          onclick="playSuccessVideo('PxojmKgvuNU')"
+        >
+          <div class="thumb-wrapper">
+            <img
+              src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/thumbnail1.png?raw=true"
+              alt="Shramic Introduction"
+            />
+            <div class="play-trigger"><i class="fas fa-play"></i></div>
+          </div>
+          <div class="video-text-content">
+            <h4>Introducing Shramic Networks: Solving Rural Challenges</h4>
+            <p class="text-muted small">
+              Learn how we connect agriculture, construction, and livestock
+              sectors to enable sustainable livelihoods.
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">35%</div>
-        <div class="stat-label">Average Yield Increase</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">50+</div>
-        <div class="stat-label">Districts Covered</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">98%</div>
-        <div class="stat-label">Customer Satisfaction</div>
+
+      <!-- Video 2 -->
+      <div class="col-lg-6" data-aos="fade-left">
+        <div
+          class="video-card-premium"
+          onclick="playSuccessVideo('dUdR8JU7KSY')"
+        >
+          <div class="thumb-wrapper">
+            <img
+              src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/thumbnail.jpg?raw=true"
+              alt="Problem Solving"
+            />
+            <div class="play-trigger"><i class="fas fa-play"></i></div>
+          </div>
+          <div class="video-text-content">
+            <h4>Problems We Are Solving for Rural India</h4>
+            <p class="text-muted small">
+              An in-depth look at employment gaps, skilled labor access, and
+              market connectivity challenges.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="video-section">
-  <div class="container">
-    <h2 class="section-title">Farmer Success Stories</h2>
-    <p class="section-text">
-      Watch how Shramic Networks is making a real difference in farmers' lives
-      across India.
-    </p>
-
-    <div class="video-grid">
-      <div class="video-card" onclick="openVideoPopup('PxojmKgvuNU')">
-        <div class="video-thumbnail">
-          <img
-            src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/thumbnail1.png?raw=true"
-            alt="Farmer testimonial video"
-          />
-          <div class="play-button">
-            <i class="fas fa-play"></i>
-          </div>
-        </div>
-        <div class="video-info">
-          <h3 class="video-title">
-            Introducing Shramic Networks | Solving Rural Challenges Through
-            Technology
-          </h3>
-          <p class="video-description">
-            Shramic Networks Private Limited is a purpose-driven technology
-            company creating a unified digital ecosystem for rural India.
-            Through five integrated platforms, it connects agriculture,
-            construction, and livestock sectors to enable employment, expert
-            access, service discovery, and sustainable livelihoods—designed for
-            real rural needs with simplicity, affordability, and regional
-            language support.
-          </p>
-        </div>
-      </div>
-      <div class="video-card" onclick="openVideoPopup('dUdR8JU7KSY')">
-        <div class="video-thumbnail">
-          <img
-            src="https://github.com/saiposhith-ai/Website-Main/blob/main/static/thumbnail.jpg?raw=true"
-            alt="Farmer testimonial video"
-          />
-          <div class="play-button">
-            <i class="fas fa-play"></i>
-          </div>
-        </div>
-        <div class="video-info">
-          <h3 class="video-title">Problems We Are Solving for Rural India</h3>
-          <p class="video-description">
-            Shramic Networks is solving key rural challenges by connecting
-            farmers, workers, experts, and service providers through a unified
-            digital ecosystem. We address employment gaps, lack of skilled labor
-            access, limited expert guidance, fragmented services, and poor
-            market connectivity across agriculture, construction, and livestock
-            sectors enabling sustainable livelihoods through accessible
-            technology.
-          </p>
-        </div>
-      </div>
+<!-- Final CTA -->
+<section class="py-5">
+  <div class="container pb-5">
+    <div
+      class="glass-card p-5 text-center shadow-lg"
+      style="background: var(--bg-body); border-radius: 40px"
+    >
+      <h2 class="mb-3">Be Our Next Success Story</h2>
+      <p class="text-muted mb-5 mx-auto" style="max-width: 600px">
+        Join the thousands of farmers and professionals who are transforming
+        their lives through the Shramic ecosystem.
+      </p>
+      <a href="{{ url_for('contact') }}" class="btn btn-shramic btn-lg px-5"
+        >Join the Community</a
+      >
     </div>
   </div>
 </section>
 
-<!-- Video Popup -->
-<div
-  class="video-popup-overlay"
-  id="videoPopup"
-  onclick="closeVideoPopup(event)"
->
-  <div class="video-popup-container">
-    <button class="video-popup-close" onclick="closeVideoPopup(event)">
+<!-- Video Modal Overlay -->
+<div class="video-modal-overlay" id="videoModal">
+  <div class="video-modal-container">
+    <div class="video-modal-close" onclick="closeSuccessVideo()">
       <i class="fas fa-times"></i>
-    </button>
-    <div class="video-popup-wrapper" id="videoWrapper">
-      <!-- YouTube iframe will be inserted here -->
+    </div>
+    <div id="videoIframeContainer" style="width: 100%; height: 100%">
+      <!-- Iframe injected here -->
     </div>
   </div>
 </div>
 
+{% endblock %} {% block extra_js %}
 <script>
-  function openVideoPopup(videoId) {
-    const popup = document.getElementById("videoPopup");
-    const wrapper = document.getElementById("videoWrapper");
+  const videoModal = document.getElementById("videoModal");
+  const iframeContainer = document.getElementById("videoIframeContainer");
 
-    // Create YouTube iframe
+  function playSuccessVideo(videoId) {
     const iframe = document.createElement("iframe");
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-    iframe.allow =
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-    iframe.allowFullscreen = true;
+    iframe.setAttribute(
+      "src",
+      `https://www.youtube.com/embed/${videoId}?autoplay=1`,
+    );
+    iframe.setAttribute("frameborder", "0");
+    iframe.setAttribute(
+      "allow",
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+    );
+    iframe.setAttribute("allowfullscreen", "true");
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
 
-    wrapper.innerHTML = "";
-    wrapper.appendChild(iframe);
-    popup.classList.add("active");
-
-    // Prevent body scroll
-    document.body.style.overflow = "hidden";
+    iframeContainer.innerHTML = "";
+    iframeContainer.appendChild(iframe);
+    videoModal.classList.add("active");
+    document.body.style.overflow = "hidden"; // Lock background scroll
   }
 
-  function closeVideoPopup(event) {
-    if (
-      event.target === event.currentTarget ||
-      event.target.closest(".video-popup-close")
-    ) {
-      const popup = document.getElementById("videoPopup");
-      const wrapper = document.getElementById("videoWrapper");
-
-      popup.classList.remove("active");
-      wrapper.innerHTML = "";
-
-      // Restore body scroll
-      document.body.style.overflow = "";
-
-      event.stopPropagation();
-    }
+  function closeSuccessVideo() {
+    videoModal.classList.remove("active");
+    iframeContainer.innerHTML = "";
+    document.body.style.overflow = "auto"; // Unlock background scroll
   }
 
-  // Close popup on Escape key
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") {
-      const popup = document.getElementById("videoPopup");
-      if (popup.classList.contains("active")) {
-        closeVideoPopup({ target: popup, currentTarget: popup });
-      }
-    }
+  // Close on click outside modal
+  videoModal.addEventListener("click", (e) => {
+    if (e.target === videoModal) closeSuccessVideo();
+  });
+
+  // Close on ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && videoModal.classList.contains("active"))
+      closeSuccessVideo();
   });
 </script>
-
 {% endblock %}

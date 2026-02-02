@@ -1,771 +1,224 @@
 {% extends "base.html" %} {% block title %}Our Services - Shramic Networks |
-Smart Farming & Agriculture Solutions{% endblock %} {% block meta_title
-%}Agriculture Services - Smart Farming, Training & Market Intelligence | Shramic
-Networks{% endblock %} {% block meta_description %}Discover Shramic Networks'
-comprehensive agriculture services: expert consulting, IoT-based smart farming
-solutions, farmer training programs, and real-time market intelligence to boost
-your farm's productivity.{% endblock %} {% block meta_keywords %}agriculture
-consulting India, smart farming solutions, IoT agriculture, farmer training
-programs, market intelligence farming, precision agriculture services, agri-tech
-solutions{% endblock %} {% block canonical_url %}/services{% endblock %} {%
-block og_title %}Shramic Networks Services - Empowering Farmers with
-Technology{% endblock %} {% block og_description %}Expert agriculture
-consulting, smart farming technology, comprehensive training, and market
-intelligence services for Indian farmers.{% endblock %} {% block og_url
-%}/services{% endblock %} {% block extra_css %}
+Integrated Rural Solutions{% endblock %} {% block extra_css %}
 <style>
-  .services-section {
-    padding: 100px 0;
-    background: linear-gradient(
-      180deg,
-      var(--cream) 0%,
-      var(--cream-dark) 100%
-    );
-    position: relative;
-    overflow: hidden;
+  .service-grid-main {
+    padding: 80px 0;
   }
 
-  .services-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e67e22' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  .row {
-    gap: 40px 0;
-  }
-
-  .service-card {
-    background: var(--white);
-    border-radius: 25px;
-    padding: 45px 35px;
-    margin-bottom: 40px;
-    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.08),
-      -4px -4px 16px rgba(255, 255, 255, 0.95),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  .service-category-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 50px 40px;
     height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
-    border: 2px solid rgba(230, 126, 34, 0.1);
-    position: relative;
-    overflow: hidden;
-    transform: translateZ(0);
-    will-change: transform, box-shadow;
+    box-shadow: var(--shadow-md);
   }
 
-  .service-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(230, 126, 34, 0.02) 100%
-    );
-    border-radius: 25px;
-    pointer-events: none;
-    z-index: 0;
+  .service-category-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
   }
 
-  .service-card::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-      circle,
-      rgba(230, 126, 34, 0.1) 0%,
-      transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .service-card:hover::after {
-    opacity: 1;
-  }
-
-  .service-card:hover {
-    box-shadow: 16px 16px 32px rgba(0, 0, 0, 0.12),
-      -6px -6px 20px rgba(255, 255, 255, 1),
-      inset 0 0 0 2px rgba(230, 126, 34, 0.2);
-    transform: translateY(-10px) scale(1.02);
-    border-color: rgba(230, 126, 34, 0.3);
-  }
-
-  .service-card > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  .service-icon {
-    width: 85px;
-    height: 85px;
-    background: linear-gradient(135deg, #e67e22 0%, #f39c12 50%, #e67e22 100%);
-    background-size: 200% 200%;
+  .category-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--primary-dark);
+    color: white;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 28px;
-    box-shadow: 6px 6px 18px rgba(230, 126, 34, 0.4),
-      -3px -3px 10px rgba(255, 255, 255, 0.6),
-      inset 0 -2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s ease;
-    animation: iconPulse 3s ease-in-out infinite;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 20px rgba(15, 61, 62, 0.15);
   }
 
-  @keyframes iconPulse {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
+  .feature-tag-list {
+    margin: 25px 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
   }
 
-  .service-card:hover .service-icon {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 8px 8px 24px rgba(230, 126, 34, 0.5),
-      -4px -4px 12px rgba(255, 255, 255, 0.8),
-      inset 0 -3px 6px rgba(0, 0, 0, 0.15);
-  }
-
-  .service-icon i {
-    font-size: 2.4rem;
-    color: var(--white);
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    transition: transform 0.3s ease;
-  }
-
-  .service-card:hover .service-icon i {
-    transform: scale(1.1);
-  }
-
-  .service-card h3 {
-    font-family: "Playfair Display", serif;
-    font-size: 1.85rem;
-    color: var(--primary);
-    margin-bottom: 18px;
-    font-weight: 700;
-    line-height: 1.3;
-    transition: color 0.3s ease;
-  }
-
-  .service-card:hover h3 {
-    color: var(--secondary);
-  }
-
-  .service-card p {
-    color: var(--text-light);
-    font-size: 1rem;
-    line-height: 1.9;
-    margin-bottom: 28px;
-    flex-grow: 1;
-  }
-
-  .service-features {
-    list-style: none;
-    padding: 0;
-    margin: 25px 0 30px 0;
-  }
-
-  .service-features li {
-    padding: 10px 0;
-    color: var(--text-dark);
-    font-size: 0.95rem;
-    display: flex;
-    align-items: start;
-    transition: transform 0.2s ease;
-  }
-
-  .service-features li:hover {
-    transform: translateX(5px);
-  }
-
-  .service-features li i {
-    color: var(--success);
-    margin-right: 12px;
-    margin-top: 4px;
+  .feature-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-size: 0.9rem;
-    transition: transform 0.2s ease;
-  }
-
-  .service-features li:hover i {
-    transform: scale(1.2);
-  }
-
-  .btn-service {
-    background: linear-gradient(135deg, var(--secondary) 0%, #d67118 100%);
-    color: var(--white);
-    padding: 14px 32px;
-    border-radius: 15px;
-    text-decoration: none;
     font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-    border: none;
-    box-shadow: 5px 5px 15px rgba(230, 126, 34, 0.35),
-      -2px -2px 8px rgba(255, 255, 255, 0.6);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-service::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
+    color: var(--text-gray);
+    margin-bottom: 10px;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.3),
-      transparent
-    );
-    transition: left 0.5s ease;
   }
 
-  .btn-service:hover::before {
-    left: 100%;
-  }
-
-  .btn-service:hover {
-    background: linear-gradient(135deg, #d67118 0%, var(--secondary) 100%);
-    box-shadow: 7px 7px 20px rgba(230, 126, 34, 0.45),
-      -3px -3px 10px rgba(255, 255, 255, 0.7);
-    transform: translateY(-3px);
-    color: var(--white);
-  }
-
-  .cta-section {
-    background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
-    padding: 100px 0;
-    text-align: center;
-    color: var(--white);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.1;
-    animation: backgroundMove 20s linear infinite;
-  }
-
-  @keyframes backgroundMove {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(60px, 60px);
-    }
-  }
-
-  .cta-section h2 {
-    font-family: "Playfair Display", serif;
-    font-size: 2.8rem;
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-    animation: fadeInUp 0.8s ease;
-  }
-
-  .cta-section p {
-    font-size: 1.25rem;
-    opacity: 0.95;
-    margin-bottom: 35px;
-    position: relative;
-    z-index: 1;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    animation: fadeInUp 0.8s ease 0.2s backwards;
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .btn-cta {
-    background: linear-gradient(135deg, var(--secondary) 0%, #d67118 100%);
-    color: var(--white);
-    padding: 18px 45px;
-    border-radius: 15px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.15rem;
-    transition: all 0.4s ease;
-    display: inline-block;
-    border: none;
-    position: relative;
-    z-index: 1;
-    box-shadow: 8px 8px 24px rgba(230, 126, 34, 0.5),
-      -3px -3px 12px rgba(255, 255, 255, 0.1);
-    animation: fadeInUp 0.8s ease 0.4s backwards;
-    overflow: hidden;
-  }
-
-  .btn-cta::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
-  }
-
-  .btn-cta:hover::before {
-    width: 300px;
-    height: 300px;
-  }
-
-  .btn-cta:hover {
-    background: linear-gradient(135deg, #d67118 0%, var(--secondary) 100%);
-    color: var(--white);
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 12px 12px 32px rgba(230, 126, 34, 0.6),
-      -4px -4px 16px rgba(255, 255, 255, 0.15);
-  }
-
-  .stats-section {
-    background: linear-gradient(
-      180deg,
-      var(--cream-dark) 0%,
-      var(--cream) 100%
-    );
-    padding: 80px 0;
-    position: relative;
-  }
-
-  .stat-box {
-    text-align: center;
-    padding: 40px 25px;
-    background: var(--white);
-    border-radius: 20px;
-    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.08),
-      -3px -3px 12px rgba(255, 255, 255, 0.95),
-      inset 0 0 0 1px rgba(230, 126, 34, 0.1);
-    margin-bottom: 25px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .stat-box::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--secondary), #f39c12);
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-  }
-
-  .stat-box:hover::before {
-    transform: scaleX(1);
-  }
-
-  .stat-box:hover {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 12px 12px 28px rgba(0, 0, 0, 0.12),
-      -4px -4px 16px rgba(255, 255, 255, 1),
-      inset 0 0 0 2px rgba(230, 126, 34, 0.2);
-  }
-
-  .stat-box .stat-number {
-    font-family: "Playfair Display", serif;
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: var(--secondary);
-    margin-bottom: 12px;
-    transition: transform 0.3s ease;
-  }
-
-  .stat-box:hover .stat-number {
-    transform: scale(1.1);
-  }
-
-  .stat-box .stat-label {
-    color: var(--text-dark);
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
-
-  @media (max-width: 991px) {
-    .services-section {
-      padding: 80px 0;
-    }
-
-    .row {
-      gap: 30px 0;
-    }
-
-    .service-card {
-      margin-bottom: 30px;
-    }
+  .feature-tag i {
+    color: var(--accent);
   }
 
   @media (max-width: 768px) {
-    .services-section {
-      padding: 60px 0;
+    .service-category-card {
+      padding: 30px 25px;
     }
-
-    .service-card {
-      padding: 35px 25px;
-      margin-bottom: 25px;
-      border-radius: 20px;
-    }
-
-    .service-card h3 {
-      font-size: 1.6rem;
-    }
-
-    .service-icon {
-      width: 70px;
-      height: 70px;
-      border-radius: 16px;
-    }
-
-    .service-icon i {
-      font-size: 2rem;
-    }
-
-    .cta-section {
-      padding: 70px 0;
-    }
-
-    .cta-section h2 {
+    .hero-title {
       font-size: 2.2rem;
-    }
-
-    .cta-section p {
-      font-size: 1.1rem;
-    }
-
-    .btn-cta {
-      padding: 15px 35px;
-      font-size: 1.05rem;
-    }
-
-    .stats-section {
-      padding: 60px 0;
-    }
-
-    .stat-box {
-      padding: 35px 20px;
-    }
-
-    .stat-box .stat-number {
-      font-size: 2.8rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .service-card {
-      padding: 30px 20px;
-      border-radius: 18px;
-    }
-
-    .service-card h3 {
-      font-size: 1.5rem;
-    }
-
-    .service-icon {
-      width: 65px;
-      height: 65px;
-    }
-
-    .btn-service {
-      width: 100%;
-      text-align: center;
-    }
-
-    .cta-section h2 {
-      font-size: 1.9rem;
-    }
-
-    .cta-section p {
-      font-size: 1rem;
-    }
-
-    .stat-box .stat-number {
-      font-size: 2.5rem;
-    }
-  }
-
-  /* Smooth scroll behavior */
-  html {
-    scroll-behavior: smooth;
-  }
-
-  /* Accessibility improvements */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
     }
   }
 </style>
 {% endblock %} {% block content %}
 <!-- Page Header -->
-<div class="page-header">
-  <div class="container">
-    <h1>Our Services</h1>
-    <p>
-      Comprehensive solutions to transform your agricultural journey with
-      cutting-edge technology and expert guidance
+<header class="page-banner">
+  <div class="container" data-aos="fade-up">
+    <span class="sub-title text-white-50">What we do</span>
+    <h1 class="text-white">Comprehensive Rural Solutions</h1>
+    <p class="mx-auto mt-4 col-lg-8 text-white opacity-75">
+      From the field to the marketplace, Shramic Networks provides the digital
+      infrastructure to empower every rural stakeholder.
     </p>
   </div>
-</div>
+</header>
 
-<!-- Services Section -->
-<section class="services-section">
+<section class="service-grid-main">
   <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="section-title">What We Offer</h2>
-      <p class="section-text">
-        From precision farming technology to market insights, we provide
-        end-to-end solutions designed to maximize your farm's potential and
-        profitability.
-      </p>
-    </div>
-
-    <div class="row">
-      <!-- Service 1: Agriculture Consulting -->
-      <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="service-card">
-          <div class="service-icon">
-            <i class="fas fa-seedling"></i>
-          </div>
+    <div class="row g-4">
+      <!-- Agriculture Consulting -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-category-card">
+          <div class="category-icon"><i class="fas fa-seedling"></i></div>
           <h3>Agriculture Consulting</h3>
           <p>
-            Get personalized expert guidance tailored to your farm's unique
-            needs. Our experienced agronomists analyze your soil, climate, and
-            resources to recommend optimal crop selection, cultivation
-            techniques, and sustainable practices that maximize yield while
-            preserving land health.
+            Expert-led guidance tailored to your specific terrain. We provide
+            agronomist support to optimize crop health and resource management.
           </p>
-          <ul class="service-features">
-            <li>
-              <i class="fas fa-check-circle"></i> Soil testing and analysis
-            </li>
-            <li><i class="fas fa-check-circle"></i> Crop selection advisory</li>
-            <li>
-              <i class="fas fa-check-circle"></i> Pest and disease management
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i> Sustainable farming practices
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i> Resource optimization
-              strategies
-            </li>
-          </ul>
-          <a href="{{ url_for('agriculture_consulting') }}" class="btn-service">
-            Learn More <i class="fas fa-arrow-right ms-2"></i>
-          </a>
+          <div class="feature-tag-list">
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Soil Health Analysis
+            </div>
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Personalized Crop Planning
+            </div>
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Pest & Disease Management
+            </div>
+          </div>
+          <a
+            href="{{ url_for('agriculture_consulting') }}"
+            class="btn btn-shramic mt-auto"
+            >Learn More</a
+          >
         </div>
       </div>
 
-      <!-- Service 2: Smart Farming Solutions -->
-      <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="service-card">
-          <div class="service-icon">
+      <!-- Smart Farming Solutions -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-category-card">
+          <div class="category-icon" style="background: var(--accent)">
             <i class="fas fa-microchip"></i>
           </div>
           <h3>Smart Farming Solutions</h3>
           <p>
-            Embrace the future of agriculture with IoT-enabled precision farming
-            technology. Monitor soil moisture, weather conditions, and crop
-            health in real-time through our smart sensors and automated systems.
-            Make data-driven decisions that reduce waste, optimize water usage,
-            and boost productivity.
+            Harnessing IoT and Data Analytics to bring precision to the field.
+            Monitor moisture, weather, and growth in real-time through Shramic
+            Krushi.
           </p>
-          <ul class="service-features">
-            <li><i class="fas fa-check-circle"></i> IoT sensor installation</li>
-            <li>
-              <i class="fas fa-check-circle"></i> Real-time crop monitoring
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i> Automated irrigation systems
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i> Weather prediction alerts
-            </li>
-            <li><i class="fas fa-check-circle"></i> Mobile app dashboard</li>
-          </ul>
+          <div class="feature-tag-list">
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> IoT Sensor Deployment
+            </div>
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Precision Irrigation
+            </div>
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Remote Growth Monitoring
+            </div>
+          </div>
           <a
             href="{{ url_for('smart_farming_solutions') }}"
-            class="btn-service"
+            class="btn btn-shramic mt-auto"
+            >Explore Tech</a
           >
-            Learn More <i class="fas fa-arrow-right ms-2"></i>
-          </a>
         </div>
       </div>
 
-      <!-- Service 3: Training Programs -->
-      <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
-        <div class="service-card">
-          <div class="service-icon">
-            <i class="fas fa-chalkboard-teacher"></i>
-          </div>
+      <!-- Training Programs -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-category-card">
+          <div class="category-icon"><i class="fas fa-graduation-cap"></i></div>
           <h3>Training Programs</h3>
           <p>
-            Empower yourself with knowledge through our comprehensive training
-            workshops and certification courses. Learn modern farming
-            techniques, technology adoption, financial management, and market
-            strategies from industry experts. Build skills that increase your
-            farm's competitiveness and profitability.
+            Upskilling rural India. We provide certification and hands-on
+            workshops for modern farming and construction techniques.
           </p>
-          <ul class="service-features">
-            <li>
-              <i class="fas fa-check-circle"></i> Modern farming techniques
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i> Technology adoption workshops
-            </li>
-            <li>
-              <i class="fas fa-check-circle"></i> Financial literacy for farmers
-            </li>
-            <li><i class="fas fa-check-circle"></i> Marketing and branding</li>
-            <li><i class="fas fa-check-circle"></i> Certification programs</li>
-          </ul>
-          <a href="{{ url_for('training_programs') }}" class="btn-service">
-            Learn More <i class="fas fa-arrow-right ms-2"></i>
-          </a>
+          <div class="feature-tag-list">
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Modern Tech Workshops
+            </div>
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Financial Literacy
+            </div>
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Skill Certification
+            </div>
+          </div>
+          <a
+            href="{{ url_for('training_programs') }}"
+            class="btn btn-shramic mt-auto"
+            >View Programs</a
+          >
         </div>
       </div>
 
-      <!-- Service 4: Market Intelligence -->
-      <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="400">
-        <div class="service-card">
-          <div class="service-icon">
+      <!-- Market Intelligence -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="service-category-card">
+          <div class="category-icon" style="background: var(--accent)">
             <i class="fas fa-chart-line"></i>
           </div>
           <h3>Market Intelligence</h3>
           <p>
-            Stay ahead of market trends with our real-time price tracking and
-            demand forecasting. Access comprehensive market data, connect
-            directly with buyers, and get timely alerts on price fluctuations.
-            Make informed selling decisions that maximize your profits and
-            reduce post-harvest losses.
+            Data-driven insights to maximize profit. Track real-time prices and
+            connect directly with verified B2B buyers through Shramic Business.
           </p>
-          <ul class="service-features">
-            <li>
-              <i class="fas fa-check-circle"></i> Real-time price tracking
-            </li>
-            <li><i class="fas fa-check-circle"></i> Demand forecasting</li>
-            <li>
-              <i class="fas fa-check-circle"></i> Direct buyer connections
-            </li>
-            <li><i class="fas fa-check-circle"></i> Market trend analysis</li>
-            <li>
-              <i class="fas fa-check-circle"></i> Price alert notifications
-            </li>
-          </ul>
-          <a href="{{ url_for('market_intelligence') }}" class="btn-service">
-            Learn More <i class="fas fa-arrow-right ms-2"></i>
-          </a>
+          <div class="feature-tag-list">
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Real-time Price Tracking
+            </div>
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Demand Forecasting
+            </div>
+            <div class="feature-tag">
+              <i class="fas fa-check-circle"></i> Direct Buyer Linkage
+            </div>
+          </div>
+          <a
+            href="{{ url_for('market_intelligence') }}"
+            class="btn btn-shramic mt-auto"
+            >Get Insights</a
+          >
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Stats Section -->
-<section class="stats-section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-        <div class="stat-box" data-aos="zoom-in" data-aos-delay="100">
-          <div class="stat-number">500+</div>
-          <div class="stat-label">Farmers Served</div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-        <div class="stat-box" data-aos="zoom-in" data-aos-delay="200">
-          <div class="stat-number">35%</div>
-          <div class="stat-label">Avg. Yield Increase</div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-        <div class="stat-box" data-aos="zoom-in" data-aos-delay="300">
-          <div class="stat-number">50+</div>
-          <div class="stat-label">Training Sessions</div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6">
-        <div class="stat-box" data-aos="zoom-in" data-aos-delay="400">
-          <div class="stat-number">98%</div>
-          <div class="stat-label">Client Satisfaction</div>
-        </div>
-      </div>
+<!-- Final CTA -->
+<section class="py-5">
+  <div class="container pb-5">
+    <div
+      class="glass-card p-5 text-center shadow-lg"
+      style="background: var(--primary-dark); border-radius: 40px"
+    >
+      <h2 class="text-white mb-3">Not sure where to start?</h2>
+      <p class="text-white-50 mb-4 mx-auto" style="max-width: 600px">
+        Talk to our experts today for a personalized consultation on how Shramic
+        can grow your farm or business.
+      </p>
+      <a href="{{ url_for('contact') }}" class="btn btn-shramic btn-lg"
+        >Get a Consultation</a
+      >
     </div>
   </div>
 </section>
-
-<!-- CTA Section -->
-<section class="cta-section">
-  <div class="container">
-    <h2>Ready to Transform Your Farm?</h2>
-    <p>
-      Join hundreds of farmers who have already increased their productivity and
-      income with our services
-    </p>
-    <a href="{{ url_for('contact') }}" class="btn-cta">
-      Get Started Today <i class="fas fa-arrow-right ms-2"></i>
-    </a>
-  </div>
-</section>
-{% endblock %} {% block extra_js %}
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-<script>
-  AOS.init({
-    duration: 800,
-    easing: "ease-in-out",
-    once: true,
-    offset: 100,
-  });
-</script>
 {% endblock %}
